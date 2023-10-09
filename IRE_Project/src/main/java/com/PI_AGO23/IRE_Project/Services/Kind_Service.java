@@ -27,7 +27,7 @@ public class Kind_Service {
     public Kind_Model update_Kind(Kind_Model Request, Long id){
         Kind_Model Kind = kindRepository.findById(id).get();
 
-        Kind.setKind_Name(Kind.getKind_Name());
+        Kind.setKind_Name(Request.getKind_Name());
 
         kindRepository.save(Kind);
 

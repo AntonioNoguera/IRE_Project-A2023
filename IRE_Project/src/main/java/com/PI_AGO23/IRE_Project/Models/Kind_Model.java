@@ -12,6 +12,14 @@ public class Kind_Model {
 
     @Column private String Kind_Name;
 
+    public Long getKind_ID() {
+        return Kind_ID;
+    }
+
+    public void setKind_ID(Long kind_ID) {
+        Kind_ID = kind_ID;
+    }
+
     public String getKind_Name() {
         return Kind_Name;
     }
@@ -19,4 +27,6 @@ public class Kind_Model {
     public void setKind_Name(String kind_Name) {
         Kind_Name = kind_Name;
     }
+
+
 }
