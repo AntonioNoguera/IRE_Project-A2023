@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 import com.PI_AGO23.IRE_Project.Models.Group_Model;
 
 @Repository
-public interface I_Group_Repository extends JpaRepository<Group_Model,Long> {
-}
+public interface I_Group_Repository extends JpaRepository<Group_Model,Long> { }

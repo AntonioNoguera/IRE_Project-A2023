@@ -1,12 +1,10 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Department_Model;
 import com.PI_AGO23.IRE_Project.Models.Group_Model;
 import com.PI_AGO23.IRE_Project.Services.Group_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -36,7 +34,7 @@ public class Group_Controller {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteDepartmentById(@PathVariable("id") long Id){
+    public String Delete_Group(@PathVariable("id") long Id){
         boolean ok = this.GroupService.Delete_Group(Id);
 
         if(ok){

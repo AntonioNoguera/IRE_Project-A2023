@@ -9,17 +9,13 @@ public class Group_Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Group_ID;
 
-    @Column
-    private String Group_Name;
+    @Column private String Group_Name;
 
-    @Column
-    private String Group_Description;
+    @Column private String Group_Description;
 
-    @Column
-    private String Group_Hex_Color;
+    @Column private String Group_Hex_Color;
 
-    @Column(columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean Group_Is_Active;
+    @Column(columnDefinition = "BOOLEAN DEFAULT true") private Boolean Group_Is_Active;
 
     public Long getGroup_ID() {
         return Group_ID;

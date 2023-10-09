@@ -30,7 +30,7 @@ public class Group_Service {
     }
 
     //Actualización de Grupo
-    public Group_Model Update_Group(Group_Model Request, Long Id){
+    public Group_Model Update_Group(@org.jetbrains.annotations.NotNull Group_Model Request, Long Id){
         Group_Model Group = groupRepository.findById(Id).get();
 
         Group.setGroup_Name(Request.getGroup_Name());
