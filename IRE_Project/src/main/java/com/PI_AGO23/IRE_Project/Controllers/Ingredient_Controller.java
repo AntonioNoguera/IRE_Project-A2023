@@ -23,6 +23,10 @@ public class Ingredient_Controller {
     public Optional<Ingredient_Model> Get_Ingredient_By_ID(@PathVariable("id") long id){
         return this.ingredientService.get_Ingredient_By_ID(id);
     }
+    @PostMapping
+    Ingredient_Model New_Ingredient(@RequestBody Ingredient_Model Ingredient){
+        return this.ingredientService.new_Ingredient(Ingredient);
+    }
 
     @PutMapping(path = "/{id}")
     public Ingredient_Model Update_Ingredient(@RequestBody Ingredient_Model Request, @PathVariable("id") long id){

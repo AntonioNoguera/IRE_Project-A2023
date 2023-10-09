@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class Ingredient_Service {
 
     //Nuevo Ingrediente
     public Ingredient_Model new_Ingredient(Ingredient_Model Ingredient){
+        Ingredient.setIngredient_Last_Used(String.valueOf(LocalDateTime.now()));
         return ingredientRepository.save(Ingredient);
     }
 
