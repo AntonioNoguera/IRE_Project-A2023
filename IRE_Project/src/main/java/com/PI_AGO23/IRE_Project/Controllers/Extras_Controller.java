@@ -31,7 +31,7 @@ public class Extras_Controller {
     }
 
     @PutMapping(path = "/{id}")
-    public Extra_Model Update_Extra (Extra_Model Request, @PathVariable("id") Long Id){
+    public Extra_Model Update_Extra (@RequestBody Extra_Model Request, @PathVariable("id") long Id){
         return this.extraService.update_Extra(Request,Id);
     }
 
