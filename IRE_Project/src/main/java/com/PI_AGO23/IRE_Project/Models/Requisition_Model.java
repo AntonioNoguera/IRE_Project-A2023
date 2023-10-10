@@ -7,16 +7,16 @@ import javax.persistence.*;
 public class Requisition_Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Reisition_ID;
+    private Long Requisition_ID;
     @Column private String Requisition_Day_Name;
-    @Column private String Requsition_Date;
+    @Column private String Requisition_Date;
 
-    public Long getReisition_ID() {
-        return Reisition_ID;
+    public Long getRequisition_ID() {
+        return Requisition_ID;
     }
 
-    public void setReisition_ID(Long reisition_ID) {
-        Reisition_ID = reisition_ID;
+    public void setRequisition_ID(Long requisition_ID) {
+        Requisition_ID = requisition_ID;
     }
 
     public String getRequisition_Day_Name() {
@@ -27,11 +27,11 @@ public class Requisition_Model {
         Requisition_Day_Name = requisition_Day_Name;
     }
 
-    public String getRequsition_Date() {
-        return Requsition_Date;
+    public String getRequisition_Date() {
+        return Requisition_Date;
     }
 
-    public void setRequsition_Date(String requsition_Date) {
-        Requsition_Date = requsition_Date;
+    public void setRequisition_Date(String requisition_Date) {
+        Requisition_Date = requisition_Date;
     }
 }
