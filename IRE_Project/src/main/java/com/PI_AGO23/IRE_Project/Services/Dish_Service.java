@@ -33,6 +33,7 @@ public class Dish_Service {
     }
 
     public Dish_Model new_Dish(Dish_Model Dish){
+        //Esta fecha no puede ser el día de hoy, se actualiza hasta que se asgina un platillo a la req.
 
         Dish.setDish_Last_Made(String.valueOf(LocalDateTime.now()));
 

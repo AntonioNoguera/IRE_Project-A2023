@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/{id}")
+@RequestMapping("/Dish")
 public class Dish_Controller {
     @Autowired
     private Dish_Service dishService;
