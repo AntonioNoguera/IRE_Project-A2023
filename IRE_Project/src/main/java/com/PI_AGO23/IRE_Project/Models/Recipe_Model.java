@@ -10,11 +10,13 @@ public class Recipe_Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Recipe_ID;
 
-    @Column(name="Dish_ID") private Long dishID;
+    @Column(name="Dish_ID") private Long Dish_ID;
 
     @Column private Long Ingredient_ID;
 
     @Column private float Recipe_Ingredient_Amount;
+
+
 
     public Long getRecipe_ID() {
         return Recipe_ID;
@@ -24,12 +26,12 @@ public class Recipe_Model {
         Recipe_ID = recipe_ID;
     }
 
-    public Long getDishID() {
-        return dishID;
+    public Long getDish_ID() {
+        return Dish_ID;
     }
 
-    public void setDishID(Long dishID) {
-        dishID = dishID;
+    public void setDish_ID(Long dish_ID) {
+        Dish_ID = dish_ID;
     }
 
     public Long getIngredient_ID() {
@@ -40,11 +42,11 @@ public class Recipe_Model {
         Ingredient_ID = ingredient_ID;
     }
 
-    public float getRecipe_Ingredient_Amont() {
+    public float getRecipe_Ingredient_Amount() {
         return Recipe_Ingredient_Amount;
     }
 
-    public void setRecipe_Ingredient_Amont(float recipe_Ingredient_Amont) {
-        Recipe_Ingredient_Amount = recipe_Ingredient_Amont;
+    public void setRecipe_Ingredient_Amount(float recipe_Ingredient_Amount) {
+        Recipe_Ingredient_Amount = recipe_Ingredient_Amount;
     }
 }
