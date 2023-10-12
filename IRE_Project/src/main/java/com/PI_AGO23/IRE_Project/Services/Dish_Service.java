@@ -36,10 +36,10 @@ public class Dish_Service {
 
         if (optionalDish.isPresent()) {
             Dish_Model dish = optionalDish.get();
-            dish.setSauce_Name(extraRepository.getExtra(dish.getSauce_ID()));
-            dish.setComplement_Name(extraRepository.getExtra(dish.getComplement_ID()));
-            dish.setProtein_Name(extraRepository.getExtra(dish.getProtein_ID()));
-            dish.setType_Name(extraRepository.getExtra(dish.getDish_Type()));
+            dish.setV_Sauce_Name(extraRepository.getExtra(dish.getSauce_ID()));
+            dish.setV_Complement_Name(extraRepository.getExtra(dish.getComplement_ID()));
+            dish.setV_Protein_Name(extraRepository.getExtra(dish.getProtein_ID()));
+            dish.setV_Type_Name(extraRepository.getExtra(dish.getDish_Type()));
             return optionalDish;
         } else {
             // Handle the case where the dish is not found by ID.
