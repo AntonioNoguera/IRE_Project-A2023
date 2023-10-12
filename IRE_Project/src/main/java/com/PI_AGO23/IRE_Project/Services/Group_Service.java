@@ -42,13 +42,13 @@ public class Group_Service {
         return Group;
     }
 
-    //Eliminar Grupo
     public Boolean Delete_Group(Long Id){
         try{
             groupRepository.deleteById(Id);
             return true;
         }catch(Exception e){
             return false;
+    //Eliminar Grupo
         }
     }
 
