@@ -1,14 +1,9 @@
-package com.PI_AGO23.IRE_Project.Services.Implementation;
+package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Services.I_Upload_Images;
-import org.springframework.http.ResponseEntity;
+import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class UploadFilesServiceImple implements I_Upload_Images {
+public class Image_Service implements I_Image_pseudoRepo {
     @Override
     public String handleFileUpload(MultipartFile file) throws Exception{
         try{
@@ -49,10 +44,9 @@ public class UploadFilesServiceImple implements I_Upload_Images {
                 try {
 
                     Files.createDirectories(folderPath);
-                    return "Se Crea";
                 } catch (IOException e) {
                     // Manejar cualquier error de creación de la carpetar
-                    return "No se crea";
+                    return "Problems with the folder";
                 }
             }
             Path filePath = folderPath.resolve(newFileName);
@@ -60,7 +54,7 @@ public class UploadFilesServiceImple implements I_Upload_Images {
             try {
                 // Supongo que 'bytes' es un arreglo de bytes que deseas escribir en el archivo
                 Files.write(filePath, bytes);
-                return System.getProperty("user.dir");
+                return "File Uploaded!";
             } catch (IOException e) {
                 return "File Problem!";
                 // Manejar cualquier error de escritura en el archivo
