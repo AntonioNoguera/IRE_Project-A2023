@@ -5,6 +5,7 @@ import com.PI_AGO23.IRE_Project.Models.Movement_Model;
 import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
 import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Movement_Repository;
+import com.PI_AGO23.IRE_Project.Repositories.I_Requisition_Repository;
 import org.aspectj.apache.bcel.classfile.ExceptionTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,16 @@ public class Movement_Service {
     @Autowired
     I_Movement_Repository movementRepository;
 
+    @Autowired
+    I_Requisition_Repository requisitionRepository;
+
     //8.1.- Insert_Movement()
     public Movement_Model new_Movement(Movement_Model Movement){
         return movementRepository.save(Movement);
     }
 
     //8.2.- Get_Movements_By_Requisition()
-    public List<MovementJoin_Model> get_Movement_By_Requisition(Long id){
+    public List<MovementJoin_Model> get_Movements_By_Requisition(Long id){
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -33,30 +37,34 @@ public class Movement_Service {
         List<MovementJoin_Model> JoinMovements= new ArrayList<>();
         for (Object[] Movement : Movements) {
             MovementJoin_Model moves = new MovementJoin_Model(
-                    (int) Movement[0],  // Recipe_ID
-                    (String) Movement[1],  // Dish_Name
-                    dateFormat1.format(Movement[2]),  // Ingredient_Name
-                    (String) Movement[3],  // Recipe_Ingredient_Amount
-                    (String) Movement[4],
-                    (float) Movement[5],
-                    (String) Movement[6],  // Recipe_Ingredient_Amount
-                    dateFormat.format(Movement[7]) // Ingredient_Unit
+                    (int) Movement[0],  //
+                    (String) Movement[1],  //
+                    dateFormat1.format(Movement[2]),  //
+                    (String) Movement[3],  //
+                    (String) Movement[4],   //
+                    (float) Movement[5],    //
+                    (String) Movement[6],  //
+                    dateFormat.format(Movement[7]) //
             );
 
             JoinMovements.add(moves);
-
         }
          return JoinMovements;
     }
 
-    /**
+
     //8.2.1.- Get Mo
-     public List<List<Object>> get_Requisitions(){
-        long tilin=1;
-        return (List<List<Object>>) movementRepository.findById(tilin);
+     public List<List<MovementJoin_Model>> get_Requisitions(){
+        ArrayList<Long> Requisitions = requisitionRepository.getRequisitions();
+
+        List<List<MovementJoin_Model>> generalMovements = new ArrayList<>();
+        for(Long Requisition : Requisitions){
+            generalMovements.add(get_Movements_By_Requisition(Requisition));
+        }
+
+        return generalMovements;
     }
 
-    */
 
     //8.3.- Update_Movement()
     public Movement_Model update_Requisition(Movement_Model Request, Long id){

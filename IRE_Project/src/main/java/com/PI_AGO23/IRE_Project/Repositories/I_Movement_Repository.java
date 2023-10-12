@@ -29,4 +29,6 @@ public interface I_Movement_Repository extends JpaRepository<Movement_Model, Lon
             " WHERE Movement_Table.Requisition_ID = ?1",nativeQuery = true)
     List<Object[]> getMovementsByRequisition(long Dish_ID);
 
+
+
 }

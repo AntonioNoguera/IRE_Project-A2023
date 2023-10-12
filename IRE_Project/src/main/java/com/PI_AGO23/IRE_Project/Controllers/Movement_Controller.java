@@ -15,14 +15,14 @@ public class Movement_Controller {
     @Autowired private Movement_Service movementService;
 
     @GetMapping("/{id}")
-    public List<MovementJoin_Model> Get_Movement_By_Requisition(@PathVariable("id") long id){
-        return this.movementService.get_Movement_By_Requisition(id);
+    public List<MovementJoin_Model> Get_Movements_By_Requisition(@PathVariable("id") long id){
+        return this.movementService.get_Movements_By_Requisition(id);
     }
 
-    /**@GetMapping()
-    public List<List<Object>> Get_All_Movements(){
+    @GetMapping()
+    public List<List<MovementJoin_Model>> Get_All_Movements(){
         return this.movementService.get_Requisitions();
-    }*/
+    }
 
     @PostMapping
     Movement_Model New_Movement(@RequestBody Movement_Model Movement){
