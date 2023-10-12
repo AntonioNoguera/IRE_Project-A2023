@@ -1,5 +1,6 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
@@ -107,9 +108,9 @@ public class Dish_Service {
         // Map<String, List<Map<Integer, String>>>
 
         for(int i=0;i<Extras.size();i++){
-            List<Map<Integer,String>> Ex = new ArrayList<>();
+            List<Extra_Data_Model> Ex = new ArrayList<>();
             for(int j=0;j<ExtrasCount.get(i).size(); j++){
-                Ex.add(Map.of(ExtrasCount.get(i).get(j),this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
+                Ex.add(new Extra_Data_Model(ExtrasCount.get(i).get(j),this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
             }
             HashMenuModel.Extra_Info.put(Extras.get(i),Ex);
         }
