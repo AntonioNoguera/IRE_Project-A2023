@@ -1,5 +1,6 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
@@ -10,6 +11,8 @@ import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -17,15 +20,8 @@ public class Dish_Service {
 
     @Autowired I_Dish_Repository dishRepository;
     @Autowired
-    I_Extra_Repository extraRepository;
+    I_Extra_Repository extraRep;
 
-    /**
-     * 1.1.- New_Dish (Crear):
-     * 1.2.- Get_Dish_By_ID, x
-     * Get_Dishes (Leer): x
-     * 1.3.- Update_Dish (Actualizar):
-     * 1.4.- Delete_Dish (Actualizar):
-     */
 
     public ArrayList<Dish_Model> get_Dishes(){
         return (ArrayList<Dish_Model>) dishRepository.findAll();
@@ -36,10 +32,10 @@ public class Dish_Service {
 
         if (optionalDish.isPresent()) {
             Dish_Model dish = optionalDish.get();
-            dish.setV_Sauce_Name(extraRepository.getExtra(dish.getSauce_ID()));
-            dish.setV_Complement_Name(extraRepository.getExtra(dish.getComplement_ID()));
-            dish.setV_Protein_Name(extraRepository.getExtra(dish.getProtein_ID()));
-            dish.setV_Type_Name(extraRepository.getExtra(dish.getDish_Type()));
+            dish.setV_Sauce_Name(extraRep.getExtra(dish.getSauce_ID()));
+            dish.setV_Complement_Name(extraRep.getExtra(dish.getComplement_ID()));
+            dish.setV_Protein_Name(extraRep.getExtra(dish.getProtein_ID()));
+            dish.setV_Type_Name(extraRep.getExtra(dish.getDish_Type()));
             return optionalDish;
         } else {
             // Handle the case where the dish is not found by ID.
@@ -82,5 +78,49 @@ public class Dish_Service {
             return false;
         }
     }
+
+    //Support Methods
+    public List<Integer> Extra_List = List.of(1,2,3);
+    public List<List<Integer>> getExtrasCount(){
+        List<List<Integer>> ExtraCount = new ArrayList<>();
+
+        for(Integer ExtraMember : Extra_List){
+            ExtraCount.add(this.extraRep.getExtrasIDS(ExtraMember));
+        }
+
+        return ExtraCount;
+    }
+
+    public Menu_Data_Model preProcessing(){
+        //Dish Type Related
+        List<Long> Types = this.extraRep.getDish_Types_ID();
+        List<String> NameTypes= new ArrayList<>();
+
+
+        //Extra Related
+        //Salsa = 1, Proteina = 2, Complementos = 3
+        List<String> Extras = List.of("Sauce","Protein","Complement");
+        List<List<Integer>> ExtrasCount = this.getExtrasCount();
+
+        //Data Model
+        Menu_Data_Model HashMenuModel = new Menu_Data_Model();
+        // Map<String, List<Map<Integer, String>>>
+
+        for(int i=0;i<Extras.size();i++){
+            List<Map<Integer,String>> Ex = new ArrayList<>();
+            for(int j=0;j<ExtrasCount.get(i).size(); j++){
+                Ex.add(Map.of(ExtrasCount.get(i).get(j),this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
+            }
+            HashMenuModel.Extra_Info.put(Extras.get(i),Ex);
+        }
+
+
+        for(long Type: Types){
+            HashMenuModel.Dish_Kind_Amount_Info.put(this.extraRep.getExtra(Type),this.extraRep.getNumberOfExtras(Type));
+        }
+
+        return HashMenuModel;
+    }
+
 
 }

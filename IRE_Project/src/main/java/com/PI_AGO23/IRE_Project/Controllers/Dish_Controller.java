@@ -1,11 +1,13 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
+import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Services.Dish_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -44,4 +46,11 @@ public class Dish_Controller {
             return "Action wasn´t Completed!";
         }
     }
+
+    @GetMapping(path = "/getValues")
+    public Menu_Data_Model getFirstValues(){
+        return this.dishService.preProcessing();
+    }
+
+
 }
