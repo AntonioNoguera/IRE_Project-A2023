@@ -1,12 +1,17 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.MovementJoin_Model;
 import com.PI_AGO23.IRE_Project.Models.Movement_Model;
+import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Movement_Repository;
 import org.aspectj.apache.bcel.classfile.ExceptionTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 @Service
 public class Movement_Service {
@@ -19,12 +24,33 @@ public class Movement_Service {
     }
 
     //8.2.- Get_Movements_By_Requisition()
-    public List<Object> get_Movement_By_Requisition(Long id){
-        return (List<Object>) movementRepository.getMovementByRequisition(id);
+    public List<MovementJoin_Model> get_Movement_By_Requisition(Long id){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        List<Object[]> Movements = movementRepository.getMovementsByRequisition(id);
+        List<MovementJoin_Model> JoinMovements= new ArrayList<>();
+        for (Object[] Movement : Movements) {
+            MovementJoin_Model moves = new MovementJoin_Model(
+                    (int) Movement[0],  // Recipe_ID
+                    (String) Movement[1],  // Dish_Name
+                    dateFormat1.format(Movement[2]),  // Ingredient_Name
+                    (String) Movement[3],  // Recipe_Ingredient_Amount
+                    (String) Movement[4],
+                    (float) Movement[5],
+                    (String) Movement[6],  // Recipe_Ingredient_Amount
+                    dateFormat.format(Movement[7]) // Ingredient_Unit
+            );
+
+            JoinMovements.add(moves);
+
+        }
+         return JoinMovements;
     }
 
     /**
-    //8.2.1.- Get All Movements
+    //8.2.1.- Get Mo
      public List<List<Object>> get_Requisitions(){
         long tilin=1;
         return (List<List<Object>>) movementRepository.findById(tilin);

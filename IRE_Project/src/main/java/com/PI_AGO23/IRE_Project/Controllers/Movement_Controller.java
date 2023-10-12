@@ -1,5 +1,6 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
+import com.PI_AGO23.IRE_Project.Models.MovementJoin_Model;
 import com.PI_AGO23.IRE_Project.Models.Movement_Model;
 import com.PI_AGO23.IRE_Project.Services.Movement_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class Movement_Controller {
     @Autowired private Movement_Service movementService;
 
     @GetMapping("/{id}")
-    public List<Object> Get_Movement_By_Requisition(@PathVariable("id") long id){
+    public List<MovementJoin_Model> Get_Movement_By_Requisition(@PathVariable("id") long id){
         return this.movementService.get_Movement_By_Requisition(id);
     }
 
