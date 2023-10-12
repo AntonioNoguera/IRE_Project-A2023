@@ -2,6 +2,7 @@ package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
+import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class Dish_Service {
 
     @Autowired I_Dish_Repository dishRepository;
+    @Autowired
+    I_Extra_Repository extraRepository;
 
     /**
      * 1.1.- New_Dish (Crear):
@@ -29,7 +32,20 @@ public class Dish_Service {
     }
 
     public Optional<Dish_Model> get_Dish_By_ID(Long id){
-        return dishRepository.findById(id);
+        Optional<Dish_Model> optionalDish = dishRepository.findById(id);
+
+        if (optionalDish.isPresent()) {
+            Dish_Model dish = optionalDish.get();
+            dish.setSauce_Name(extraRepository.getExtra(dish.getSauce_ID()));
+            dish.setComplement_Name(extraRepository.getExtra(dish.getComplement_ID()));
+            dish.setProtein_Name(extraRepository.getExtra(dish.getProtein_ID()));
+            dish.setType_Name(extraRepository.getExtra(dish.getDish_Type()));
+            return optionalDish;
+        } else {
+            // Handle the case where the dish is not found by ID.
+            // You can return an empty Optional or take appropriate action.
+            return Optional.empty();
+        }
     }
 
     public Dish_Model new_Dish(Dish_Model Dish){

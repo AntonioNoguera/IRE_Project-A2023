@@ -12,4 +12,6 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
     @Query(value = "Select Dish_ID FROM Dish_Table WHERE Dish_isActive= 1",nativeQuery = true)
     ArrayList<Long> getIdActiveDishes();
+
+
 }

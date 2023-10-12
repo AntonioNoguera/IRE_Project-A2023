@@ -20,6 +20,44 @@ public class Dish_Model {
     @Column private long Protein_ID;
     @Column private long Dish_Type;
 
+    //Atributos Virtuales
+    @Transient private String Type_Name;
+    @Transient private String Complement_Name;
+    @Transient private String Sauce_Name;
+    @Transient private String Protein_Name;
+
+    public String getType_Name() {
+        return Type_Name;
+    }
+
+    public void setType_Name(String type_Name) {
+        Type_Name = type_Name;
+    }
+
+    public String getComplement_Name() {
+        return Complement_Name;
+    }
+
+    public void setComplement_Name(String complement_Name) {
+        Complement_Name = complement_Name;
+    }
+
+    public String getSauce_Name() {
+        return Sauce_Name;
+    }
+
+    public void setSauce_Name(String sauce_Name) {
+        Sauce_Name = sauce_Name;
+    }
+
+    public String getProtein_Name() {
+        return Protein_Name;
+    }
+
+    public void setProtein_Name(String protein_Name) {
+        Protein_Name = protein_Name;
+    }
+
     public Long getDish_ID() {
         return Dish_ID;
     }
