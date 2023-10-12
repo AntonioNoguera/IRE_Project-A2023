@@ -23,6 +23,15 @@ public class Movement_Service {
         return (List<Object>) movementRepository.getMovementByRequisition(id);
     }
 
+    /**
+    //8.2.1.- Get All Movements
+     public List<List<Object>> get_Requisitions(){
+        long tilin=1;
+        return (List<List<Object>>) movementRepository.findById(tilin);
+    }
+
+    */
+
     //8.3.- Update_Movement()
     public Movement_Model update_Requisition(Movement_Model Request, Long id){
         Movement_Model movement = movementRepository.findById(id).get();
