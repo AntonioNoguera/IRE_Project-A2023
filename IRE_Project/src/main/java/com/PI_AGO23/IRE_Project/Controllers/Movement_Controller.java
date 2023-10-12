@@ -29,13 +29,19 @@ public class Movement_Controller {
         return this.movementService.new_Movement(Movement);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     Movement_Model Update_Movement(@RequestBody Movement_Model Movement, @PathVariable("id") long id){
         return this.movementService.update_Requisition(Movement,id);
     }
 
-    @DeleteMapping
-    Boolean Delete_Movement(@PathVariable("id") long id){
-        return this.movementService.delete_Movement(id);
+    @DeleteMapping("/{id}")
+    String Delete_Movement(@PathVariable("id") long id){
+        boolean action = this.movementService.delete_Movement(id);
+        if(action){
+            return "Action completed succesfully!";
+        }else{
+            return "Action wasn´t posible";
+        }
+
     }
 }
