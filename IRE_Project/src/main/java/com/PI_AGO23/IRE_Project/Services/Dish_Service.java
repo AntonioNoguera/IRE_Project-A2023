@@ -5,8 +5,10 @@ import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
+import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.Option;
 import java.lang.reflect.Array;
@@ -22,6 +24,9 @@ public class Dish_Service {
     @Autowired I_Dish_Repository dishRepository;
     @Autowired
     I_Extra_Repository extraRep;
+
+    @Autowired
+    I_Image_pseudoRepo imagePseudoRepo;
 
 
     public ArrayList<Dish_Model> get_Dishes(){
@@ -45,9 +50,11 @@ public class Dish_Service {
         }
     }
 
-    public Dish_Model new_Dish(Dish_Model Dish){
+    public Dish_Model new_Dish(Dish_Model Dish, MultipartFile file) throws Exception{
         //Esta fecha no puede ser el día de hoy, se actualiza hasta que se asgina un platillo a la req.
 
+        //Este proceso debe de ser bien verificado
+        Dish.setDish_Image_Path(this.imagePseudoRepo.handleFileUpload(file));
         Dish.setDish_Last_Made(String.valueOf(LocalDateTime.now()));
 
         return dishRepository.save(Dish);

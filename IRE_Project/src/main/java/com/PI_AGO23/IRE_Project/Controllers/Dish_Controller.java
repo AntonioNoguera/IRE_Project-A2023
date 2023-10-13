@@ -5,6 +5,7 @@ import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Services.Dish_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,8 @@ public class Dish_Controller {
         return this.dishService.get_Dish_By_ID(id);
     }
 
-    @PostMapping Dish_Model New_Dish(@RequestBody Dish_Model Request){
-        return this.dishService.new_Dish(Request);
+    @PostMapping Dish_Model New_Dish(@RequestParam("file") MultipartFile file, @RequestParam("json") Dish_Model Request) throws Exception {
+        return this.dishService.new_Dish(Request,file);
     }
 
     @PutMapping(path="/{id}")

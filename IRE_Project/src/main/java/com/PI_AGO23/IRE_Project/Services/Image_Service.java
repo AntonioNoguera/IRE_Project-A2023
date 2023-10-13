@@ -54,7 +54,7 @@ public class Image_Service implements I_Image_pseudoRepo {
             try {
                 // Supongo que 'bytes' es un arreglo de bytes que deseas escribir en el archivo
                 Files.write(filePath, bytes);
-                return "File Uploaded!";
+                return filePath.toString();
             } catch (IOException e) {
                 return "File Problem!";
                 // Manejar cualquier error de escritura en el archivo

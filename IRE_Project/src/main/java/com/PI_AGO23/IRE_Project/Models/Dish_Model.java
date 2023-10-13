@@ -20,6 +20,8 @@ public class Dish_Model {
     @Column private long Protein_ID;
     @Column private long Dish_Type;
 
+    @Column private String Dish_Image_Path;
+
     //Atributos Virtuales
     @Transient private String v_Type_Name;
     @Transient private String v_Complement_Name;
@@ -58,6 +60,8 @@ public class Dish_Model {
         this.v_Protein_Name = v_Protein_Name;
     }
 
+
+    //Atributos Reales
     public Long getDish_ID() {
         return Dish_ID;
     }
@@ -144,5 +148,13 @@ public class Dish_Model {
 
     public void setComplement_ID(int complement_ID) {
         Complement_ID = complement_ID;
+    }
+
+    public String getDish_Image_Path() {
+        return Dish_Image_Path;
+    }
+
+    public void setDish_Image_Path(String dish_Image_Path) {
+        Dish_Image_Path = dish_Image_Path;
     }
 }
