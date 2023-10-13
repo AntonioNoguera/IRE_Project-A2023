@@ -56,4 +56,10 @@ public class Dish_Controller {
     public Menu_Data_Model getFirstValues(){
         return this.dishService.preProcessing();
     }
+
+    @GetMapping(path = "/getActives")
+    public Menu_Data_Model getTest(){
+        return this.dishService.getActives();
+    }
+
 }

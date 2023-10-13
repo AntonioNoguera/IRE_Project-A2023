@@ -23,7 +23,7 @@ public class Dish_Service {
     @Autowired
     I_Extra_Repository extraRep;
 
-
+    public Menu_Data_Model menu = new Menu_Data_Model();
 
     public ArrayList<Dish_Model> get_Dishes(){
         return (ArrayList<Dish_Model>) dishRepository.findAll();
@@ -128,12 +128,19 @@ public class Dish_Service {
         //Lector de tipos
         for(int i=0;i<Types.size();i++){
             HashMenuModel.getDish_Kind_Amount_Info().put(
-
                     this.extraRep.getExtra(Types.get(i)),
                     this.dishRepository.getNameDish(Types.get(i))
-
             );
         }
+        menu = HashMenuModel;
         return HashMenuModel;
+    }
+
+    public Menu_Data_Model getActives() {
+
+
+
+
+        return menu;
     }
 }
