@@ -6,6 +6,7 @@ import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +92,8 @@ public class Dish_Service {
         }
     }
 
+    public List<List<List<Integer>>> idGrades = new ArrayList<>();
+
     //Support Methods
     public List<Integer> Extra_List = List.of(1,2,3);
     public List<List<Long>> getExtrasCount(){
@@ -100,6 +103,9 @@ public class Dish_Service {
             ExtraCount.add(this.extraRep.getExtrasIDS(i+1));
         }
         return ExtraCount;
+    }
+
+    public void getGrades(ArrayList<List<Long>> members){
     }
 
     public Menu_Data_Model preProcessing(){
@@ -119,28 +125,49 @@ public class Dish_Service {
         for(int i=0;i<Extras.size();i++){
             List<Extra_Data_Model> Ex = new ArrayList<>();
             for(int j=0;j<ExtrasCount.get(i).size(); j++){
-                Ex.add(new Extra_Data_Model(ExtrasCount.get(i).get(j),
-                        this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
+
+                HashMenuModel.getExtra_Info().put(
+                        Extras.get(i),
+                        new Extra_Data_Model(ExtrasCount.get(i).get(j),
+                                this.extraRep.getExtra(ExtrasCount.get(i).get(j))
+                        ));
             }
-            HashMenuModel.getExtra_Info().put(Extras.get(i), Ex);
         }
 
+
         //Lector de tipos
+        idGrades.clear();
         for(int i=0;i<Types.size();i++){
+            List<Integer> members = this.dishRepository.getTypeMembers(Types.get(i));
             HashMenuModel.getDish_Kind_Amount_Info().put(
                     this.extraRep.getExtra(Types.get(i)),
-                    this.dishRepository.getNameDish(Types.get(i))
+                    members.size()
+
             );
+
+            List<List<Integer>> idAndGradeLevel = new ArrayList<>();
+            //Arranque media y stdDev
+            for(int j=0;j<members.size();j++){
+                idAndGradeLevel.add(List.of(
+                                members.get(j),
+                                this.dishRepository.getDishGrade(members.get(j))
+                        )
+                );
+
+            }
+
+
+            idGrades.add(idAndGradeLevel);
+
         }
+
         menu = HashMenuModel;
         return HashMenuModel;
     }
 
-    public Menu_Data_Model getActives() {
+    public List<List<List<Integer>>> getActives() {
 
 
-
-
-        return menu;
+        return idGrades;
     }
 }
