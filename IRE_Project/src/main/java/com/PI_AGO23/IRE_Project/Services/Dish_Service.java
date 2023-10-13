@@ -13,6 +13,7 @@ import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -92,46 +93,47 @@ public class Dish_Service {
 
     //Support Methods
     public List<Integer> Extra_List = List.of(1,2,3);
-    public List<List<Integer>> getExtrasCount(){
-        List<List<Integer>> ExtraCount = new ArrayList<>();
+    public List<List<Long>> getExtrasCount(){
+        List<List<Long>> ExtraCount = new ArrayList<>();
 
-        for(Integer ExtraMember : Extra_List){
-            ExtraCount.add(this.extraRep.getExtrasIDS(ExtraMember));
+        for(int i=0;i<Extra_List.size();i++){
+            ExtraCount.add(this.extraRep.getExtrasIDS(i+1));
         }
-
         return ExtraCount;
     }
 
     public Menu_Data_Model preProcessing(){
         //Dish Type Related
         List<Long> Types = this.extraRep.getDish_Types_ID();
-        List<String> NameTypes= new ArrayList<>();
 
 
         //Extra Related
         //Salsa = 1, Proteina = 2, Complementos = 3
         List<String> Extras = List.of("Sauce","Protein","Complement");
-        List<List<Integer>> ExtrasCount = this.getExtrasCount();
+        List<List<Long>> ExtrasCount = this.getExtrasCount();
 
         //Data Model
         Menu_Data_Model HashMenuModel = new Menu_Data_Model();
-        // Map<String, List<Map<Integer, String>>>
 
+        //Lector de extras
         for(int i=0;i<Extras.size();i++){
             List<Extra_Data_Model> Ex = new ArrayList<>();
             for(int j=0;j<ExtrasCount.get(i).size(); j++){
-                Ex.add(new Extra_Data_Model(ExtrasCount.get(i).get(j),this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
+                Ex.add(new Extra_Data_Model(ExtrasCount.get(i).get(j),
+                        this.extraRep.getExtra(ExtrasCount.get(i).get(j))));
             }
-            HashMenuModel.Extra_Info.put(Extras.get(i),Ex);
+            HashMenuModel.getExtra_Info().put(Extras.get(i), Ex);
         }
 
+        //Lector de tipos
+        for(int i=0;i<Types.size();i++){
+            HashMenuModel.getDish_Kind_Amount_Info().put(
 
-        for(long Type: Types){
-            HashMenuModel.Dish_Kind_Amount_Info.put(this.extraRep.getExtra(Type),this.extraRep.getNumberOfExtras(Type));
+                    this.extraRep.getExtra(Types.get(i)),
+                    this.dishRepository.getNameDish(Types.get(i))
+
+            );
         }
-
         return HashMenuModel;
     }
-
-
 }

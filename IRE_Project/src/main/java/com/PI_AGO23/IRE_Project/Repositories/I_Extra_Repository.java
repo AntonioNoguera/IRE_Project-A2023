@@ -25,7 +25,7 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
     List<Long> getDish_Types_ID();
 
     @Query(value = "Select Extras_ID From Extras_Table Where Kind_ID=?1", nativeQuery = true)
-    List<Integer> getExtrasIDS(Integer id);
+    List<Long> getExtrasIDS(Integer id);
 
 
     //Number Of member

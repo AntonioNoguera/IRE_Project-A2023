@@ -45,7 +45,6 @@ public class Dish_Controller {
     @DeleteMapping(path="/{id}")
     public String Delete_Dish(@PathVariable("id") long id){
         boolean ok = this.dishService.delete_Dish(id);
-
         if(ok){
             return  "Action Completed!";
         }else{
