@@ -19,7 +19,6 @@ public class Dish_Model {
     @Column private long Sauce_ID;
     @Column private long Protein_ID;
     @Column private long Dish_Type;
-
     @Column private String Dish_Image_Path;
 
     //Atributos Virtuales
@@ -59,7 +58,6 @@ public class Dish_Model {
     public void setV_Protein_Name(String v_Protein_Name) {
         this.v_Protein_Name = v_Protein_Name;
     }
-
 
     //Atributos Reales
     public Long getDish_ID() {

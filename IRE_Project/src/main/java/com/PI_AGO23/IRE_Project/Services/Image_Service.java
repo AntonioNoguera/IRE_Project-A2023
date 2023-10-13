@@ -1,6 +1,8 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,9 +13,11 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class Image_Service implements I_Image_pseudoRepo {
+public class Image_Service <S extends com.PI_AGO23.IRE_Project.Models.Dish_Model> implements I_Image_pseudoRepo{
+
+    @Autowired Dish_Service dishService;
     @Override
-    public String handleFileUpload(MultipartFile file) throws Exception{
+    public String handleFileUpload(MultipartFile file, long id) throws Exception{
         try{
             String fileName = UUID.randomUUID().toString();
             byte[] bytes = file.getBytes();
@@ -54,7 +58,8 @@ public class Image_Service implements I_Image_pseudoRepo {
             try {
                 // Supongo que 'bytes' es un arreglo de bytes que deseas escribir en el archivo
                 Files.write(filePath, bytes);
-                return filePath.toString();
+                dishService.update_Image_Path(id,filePath.toString());
+                return "";
             } catch (IOException e) {
                 return "File Problem!";
                 // Manejar cualquier error de escritura en el archivo
