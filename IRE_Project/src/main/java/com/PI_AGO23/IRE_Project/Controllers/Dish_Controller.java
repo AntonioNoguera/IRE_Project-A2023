@@ -58,7 +58,7 @@ public class Dish_Controller {
     }
 
     @GetMapping(path = "/getActives")
-    public Menu_Data_Model getTest(){
+    public List<List<List<Integer>>> getTest(){
         return this.dishService.getActives();
     }
 
