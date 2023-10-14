@@ -13,6 +13,7 @@ public class IreProjectApplication {
 		SpringApplication.run(IreProjectApplication.class, args);
 	}
 
+	//Nuevo array distinto
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
