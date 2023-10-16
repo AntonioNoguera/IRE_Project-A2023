@@ -7,15 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="Ingredient_Table")
 public class Ingredient_Model {
-    /**
-    Ingredient_ID INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    Ingredient_Name VARCHAR(30) NOT NULL UNIQUE,
-    Group_ID INT NOT NULL,
-    Ingredient_Existence INT UNSIGNED NOT NULL,
-    Ingredient_Unit VARCHAR(15) NOT NULL,
-    Ingredient_Last_Used DATE NOT NULL,
-
-     **/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Ingredient_ID;
@@ -30,15 +21,11 @@ public class Ingredient_Model {
     }
 
     public Ingredient_Model(Post_Ingredient_Model Model) {
-        Ingredient_Name = Model.getIngredient_Name();
-        Group_ID = Model.getGroup_Id();
-        Ingredient_Existence = Model.getIngredient_Existence();
-        Ingredient_Unit = Model.getIngredient_Unit();
+        Ingredient_Name = Model.getName();
+        Group_ID = Model.getGroup_id();
+        Ingredient_Existence = Model.getExistence();
+        Ingredient_Unit = Model.getUnit();
     }
-
-    //vAtributes
-
-
 
     //rAtributes
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.Embeddable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.boot.context.properties.bind.Bindable.mapOf;
 
@@ -19,6 +20,7 @@ public class Get_Ingredient_Model {
     private String group_name;
     private Float existence;
     private String unit;
+    private String last_time_used;
 
     //Constructor
     public Get_Ingredient_Model() {
@@ -30,6 +32,7 @@ public class Get_Ingredient_Model {
         group_id = Model.getGroup_ID();
         existence = Model.getIngredient_Existence();
         unit = Model.getIngredient_Unit();
+        last_time_used = Model.getIngredient_Last_Used();
     }
 
     //Getter and Setter
@@ -80,5 +83,13 @@ public class Get_Ingredient_Model {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getLast_time_used() {
+        return last_time_used;
+    }
+
+    public void setLast_time_used(String last_time_used) {
+        this.last_time_used = last_time_used;
     }
 }

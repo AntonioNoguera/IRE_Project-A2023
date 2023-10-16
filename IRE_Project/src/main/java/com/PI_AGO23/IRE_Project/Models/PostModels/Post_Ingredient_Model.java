@@ -6,50 +6,50 @@ import javax.persistence.Entity;
 @Embeddable
 public class Post_Ingredient_Model {
 
-    private String Ingredient_Name;
-    private Integer Group_ID;
-    private Float Ingredient_Existence;
-    private String Ingredient_Unit;
+    private String name;
+    private Integer group_id;
+    private Float existence;
+    private String unit;
 
     public Post_Ingredient_Model() {
     }
 
     public Post_Ingredient_Model(String ingredient_Name, Integer group_Id, Float ingredient_Existence, String ingredient_Unit) {
-        Ingredient_Name = ingredient_Name;
-        Group_ID = group_Id;
-        Ingredient_Existence = ingredient_Existence;
-        Ingredient_Unit = ingredient_Unit;
+        name = ingredient_Name;
+        group_id = group_Id;
+        existence = ingredient_Existence;
+        unit = ingredient_Unit;
     }
 
-    public String getIngredient_Name() {
-        return Ingredient_Name;
+    public String getName() {
+        return name;
     }
 
-    public void setIngredient_Name(String ingredient_Name) {
-        Ingredient_Name = ingredient_Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getGroup_Id() {
-        return Group_ID;
+    public Integer getGroup_id() {
+        return group_id;
     }
 
-    public void setGroup_Id(Integer group_Id) {
-        Group_ID = group_Id;
+    public void setGroup_id(Integer group_id) {
+        this.group_id = group_id;
     }
 
-    public Float getIngredient_Existence() {
-        return Ingredient_Existence;
+    public Float getExistence() {
+        return existence;
     }
 
-    public void setIngredient_Existence(Float ingredient_Existence) {
-        Ingredient_Existence = ingredient_Existence;
+    public void setExistence(Float existence) {
+        this.existence = existence;
     }
 
-    public String getIngredient_Unit() {
-        return Ingredient_Unit;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setIngredient_Unit(String ingredient_Unit) {
-        Ingredient_Unit = ingredient_Unit;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

@@ -39,8 +39,17 @@ public class Ingredient_Service {
         return IngredientsFormated;
     }
     //Obtener Un Ingrediente
-    public Optional<Ingredient_Model> get_Ingredient_By_ID(Long Id){
-        return ingredientRepository.findById(Id);
+    public Optional<Get_Ingredient_Model> get_Ingredient_By_ID(Long Id){
+
+        Optional<Ingredient_Model> ingredient = ingredientRepository.findById(Id);
+        if (ingredient.isPresent()) {
+            Ingredient_Model ingredienteReal = ingredient.get();
+            Get_Ingredient_Model modeloIngrediente = new Get_Ingredient_Model(ingredienteReal);
+            modeloIngrediente.setGroup_name(groupRepository.getGroupName(ingredienteReal.getGroup_ID()));
+            return Optional.of(modeloIngrediente);
+        } else {
+            return Optional.empty();
+        }
     }
 
     //Nuevo Ingrediente
@@ -51,12 +60,14 @@ public class Ingredient_Service {
     }
 
     //Actualizar Ingrediente
-    public Ingredient_Model update_Ingredient(Ingredient_Model Request, Long Id){
+    public Ingredient_Model update_Ingredient(Post_Ingredient_Model Request, Long Id){
         Ingredient_Model Ingredient = ingredientRepository.findById(Id).get();
 
-        Ingredient.setIngredient_Name(Request.getIngredient_Name());
-        Ingredient.setGroup_ID(Request.getGroup_ID());
-        Ingredient.setIngredient_Unit(Request.getIngredient_Unit());
+        Ingredient.setIngredient_Name(Request.getName());
+        Ingredient.setGroup_ID(Request.getGroup_id());
+        Ingredient.setIngredient_Unit(Request.getUnit());
+
+        //None Modified Values
 
         ingredientRepository.save(Ingredient);
 
