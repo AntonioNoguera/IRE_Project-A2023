@@ -12,7 +12,8 @@ public class RecipeJoin_Model {
     @Column float Recipe_Ingredient_Amount;
     @Column private String Ingredient_Unit;
 
-    public RecipeJoin_Model(int recipe_ID, String dish_Name, String ingredient_Name, float recipe_Ingredient_Amount, String ingredient_Unit) {
+    public RecipeJoin_Model(int recipe_ID, String dish_Name, String ingredient_Name,
+                            float recipe_Ingredient_Amount, String ingredient_Unit) {
         this.Recipe_ID = recipe_ID;
         this.Dish_Name = dish_Name;
         this.Ingredient_Name = ingredient_Name;

@@ -1,6 +1,8 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Services.Group_Service;
 import com.PI_AGO23.IRE_Project.Services.Ingredient_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class Ingredient_Controller {
     @Autowired private Ingredient_Service ingredientService;
 
     @GetMapping
-    public ArrayList<Ingredient_Model> Get_Ingredients(){
+    public ArrayList<Get_Ingredient_Model> Get_Ingredients(){
         return this.ingredientService.get_Ingredients();
     }
 
@@ -24,7 +26,7 @@ public class Ingredient_Controller {
         return this.ingredientService.get_Ingredient_By_ID(id);
     }
     @PostMapping
-    Ingredient_Model New_Ingredient(@RequestBody Ingredient_Model Ingredient){
+    Ingredient_Model New_Ingredient(@RequestBody Post_Ingredient_Model Ingredient){
         return this.ingredientService.new_Ingredient(Ingredient);
     }
 

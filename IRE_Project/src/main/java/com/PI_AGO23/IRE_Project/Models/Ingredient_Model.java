@@ -1,5 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,16 +19,28 @@ public class Ingredient_Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Ingredient_ID;
-
     @Column private String Ingredient_Name;
-
     @Column private Integer Group_ID;
-
     @Column private Float Ingredient_Existence;
-
     @Column private String Ingredient_Unit;
-
     @Column private String Ingredient_Last_Used;
+
+
+    public Ingredient_Model() {
+    }
+
+    public Ingredient_Model(Post_Ingredient_Model Model) {
+        Ingredient_Name = Model.getIngredient_Name();
+        Group_ID = Model.getGroup_Id();
+        Ingredient_Existence = Model.getIngredient_Existence();
+        Ingredient_Unit = Model.getIngredient_Unit();
+    }
+
+    //vAtributes
+
+
+
+    //rAtributes
 
     public Long getIngredient_ID() {
         return Ingredient_ID;

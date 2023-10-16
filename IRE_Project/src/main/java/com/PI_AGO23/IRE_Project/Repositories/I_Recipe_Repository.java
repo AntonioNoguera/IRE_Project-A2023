@@ -41,6 +41,4 @@ public interface I_Recipe_Repository extends JpaRepository<Recipe_Model, Long> {
             " INNER JOIN Ingredient_Table ON Recipe_Table.Ingredient_ID = Ingredient_Table.Ingredient_ID\n " +
             " WHERE Recipe_Table.Dish_ID = ?1",nativeQuery = true)
     ArrayList<Object[]> getRecipeById(long Dish_ID);
-
-
 }
