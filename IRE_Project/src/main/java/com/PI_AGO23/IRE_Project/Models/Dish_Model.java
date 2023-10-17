@@ -18,7 +18,7 @@ public class Dish_Model {
     @Column private String Dish_Last_Made;
     @Column private long Dish_Services;
     @Column private int Dish_Rating;
-    @Column private int Complement_ID;
+    @Column private long Complement_ID;
     @Column private long Sauce_ID;
     @Column private long Protein_ID;
     @Column private long Dish_Type;
@@ -165,11 +165,11 @@ public class Dish_Model {
         Dish_Type = dish_Type;
     }
 
-    public int getComplement_ID() {
+    public long getComplement_ID() {
         return Complement_ID;
     }
 
-    public void setComplement_ID(int complement_ID) {
+    public void setComplement_ID(long complement_ID) {
         Complement_ID = complement_ID;
     }
 

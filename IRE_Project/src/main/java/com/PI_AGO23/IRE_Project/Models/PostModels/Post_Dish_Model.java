@@ -4,7 +4,7 @@ public class Post_Dish_Model {
     private String name;
     private String assamble;
     private String temperature;
-    private Integer complement_id;
+    private Long complement_id;
     private Long sauce_id;
     private Long protein_id;
     private Long type_id;
@@ -12,7 +12,7 @@ public class Post_Dish_Model {
     //Constructor
     public Post_Dish_Model(){}
 
-    public Post_Dish_Model(String name, String assamble, String temperature, Integer complement_id, Long sauce_id, Long protein_id, Long type_id) {
+    public Post_Dish_Model(String name, String assamble, String temperature, Long complement_id, Long sauce_id, Long protein_id, Long type_id) {
         this.name = name;
         this.assamble = assamble;
         this.temperature = temperature;
@@ -47,11 +47,11 @@ public class Post_Dish_Model {
         this.temperature = temperature;
     }
 
-    public Integer getComplement_id() {
+    public Long getComplement_id() {
         return complement_id;
     }
 
-    public void setComplement_id(Integer complement_id) {
+    public void setComplement_id(Long complement_id) {
         this.complement_id = complement_id;
     }
 

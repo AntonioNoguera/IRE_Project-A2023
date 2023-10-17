@@ -2,6 +2,7 @@ package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
@@ -19,12 +20,12 @@ public class Dish_Controller {
     @Autowired private I_Image_pseudoRepo imagePseudoRepo;
 
     @GetMapping()
-    public ArrayList<Dish_Model> Get_Dishes(){
+    public ArrayList<Get_Dish_Model> Get_Dishes(){
         return this.dishService.get_Dishes();
     }
 
     @GetMapping(path="/{id}")
-    public Optional<Dish_Model> Get_Dish_By_ID(@PathVariable("id") long id){
+    public Get_Dish_Model Get_Dish_By_ID(@PathVariable("id") long id){
         return this.dishService.get_Dish_By_ID(id);
     }
 

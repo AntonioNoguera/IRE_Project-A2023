@@ -1,8 +1,10 @@
 package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Data_Model;
+import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Support_Model;
 import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
@@ -25,26 +27,63 @@ public class Dish_Service {
 
     public Menu_Data_Model menu = new Menu_Data_Model();
 
-    public ArrayList<Dish_Model> get_Dishes(){
-        return (ArrayList<Dish_Model>) dishRepository.findAll();
+    public ArrayList<Get_Dish_Model> get_Dishes(){
+        ArrayList<Dish_Model> dishUnformatd = (ArrayList<Dish_Model>) dishRepository.findAll();
+        ArrayList<Get_Dish_Model> dishFormatd = new ArrayList<>();
+
+        for(Dish_Model dish: dishUnformatd){
+            dishFormatd.add(turnDishGet(dish));
+        }
+
+        return dishFormatd;
     }
 
-    public Optional<Dish_Model> get_Dish_By_ID(Long id){
+    public Get_Dish_Model get_Dish_By_ID(Long id){
         Optional<Dish_Model> optionalDish = dishRepository.findById(id);
 
-        if (optionalDish.isPresent()) {
-            Dish_Model dish = optionalDish.get();
-            dish.setV_Sauce_Name(extraRep.getExtra(dish.getSauce_ID()));
-            dish.setV_Complement_Name(extraRep.getExtra(dish.getComplement_ID()));
-            dish.setV_Protein_Name(extraRep.getExtra(dish.getProtein_ID()));
-            dish.setV_Type_Name(extraRep.getExtra(dish.getDish_Type()));
-            return optionalDish;
-        } else {
-            // Handle the case where the dish is not found by ID.
-            // You can return an empty Optional or take appropriate action.
-            return Optional.empty();
-        }
+        return optionalDish.map(this::turnDishGet).orElse(null);
     }
+
+    public Get_Dish_Model turnDishGet(Dish_Model model){
+        Get_Dish_Model getModel = new Get_Dish_Model(model);
+        //Complemento
+        getModel.setComplement(
+                new Extra_Support_Model(
+                        model.getComplement_ID(),
+                        extraRep.getExtra(model.getComplement_ID()
+                        )
+                )
+        );
+
+        //Tipo
+        getModel.setType(
+                new Extra_Support_Model(
+                        model.getDish_Type(),
+                        extraRep.getExtra(model.getDish_Type()
+                        )
+                )
+        );
+
+        //Salsa
+        getModel.setSauce(
+                new Extra_Support_Model(
+                        model.getSauce_ID(),
+                        extraRep.getExtra(model.getSauce_ID()
+                        )
+                )
+        );
+
+        //Proteina
+        getModel.setProtein(
+                new Extra_Support_Model(
+                        model.getProtein_ID(),
+                        extraRep.getExtra(model.getProtein_ID()
+                        )
+                )
+        );
+        return getModel;
+    }
+
 
     public Put_Dish_Model new_Dish(Post_Dish_Model Dish) throws Exception{
 
