@@ -1,6 +1,9 @@
 package com.PI_AGO23.IRE_Project.Models;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Dish_Table")
@@ -26,6 +29,28 @@ public class Dish_Model {
     @Transient private String v_Complement_Name;
     @Transient private String v_Sauce_Name;
     @Transient private String v_Protein_Name;
+
+    //Constructor
+    public Dish_Model(){}
+
+    public Dish_Model(Post_Dish_Model model){
+        Dish_Name = model.getName();
+        Dish_Assamble = model.getAssamble();
+        Dish_Temperature = model.getTemperature();
+
+        Dish_Last_Made = String.valueOf(LocalDateTime.now());
+        Dish_Services = 0;
+        Dish_Rating = 0;
+
+        Complement_ID = model.getComplement_id();
+        Sauce_ID = model.getSauce_id();
+        Protein_ID = model.getProtein_id();
+        Dish_Type = model.getType_id();
+
+        Dish_Image_Path = "IRE_Project\\src\\main\\esources\\images\\default.png";
+    }
+
+    //Getters And Setters
 
     public String getV_Type_Name() {
         return v_Type_Name;

@@ -1,9 +1,9 @@
 package com.PI_AGO23.IRE_Project.Models.Automatization;
 
-
 import java.util.Map;
 
 public class Dish_Distribution_Model {
+
     private Map<String,Dish_String_Model> Active_Dishes;
     private Map<String,Dish_String_Model> Idle_Dishes;
     private double Mean_Grade_Dishes;
@@ -14,14 +14,18 @@ public class Dish_Distribution_Model {
 
     public Dish_Distribution_Model() { }
 
-    public Dish_Distribution_Model(Map<String, Dish_String_Model> active_Dishes, Map<String, Dish_String_Model> idle_Dishes, double mean_Grade_Dishes, double std_Deviation_Dish) {
+    public Dish_Distribution_Model(Map<String, Dish_String_Model>
+                                            active_Dishes, Map<String,
+                                            Dish_String_Model> idle_Dishes,
+                                            double mean_Grade_Dishes,
+                                            double std_Deviation_Dish) {
         Active_Dishes = active_Dishes;
         Idle_Dishes = idle_Dishes;
         Mean_Grade_Dishes = mean_Grade_Dishes;
         Std_Deviation_Dish = std_Deviation_Dish;
     }
 
-    //Getter and Setter
+    //Getters and Setters
 
     public Map<String, Dish_String_Model> getActive_Dishes() {
         return Active_Dishes;

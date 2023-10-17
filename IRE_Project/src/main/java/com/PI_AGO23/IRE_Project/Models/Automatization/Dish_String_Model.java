@@ -15,7 +15,13 @@ public class Dish_String_Model {
     //Constructor
     public Dish_String_Model(){};
 
-    public Dish_String_Model(String dish_ID, String dish_Name, String dish_Assemble, String dish_Temperature, String dish_Last_Made, String dish_Sauce, String dish_Protein, String dish_Complement, String dish_Type, Integer dish_Grade) {
+    public Dish_String_Model(String dish_ID, String dish_Name,
+                             String dish_Assemble,
+                             String dish_Temperature,
+                             String dish_Last_Made,
+                             String dish_Sauce, String dish_Protein,
+                             String dish_Complement,
+                             String dish_Type, Integer dish_Grade) {
         Dish_ID = dish_ID;
         Dish_Assemble = dish_Assemble;
         Dish_Temperature = dish_Temperature;

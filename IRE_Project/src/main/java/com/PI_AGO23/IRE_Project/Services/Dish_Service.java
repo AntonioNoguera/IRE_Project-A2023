@@ -3,6 +3,8 @@ package com.PI_AGO23.IRE_Project.Services;
 import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
@@ -12,10 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class Dish_Service {
@@ -47,13 +46,10 @@ public class Dish_Service {
         }
     }
 
-    public Dish_Model new_Dish(Dish_Model Dish) throws Exception{
-        //Esta fecha no puede ser el día de hoy, se actualiza hasta que se asgina un platillo a la req.
-        Dish.setDish_Image_Path("IRE_Project\\src\\main\\esources\\images\\default.png");
-        //Este proceso debe de ser bien verificado
-        Dish.setDish_Last_Made(String.valueOf(LocalDateTime.now()));
+    public Put_Dish_Model new_Dish(Post_Dish_Model Dish) throws Exception{
 
-        return dishRepository.save(Dish);
+        Dish_Model model = dishRepository.save(new Dish_Model(Dish));
+        return new Put_Dish_Model(model);
     }
 
     public Dish_Model update_Dish(Dish_Model Request, Long Id){
@@ -82,7 +78,6 @@ public class Dish_Service {
         return "Image Path Correctly Updated!";
     }
 
-
     public Boolean delete_Dish(Long Id){
         try{
             dishRepository.deleteById(Id);
@@ -108,6 +103,8 @@ public class Dish_Service {
     public void getGrades(ArrayList<List<Long>> members){
     }
 
+
+    public List<String> Extras = List.of("Sauce","Protein","Complement");
     public Menu_Data_Model preProcessing(){
         //Dish Type Related
         List<Long> Types = this.extraRep.getDish_Types_ID();
@@ -115,7 +112,6 @@ public class Dish_Service {
 
         //Extra Related
         //Salsa = 1, Proteina = 2, Complementos = 3
-        List<String> Extras = List.of("Sauce","Protein","Complement");
         List<List<Long>> ExtrasCount = this.getExtrasCount();
 
         //Data Model
@@ -165,9 +161,22 @@ public class Dish_Service {
         return HashMenuModel;
     }
 
-    public List<List<List<Integer>>> getActives() {
+    public String getActives() {
+        String debug="";
+        //List<String> Types = dishRepository.
+        Map<String,Extra_Data_Model> DishesInDB = new HashMap<String, Extra_Data_Model>();
+        if(!idGrades.isEmpty()){
+            int limite = idGrades.size();
+            for(int i=0; i<limite; i++){
+                for(int j=0;j<idGrades.get(i).size();j++){
+                    debug+= idGrades.get(i).get(j).get(0).toString() +"-";
+                    //Dish_Type - Dish_String_Model
+                    //DishesInDB.put(Types.get(i),new Extra_Data_Model());
+                }
 
+            }
+        }
 
-        return idGrades;
+        return debug;
     }
 }

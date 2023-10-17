@@ -2,17 +2,14 @@ package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
 import com.PI_AGO23.IRE_Project.Services.Dish_Service;
-import com.PI_AGO23.IRE_Project.Services.Image_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,11 +28,10 @@ public class Dish_Controller {
         return this.dishService.get_Dish_By_ID(id);
     }
 
-    @PostMapping Dish_Model New_Dish(@RequestBody Dish_Model Request) throws Exception {
+    @PostMapping
+    Put_Dish_Model New_Dish(@RequestBody Post_Dish_Model Request) throws Exception {
         return this.dishService.new_Dish(Request);
     }
-
-
 
     @PutMapping(path="/{id}")
     public Dish_Model Update_Dish(@RequestBody Dish_Model Request, @PathVariable("id") long id){
@@ -53,12 +49,12 @@ public class Dish_Controller {
     }
 
     @GetMapping(path = "/getValues")
-    public Menu_Data_Model getFirstValues(){
+    public Menu_Data_Model AutomatizationGetFirstValues(){
         return this.dishService.preProcessing();
     }
 
-    @GetMapping(path = "/getActives")
-    public List<List<List<Integer>>> getTest(){
+    @GetMapping(path = "/GetActives")
+    public String AutomatizationGetTest(){
         return this.dishService.getActives();
     }
 
