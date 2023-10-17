@@ -3,18 +3,15 @@ package com.PI_AGO23.IRE_Project.Services;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Group_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Ingredient_Repository;
-import com.fasterxml.jackson.databind.deser.UnresolvedId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-
-import static org.springframework.boot.context.properties.bind.Bindable.mapOf;
 
 @Service
 public class Ingredient_Service {
@@ -53,14 +50,15 @@ public class Ingredient_Service {
     }
 
     //Nuevo Ingrediente
-    public Ingredient_Model new_Ingredient(Post_Ingredient_Model Ingredient){
+    public Put_Ingredient_Model new_Ingredient(Post_Ingredient_Model Ingredient){
         Ingredient_Model IngredientFormat = new Ingredient_Model(Ingredient);
         IngredientFormat.setIngredient_Last_Used(String.valueOf(LocalDateTime.now()));
-        return ingredientRepository.save(IngredientFormat);
+        ingredientRepository.save(IngredientFormat);
+        return new Put_Ingredient_Model(IngredientFormat);
     }
 
     //Actualizar Ingrediente
-    public Ingredient_Model update_Ingredient(Post_Ingredient_Model Request, Long Id){
+    public Put_Ingredient_Model update_Ingredient(Post_Ingredient_Model Request, Long Id){
         Ingredient_Model Ingredient = ingredientRepository.findById(Id).get();
 
         Ingredient.setIngredient_Name(Request.getName());
@@ -71,7 +69,7 @@ public class Ingredient_Service {
 
         ingredientRepository.save(Ingredient);
 
-        return Ingredient;
+        return new Put_Ingredient_Model(Ingredient);
     }
 
     //Eliminar Ingrediente

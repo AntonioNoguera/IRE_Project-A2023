@@ -12,4 +12,8 @@ public interface I_Group_Repository extends JpaRepository<Group_Model,Long> {
 
     @Query(value = "Select Group_Name FROM Group_Table WHERE Group_ID= ?1",nativeQuery = true)
     String getGroupName(Integer id);
+
+
+    @Query(value = "Select * FROM Group_Table WHERE Group_Is_Active= true",nativeQuery = true)
+    ArrayList<Group_Model> findActiveMembers();
 }

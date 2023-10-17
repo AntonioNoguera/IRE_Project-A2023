@@ -3,6 +3,7 @@ package com.PI_AGO23.IRE_Project.Controllers;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Services.Group_Service;
 import com.PI_AGO23.IRE_Project.Services.Ingredient_Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class Ingredient_Controller {
         return this.ingredientService.get_Ingredient_By_ID(id);
     }
     @PostMapping
-    Ingredient_Model New_Ingredient(@RequestBody Post_Ingredient_Model Ingredient){
+    Put_Ingredient_Model New_Ingredient(@RequestBody Post_Ingredient_Model Ingredient){
         return this.ingredientService.new_Ingredient(Ingredient);
     }
 
     @PutMapping(path = "/{id}")
-    public Ingredient_Model Update_Ingredient(@RequestBody Post_Ingredient_Model Request, @PathVariable("id") long id){
+    public Put_Ingredient_Model Update_Ingredient(@RequestBody Post_Ingredient_Model Request, @PathVariable("id") long id){
         return this.ingredientService.update_Ingredient(Request,id);
     }
 

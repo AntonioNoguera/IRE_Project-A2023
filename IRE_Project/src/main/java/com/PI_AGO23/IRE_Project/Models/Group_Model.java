@@ -1,5 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Group_Model;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,19 @@ public class Group_Model {
 
     @Column(columnDefinition = "BOOLEAN DEFAULT true") private Boolean Group_Is_Active;
 
+    //Constructores
+
+
+    public Group_Model() {}
+
+    public Group_Model(Post_Group_Model model){
+        this.Group_Name = model.getName();
+        this.Group_Description = model.getDescription();
+        this.Group_Hex_Color = model.getHexColor();
+        this.Group_Is_Active = true;
+    }
+
+    //Getter And Setters
     public Long getGroup_ID() {
         return Group_ID;
     }
