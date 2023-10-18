@@ -24,11 +24,7 @@ public class Dish_Model {
     @Column private long Dish_Type;
     @Column private String Dish_Image_Path;
 
-    //Atributos Virtuales
-    @Transient private String v_Type_Name;
-    @Transient private String v_Complement_Name;
-    @Transient private String v_Sauce_Name;
-    @Transient private String v_Protein_Name;
+    @Column private Integer Dish_is_Active;
 
     //Constructor
     public Dish_Model(){}
@@ -50,41 +46,7 @@ public class Dish_Model {
         Dish_Image_Path = "IRE_Project\\src\\main\\esources\\images\\default.png";
     }
 
-    //Getters And Setters
-
-    public String getV_Type_Name() {
-        return v_Type_Name;
-    }
-
-    public void setV_Type_Name(String v_Type_Name) {
-        this.v_Type_Name = v_Type_Name;
-    }
-
-    public String getV_Complement_Name() {
-        return v_Complement_Name;
-    }
-
-    public void setV_Complement_Name(String v_Complement_Name) {
-        this.v_Complement_Name = v_Complement_Name;
-    }
-
-    public String getV_Sauce_Name() {
-        return v_Sauce_Name;
-    }
-
-    public void setV_Sauce_Name(String v_Sauce_Name) {
-        this.v_Sauce_Name = v_Sauce_Name;
-    }
-
-    public String getV_Protein_Name() {
-        return v_Protein_Name;
-    }
-
-    public void setV_Protein_Name(String v_Protein_Name) {
-        this.v_Protein_Name = v_Protein_Name;
-    }
-
-    //Atributos Reales
+    //Getters And Setters - Atributos Reales
     public Long getDish_ID() {
         return Dish_ID;
     }
@@ -179,5 +141,13 @@ public class Dish_Model {
 
     public void setDish_Image_Path(String dish_Image_Path) {
         Dish_Image_Path = dish_Image_Path;
+    }
+
+    public Integer getDish_is_Active() {
+        return Dish_is_Active;
+    }
+
+    public void setDish_is_Active(Integer dish_is_Active) {
+        Dish_is_Active = dish_is_Active;
     }
 }

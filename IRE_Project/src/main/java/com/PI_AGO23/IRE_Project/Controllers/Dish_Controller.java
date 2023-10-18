@@ -35,7 +35,7 @@ public class Dish_Controller {
     }
 
     @PutMapping(path="/{id}")
-    public Dish_Model Update_Dish(@RequestBody Dish_Model Request, @PathVariable("id") long id){
+    public Put_Dish_Model Update_Dish(@RequestBody Put_Dish_Model Request, @PathVariable("id") long id){
         return this.dishService.update_Dish(Request, id);
     }
 

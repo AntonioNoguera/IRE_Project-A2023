@@ -7,6 +7,7 @@ import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
@@ -91,21 +92,32 @@ public class Dish_Service {
         return new Put_Dish_Model(model);
     }
 
-    public Dish_Model update_Dish(Dish_Model Request, Long Id){
+    public Put_Dish_Model update_Dish(Put_Dish_Model Request, Long Id){
         Dish_Model Dish = dishRepository.findById(Id).get();
 
-        Dish.setDish_Name(Request.getDish_Name());
-        Dish.setDish_Assamble(Request.getDish_Assamble());
-        Dish.setDish_Temperature(Request.getDish_Temperature());
-        Dish.setDish_Services(Request.getDish_Services());
-        Dish.setComplement_ID(Request.getComplement_ID());
-        Dish.setSauce_ID(Request.getSauce_ID());
-        Dish.setProtein_ID(Request.getProtein_ID());
-        Dish.setDish_Type(Request.getDish_Type());
+
+        // Transform(12)
+
+        Dish.setDish_Name(Request.getName());
+        Dish.setDish_Assamble(Request.getAssamble());
+        Dish.setDish_Temperature(Request.getTemperature());
+        Dish.setDish_Services(Request.getServices());
+        Dish.setComplement_ID(Request.getComplement_id());
+        //Date unModifible + 9
+        //
+        Dish.setDish_Rating(Request.getRating());
+        Dish.setDish_Image_Path(Request.getImage_path());
+        Dish.setDish_is_Active(Request.getActive());
+
+        Dish.setSauce_ID(Request.getSauce_id());
+        Dish.setProtein_ID(Request.getProtein_id());
+        Dish.setDish_Type(Request.getType_id());
 
         dishRepository.save(Dish);
 
-        return Dish;
+
+
+        return new Put_Dish_Model(Dish);
     }
 
     public String update_Image_Path(long id, String imagePath){
