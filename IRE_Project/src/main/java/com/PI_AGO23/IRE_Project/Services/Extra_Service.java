@@ -5,6 +5,7 @@ import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
+import com.PI_AGO23.IRE_Project.Repositories.I_Kind_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,10 @@ public class Extra_Service {
     @Autowired
     I_Extra_Repository extraRepository;
 
+    @Autowired
+    I_Kind_Repository kindRepository;
+
+
     //Obtener Extras
     public ArrayList<Extra_Model> get_Extras(){
         return (ArrayList<Extra_Model>) extraRepository.findAll();
@@ -27,7 +32,9 @@ public class Extra_Service {
     public ResponseEntity<Get_Extra_Model> get_Extra_ByiD(Long Id){
         Optional<Extra_Model> extraM = extraRepository.findById(Id);
         if(extraM.isPresent()){
-            return ResponseEntity.status(HttpStatus.OK).body(new Get_Extra_Model(extraM.get()));
+            Get_Extra_Model getModel = new Get_Extra_Model(extraM.get());
+            getModel.setKind_name(kindRepository.getKindName(getModel.getKind_id()));
+            return ResponseEntity.status(HttpStatus.OK).body(getModel);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

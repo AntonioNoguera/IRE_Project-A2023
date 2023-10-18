@@ -26,7 +26,7 @@ public class Extras_Controller {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Get_Extra_Model> Get_Extra_By_ID(@PathVariable("id") long Id){
-        //Añadir metodo pend
+        //Añadir
         return this.extraService.get_Extra_ByiD(Id);
     }
 
