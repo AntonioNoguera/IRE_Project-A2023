@@ -1,15 +1,8 @@
 package com.PI_AGO23.IRE_Project.Models.GetModels;
 
-import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Repositories.I_Group_Repository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Ingredient_Model;
 
 import javax.persistence.Embeddable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import static org.springframework.boot.context.properties.bind.Bindable.mapOf;
 
 @Embeddable
 public class Get_Ingredient_Model {

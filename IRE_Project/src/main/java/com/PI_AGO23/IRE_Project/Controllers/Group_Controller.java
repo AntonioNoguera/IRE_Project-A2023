@@ -1,19 +1,14 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Group_Model;
-import com.PI_AGO23.IRE_Project.Models.Group_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Group_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Group_Model;
 import com.PI_AGO23.IRE_Project.Services.Group_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Group")

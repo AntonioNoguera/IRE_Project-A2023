@@ -1,4 +1,4 @@
-package com.PI_AGO23.IRE_Project.Models;
+package com.PI_AGO23.IRE_Project.Models.BackModels;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

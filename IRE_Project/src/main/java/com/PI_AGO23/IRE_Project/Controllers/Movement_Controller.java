@@ -1,12 +1,11 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.MovementJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Movement_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.MovementJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Movement_Model;
 import com.PI_AGO23.IRE_Project.Services.Movement_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 @RestController

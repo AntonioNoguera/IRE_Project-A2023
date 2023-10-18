@@ -1,7 +1,7 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.RecipeJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Recipe_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Recipe_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Recipe_Service {

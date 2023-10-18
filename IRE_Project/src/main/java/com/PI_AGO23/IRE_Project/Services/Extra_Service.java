@@ -1,6 +1,6 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

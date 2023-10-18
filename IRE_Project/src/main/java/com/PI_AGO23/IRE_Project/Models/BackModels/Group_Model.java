@@ -1,4 +1,4 @@
-package com.PI_AGO23.IRE_Project.Models;
+package com.PI_AGO23.IRE_Project.Models.BackModels;
 
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Group_Model;
 

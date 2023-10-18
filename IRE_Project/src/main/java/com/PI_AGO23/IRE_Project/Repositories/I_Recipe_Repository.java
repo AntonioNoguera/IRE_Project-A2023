@@ -1,14 +1,11 @@
 package com.PI_AGO23.IRE_Project.Repositories;
 
-import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Recipe_Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
 
 @Repository
 public interface I_Recipe_Repository extends JpaRepository<Recipe_Model, Long> {

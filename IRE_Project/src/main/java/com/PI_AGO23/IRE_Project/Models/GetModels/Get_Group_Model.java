@@ -1,6 +1,6 @@
 package com.PI_AGO23.IRE_Project.Models.GetModels;
 
-import com.PI_AGO23.IRE_Project.Models.Group_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Group_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Group_Model;
 
 import javax.persistence.Embeddable;

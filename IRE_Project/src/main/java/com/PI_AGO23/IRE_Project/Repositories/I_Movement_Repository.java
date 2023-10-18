@@ -1,12 +1,10 @@
 package com.PI_AGO23.IRE_Project.Repositories;
 
-import com.PI_AGO23.IRE_Project.Models.MovementJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Movement_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Movement_Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository

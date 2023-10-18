@@ -1,6 +1,6 @@
 package com.PI_AGO23.IRE_Project.Models.PutModel;
 
-import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Ingredient_Model;
 
 import javax.persistence.*;
 

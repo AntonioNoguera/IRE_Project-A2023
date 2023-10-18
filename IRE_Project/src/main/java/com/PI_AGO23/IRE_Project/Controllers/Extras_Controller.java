@@ -1,6 +1,6 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Services.Extra_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

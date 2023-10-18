@@ -1,11 +1,10 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Kind_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Kind_Model;
 import com.PI_AGO23.IRE_Project.Services.Kind_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 
 @RestController

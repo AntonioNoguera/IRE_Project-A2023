@@ -1,7 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.GetModels;
 
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Support_Model;
-import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 
 public class Get_Dish_Model {
     private long id;

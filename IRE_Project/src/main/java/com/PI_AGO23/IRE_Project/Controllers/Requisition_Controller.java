@@ -1,10 +1,8 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Requisition_Model;
-import com.PI_AGO23.IRE_Project.Repositories.I_Requisition_Repository;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Requisition_Model;
 import com.PI_AGO23.IRE_Project.Services.Requisition_Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

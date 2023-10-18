@@ -3,7 +3,7 @@ package com.PI_AGO23.IRE_Project.Services;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Support_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
-import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;

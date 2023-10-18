@@ -1,20 +1,15 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Group_Model;
-import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Models.Group_Model;
-import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Group_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Group_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Group_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Group_Repository;
-import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Optional;
 

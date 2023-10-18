@@ -1,12 +1,9 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.MovementJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Movement_Model;
-import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.MovementJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Movement_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Movement_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Requisition_Repository;
-import org.aspectj.apache.bcel.classfile.ExceptionTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

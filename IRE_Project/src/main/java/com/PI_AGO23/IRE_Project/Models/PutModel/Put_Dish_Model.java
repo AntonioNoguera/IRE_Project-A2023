@@ -1,9 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.PutModel;
 
-import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
-
-import java.time.LocalDateTime;
 
 public class Put_Dish_Model extends Post_Dish_Model {
     private long id;

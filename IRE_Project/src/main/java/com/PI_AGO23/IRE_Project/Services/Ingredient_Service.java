@@ -1,23 +1,17 @@
 package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Models.SupportModels.Response_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Group_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Ingredient_Repository;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.models.Response;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -61,13 +55,19 @@ public class Ingredient_Service {
     //Nuevo Ingrediente(400,500,419)
     public ResponseEntity<Put_Ingredient_Model> new_Ingredient(Post_Ingredient_Model Ingredient){
         Ingredient_Model IngredientFormat = new Ingredient_Model(Ingredient);
-        IngredientFormat.setIngredient_Last_Used(String.valueOf(LocalDateTime.now()));
-        if(ingredientExists(IngredientFormat)){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new Put_Ingredient_Model(IngredientFormat));
-        }else{
-            ingredientRepository.save(IngredientFormat);
-            return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(IngredientFormat));
 
+        if(ingredientExists(IngredientFormat)){
+            //Duplicado Nombre
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }else{
+            if(!(groupRepository.getGroupName(Ingredient.getGroup_id()) == null)){
+                //Existe el grupo no es duplicado el nombre
+                IngredientFormat.setIngredient_Last_Used(String.valueOf(LocalDateTime.now()));
+                ingredientRepository.save(IngredientFormat);
+                return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(IngredientFormat));
+            }
+            //No existe el grupo
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
     }
 
@@ -78,18 +78,28 @@ public class Ingredient_Service {
 
     //Actualizar Ingrediente
     public ResponseEntity<Put_Ingredient_Model> update_Ingredient(Post_Ingredient_Model Request, Long Id){
-        Optional<Ingredient_Model> Ingredient = Optional.of(ingredientRepository.findById(Id).get());
+        Optional<Ingredient_Model> Ingredient = ingredientRepository.findById(Id);
 
-        Ingredient.get().setIngredient_Name(Request.getName());
-        Ingredient.get().setGroup_ID(Request.getGroup_id());
 
-        if(!(groupRepository.getGroupName(Request.getGroup_id()) == null)){
-            Ingredient.get().setIngredient_Unit(Request.getUnit());
-            //None Modified Values
-            ingredientRepository.save(Ingredient.get());
-            return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(Ingredient.get()));
+        if(Ingredient.isPresent()){
+            if(!ingredientExists(Ingredient.get())){
+                //No se repite el Nombre
+                if(!(groupRepository.getGroupName(Request.getGroup_id()) == null)){
+                    Ingredient.get().setIngredient_Unit(Request.getUnit());
+                    Ingredient.get().setIngredient_Name(Request.getName());
+                    Ingredient.get().setGroup_ID(Request.getGroup_id());
+                    ingredientRepository.save(Ingredient.get());
+                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(Ingredient.get()));
+                }
+                //No existe el grupo
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            }
+            //Se repite el Nombre
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+
+        //No existe el id
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
 

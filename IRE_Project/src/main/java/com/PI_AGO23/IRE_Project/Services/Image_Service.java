@@ -1,6 +1,6 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
-public class Image_Service <S extends com.PI_AGO23.IRE_Project.Models.Dish_Model> implements I_Image_pseudoRepo{
+public class Image_Service <S extends Dish_Model> implements I_Image_pseudoRepo{
 
     @Autowired Dish_Service dishService;
     @Override

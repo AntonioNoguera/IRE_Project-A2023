@@ -1,16 +1,12 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
-import com.PI_AGO23.IRE_Project.Models.RecipeJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.RecipeJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Recipe_Model;
 import com.PI_AGO23.IRE_Project.Services.Recipe_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Recipe")

@@ -1,11 +1,8 @@
 package com.PI_AGO23.IRE_Project.Models.PutModel;
 
-import com.PI_AGO23.IRE_Project.Models.Group_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.Group_Model;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 @Embeddable
 public class Put_Group_Model {
