@@ -2,6 +2,8 @@ package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +36,20 @@ public class Extra_Service {
     //Metodo Pendiente
 
     //Crear Extra
-    public Extra_Model new_Extra(Extra_Model Extra){
-        return extraRepository.save(Extra);
+    public ResponseEntity<Put_Extra_Model> new_Extra(Extra_Model Extra){
+
+        if(!repitedExtra(Extra)){
+            extraRepository.save(Extra);
+            return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(Extra));
+        }
+
+        //Extra repetido
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+
+    }
+
+    public boolean repitedExtra(Extra_Model model){
+        return extraRepository.anotherExtra(model.getExtra_Name()) >= 1;
     }
 
 

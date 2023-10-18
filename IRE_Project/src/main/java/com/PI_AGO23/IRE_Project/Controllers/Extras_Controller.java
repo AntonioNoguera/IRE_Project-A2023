@@ -2,6 +2,7 @@ package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
 import com.PI_AGO23.IRE_Project.Services.Extra_Service;
 import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,12 @@ public class Extras_Controller {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Get_Extra_Model> Get_Extra_By_ID(@PathVariable("id") long Id){
+        //Añadir metodo pend
         return this.extraService.get_Extra_ByiD(Id);
     }
 
     @PostMapping
-    public Extra_Model New_Extra(@RequestBody Extra_Model Extra){
+    public ResponseEntity<Put_Extra_Model> New_Extra(@RequestBody Extra_Model Extra){
         return this.extraService.new_Extra(Extra);
 
     }
