@@ -107,7 +107,7 @@ public class Dish_Service {
         //
         Dish.setDish_Rating(Request.getRating());
         Dish.setDish_Image_Path(Request.getImage_path());
-        Dish.setDish_is_Active(Request.getActive());
+        Dish.setDish_isActive(Request.getActive());
 
         Dish.setSauce_ID(Request.getSauce_id());
         Dish.setProtein_ID(Request.getProtein_id());

@@ -11,7 +11,7 @@ public class Put_Dish_Model extends Post_Dish_Model {
     private long services;
     private int rating;
     private String image_path;
-    private Integer active;
+    private String active;
 
     //Super Constructor
     public Put_Dish_Model(Dish_Model model){
@@ -32,7 +32,7 @@ public class Put_Dish_Model extends Post_Dish_Model {
         services = model.getDish_Services();
         rating = model.getDish_Rating();
         image_path = model.getDish_Image_Path();
-        active = model.getDish_is_Active();
+        active = model.getDish_isActive();
     }
 
     //Getter and Setter
@@ -76,11 +76,11 @@ public class Put_Dish_Model extends Post_Dish_Model {
         this.image_path = image_path;
     }
 
-    public Integer getActive() {
+    public String getActive() {
         return active;
     }
 
-    public void setActive(Integer active) {
+    public void setActive(String active) {
         this.active = active;
     }
 }

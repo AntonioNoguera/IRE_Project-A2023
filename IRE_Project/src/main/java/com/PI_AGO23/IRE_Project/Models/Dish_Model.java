@@ -23,8 +23,7 @@ public class Dish_Model {
     @Column private long Protein_ID;
     @Column private long Dish_Type;
     @Column private String Dish_Image_Path;
-
-    @Column private Integer Dish_is_Active;
+    @Column private String Dish_isActive;
 
     //Constructor
     public Dish_Model(){}
@@ -37,6 +36,8 @@ public class Dish_Model {
         Dish_Last_Made = String.valueOf(LocalDateTime.now());
         Dish_Services = 0;
         Dish_Rating = 0;
+        Dish_isActive = "1";
+
 
         Complement_ID = model.getComplement_id();
         Sauce_ID = model.getSauce_id();
@@ -143,11 +144,11 @@ public class Dish_Model {
         Dish_Image_Path = dish_Image_Path;
     }
 
-    public Integer getDish_is_Active() {
-        return Dish_is_Active;
+    public String getDish_isActive() {
+        return Dish_isActive;
     }
 
-    public void setDish_is_Active(Integer dish_is_Active) {
-        Dish_is_Active = dish_is_Active;
+    public void setDish_isActive(String dish_isActive) {
+        Dish_isActive = dish_isActive;
     }
 }
