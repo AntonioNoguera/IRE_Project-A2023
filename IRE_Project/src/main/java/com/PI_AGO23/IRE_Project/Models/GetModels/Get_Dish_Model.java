@@ -1,10 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.GetModels;
 
-import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Support_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Support_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
-
-import java.util.Map;
-import java.util.Optional;
 
 public class Get_Dish_Model {
     private long id;

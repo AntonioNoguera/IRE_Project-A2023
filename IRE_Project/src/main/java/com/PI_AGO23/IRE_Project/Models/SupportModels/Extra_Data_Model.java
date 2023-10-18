@@ -1,4 +1,4 @@
-package com.PI_AGO23.IRE_Project.Models.Automatization;
+package com.PI_AGO23.IRE_Project.Models.SupportModels;
 
 public class Extra_Data_Model {
     private Long Extra_ID;

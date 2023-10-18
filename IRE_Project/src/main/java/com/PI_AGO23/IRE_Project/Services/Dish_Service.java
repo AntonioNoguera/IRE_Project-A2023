@@ -1,22 +1,19 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Data_Model;
-import com.PI_AGO23.IRE_Project.Models.Automatization.Extra_Support_Model;
-import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Data_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Extra_Support_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
-import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
-import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -86,11 +83,15 @@ public class Dish_Service {
     }
 
 
-    public Put_Dish_Model new_Dish(Post_Dish_Model Dish) throws Exception{
+    public ResponseEntity< Put_Dish_Model> new_Dish(Post_Dish_Model Dish) throws Exception{
 
         Dish_Model model = dishRepository.save(new Dish_Model(Dish));
-        return new Put_Dish_Model(model);
+        return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+
     }
+
+    //Metodo if duplicated
+
 
     public Put_Dish_Model update_Dish(Put_Dish_Model Request, Long Id){
         Dish_Model Dish = dishRepository.findById(Id).get();

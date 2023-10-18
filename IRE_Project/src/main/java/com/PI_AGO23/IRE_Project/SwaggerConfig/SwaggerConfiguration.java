@@ -16,5 +16,8 @@ public class SwaggerConfiguration {
     Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.withClassAnnotation(RestController.class)).paths(PathSelectors.any())
                 .build();
+
     }
+
+
 }

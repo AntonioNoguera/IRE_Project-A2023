@@ -3,10 +3,16 @@ package com.PI_AGO23.IRE_Project.Controllers;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Services.Group_Service;
 import com.PI_AGO23.IRE_Project.Services.Ingredient_Service;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,6 +21,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/Ingredient")
 public class Ingredient_Controller {
+
+
     @Autowired private Ingredient_Service ingredientService;
 
     @GetMapping
@@ -23,16 +31,18 @@ public class Ingredient_Controller {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Get_Ingredient_Model> Get_Ingredient_By_ID(@PathVariable("id") long id){
+    public ResponseEntity<Get_Ingredient_Model> Get_Ingredient_By_ID(@PathVariable("id") long id){
         return this.ingredientService.get_Ingredient_By_ID(id);
     }
+
+    //MANUAL API DEFINITIONS :C
     @PostMapping
-    Put_Ingredient_Model New_Ingredient(@RequestBody Post_Ingredient_Model Ingredient){
+    public ResponseEntity<Put_Ingredient_Model> New_Ingredient(@RequestBody Post_Ingredient_Model Ingredient){
         return this.ingredientService.new_Ingredient(Ingredient);
     }
 
     @PutMapping(path = "/{id}")
-    public Put_Ingredient_Model Update_Ingredient(@RequestBody Post_Ingredient_Model Request, @PathVariable("id") long id){
+    public ResponseEntity<Put_Ingredient_Model> Update_Ingredient(@RequestBody Post_Ingredient_Model Request, @PathVariable("id") long id){
         return this.ingredientService.update_Ingredient(Request,id);
     }
 

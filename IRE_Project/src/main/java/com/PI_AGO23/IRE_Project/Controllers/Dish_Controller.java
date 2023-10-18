@@ -1,17 +1,16 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
-import com.PI_AGO23.IRE_Project.Models.Automatization.Menu_Data_Model;
-import com.PI_AGO23.IRE_Project.Models.Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Image_pseudoRepo;
 import com.PI_AGO23.IRE_Project.Services.Dish_Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/Dish")
@@ -30,7 +29,7 @@ public class Dish_Controller {
     }
 
     @PostMapping
-    Put_Dish_Model New_Dish(@RequestBody Post_Dish_Model Request) throws Exception {
+    public ResponseEntity<Put_Dish_Model> New_Dish(@RequestBody Post_Dish_Model Request) throws Exception {
         return this.dishService.new_Dish(Request);
     }
 
