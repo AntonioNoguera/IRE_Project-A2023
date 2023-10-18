@@ -15,7 +15,7 @@ public class Extra_Model {
 
     @Column private String Extra_Description;
 
-    @Column private String Kind_ID;
+    @Column private int Kind_ID;
 
     public Long getExtras_ID() {
         return Extras_ID;
@@ -41,11 +41,11 @@ public class Extra_Model {
         Extra_Description = extra_Description;
     }
 
-    public String getKind_ID() {
+    public int getKind_ID() {
         return Kind_ID;
     }
 
-    public void setKind_ID(String kind_ID) {
+    public void setKind_ID(int kind_ID) {
         Kind_ID = kind_ID;
     }
 }

@@ -1,8 +1,11 @@
 package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,22 +16,18 @@ public class Extra_Service {
     @Autowired
     I_Extra_Repository extraRepository;
 
-    /**
-     * 6.2.- Get_Extra_By_ID ()
-     * 6.3.- Get_Extra_By_Kind ()
-     * 6.4.- Get_Extras ()
-     * 6.5.- Update_Extra_By_ID ()
-     * 6.6.- Delete_Extra ()
-     */
-
     //Obtener Extras
     public ArrayList<Extra_Model> get_Extras(){
         return (ArrayList<Extra_Model>) extraRepository.findAll();
     }
 
     //Obtener Extra por Id
-    public Optional<Extra_Model> get_Extra_ByiD(Long Id){
-        return extraRepository.findById(Id);
+    public ResponseEntity<Get_Extra_Model> get_Extra_ByiD(Long Id){
+        Optional<Extra_Model> extraM = extraRepository.findById(Id);
+        if(extraM.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(new Get_Extra_Model(extraM.get()));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     //Obtener Extra por tipo
@@ -63,7 +62,4 @@ public class Extra_Service {
             return false;
         }
     }
-
-
-
 }

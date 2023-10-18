@@ -1,9 +1,13 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Services.Extra_Service;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -20,7 +24,7 @@ public class Extras_Controller {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Extra_Model> Get_Extra_By_ID(@PathVariable("id") long Id){
+    public ResponseEntity<Get_Extra_Model> Get_Extra_By_ID(@PathVariable("id") long Id){
         return this.extraService.get_Extra_ByiD(Id);
     }
 
