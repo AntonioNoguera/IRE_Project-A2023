@@ -15,6 +15,7 @@ public class Ingredient_Model {
     @Column private Float Ingredient_Existence;
     @Column private String Ingredient_Unit;
     @Column private String Ingredient_Last_Used;
+    @Column private Boolean Ingredient_Is_Active;
 
 
     public Ingredient_Model() {
@@ -25,6 +26,7 @@ public class Ingredient_Model {
         Group_ID = Model.getGroup_id();
         Ingredient_Existence = Model.getExistence();
         Ingredient_Unit = Model.getUnit();
+        Ingredient_Is_Active = true;
     }
 
     //rAtributes
@@ -75,5 +77,13 @@ public class Ingredient_Model {
 
     public void setGroup_ID(Integer group_ID) {
         Group_ID = group_ID;
+    }
+
+    public Boolean getIngredient_Is_Active() {
+        return Ingredient_Is_Active;
+    }
+
+    public void setIngredient_Is_Active(Boolean ingredient_Is_Active) {
+        Ingredient_Is_Active = ingredient_Is_Active;
     }
 }

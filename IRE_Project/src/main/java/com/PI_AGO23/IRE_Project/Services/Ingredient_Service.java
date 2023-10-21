@@ -1,5 +1,6 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.BackModels.Ingredient_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Ingredient_Model;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -85,14 +87,18 @@ public class Ingredient_Service {
             if(!ingredientExists(Ingredient.get())){
                 //No se repite el Nombre
                 if(!(groupRepository.getGroupName(Request.getGroup_id()) == null)){
-                    Ingredient.get().setIngredient_Unit(Request.getUnit());
-                    Ingredient.get().setIngredient_Name(Request.getName());
-                    Ingredient.get().setGroup_ID(Request.getGroup_id());
-                    ingredientRepository.save(Ingredient.get());
-                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(Ingredient.get()));
+                    if(Ingredient.get().getIngredient_Name().equals(Request.getName())){
+                        //Caso donde no se actualiza el nombre pero si todo lo demas
+                        Ingredient.get().setIngredient_Unit(Request.getUnit());
+                        Ingredient.get().setIngredient_Name(Request.getName());
+                        Ingredient.get().setGroup_ID(Request.getGroup_id());
+                        ingredientRepository.save(Ingredient.get());
+                        return ResponseEntity.status(HttpStatus.OK).body(new Put_Ingredient_Model(Ingredient.get()));
+                    }
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
                 }
                 //No existe el grupo
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
             //Se repite el Nombre
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
@@ -100,16 +106,20 @@ public class Ingredient_Service {
 
         //No existe el id
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-
     }
 
     //Eliminar Ingrediente
-    public Boolean Delete_Ingredient(Long id){
-        try{
-            ingredientRepository.deleteById(id);
-            return true;
-        }catch(Exception e){
-            return false;
+    public ResponseEntity<String> Delete_Ingredient(Long id){
+        Optional<Ingredient_Model> ingredient = ingredientRepository.findById(id);
+        if(ingredient.isPresent()){
+            if(ingredient.get().getIngredient_Is_Active()){
+                Ingredient_Model modelForUpdate = ingredient.get();
+                modelForUpdate.setIngredient_Is_Active(false);
+                ingredientRepository.save(modelForUpdate);
+                return ResponseEntity.status(HttpStatus.OK).body("'Deleted' Succesfully");
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Ingredient Already Deleted");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingredient Doesn´t Exist");
     }
 }

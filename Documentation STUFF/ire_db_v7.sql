@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2023 a las 10:16:23
+-- Tiempo de generación: 21-10-2023 a las 06:39:38
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -39,7 +39,7 @@ CREATE TABLE `dish_table` (
   `Protein_ID` int(10) UNSIGNED NOT NULL,
   `Complement_ID` int(10) UNSIGNED NOT NULL,
   `Dish_Type` int(10) UNSIGNED NOT NULL,
-  `Dish_is_Active` tinyint(1) NOT NULL DEFAULT 1,
+  `Dish_isActive` tinyint(1) NOT NULL DEFAULT 1,
   `Dish_Image_Path` varchar(100) NOT NULL DEFAULT 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -47,12 +47,14 @@ CREATE TABLE `dish_table` (
 -- Volcado de datos para la tabla `dish_table`
 --
 
-INSERT INTO `dish_table` (`Dish_ID`, `Dish_Name`, `Dish_Assamble`, `Dish_Temperature`, `Dish_Last_Made`, `Dish_Services`, `Dish_Rating`, `Sauce_ID`, `Protein_ID`, `Complement_ID`, `Dish_Type`, `Dish_is_Active`, `Dish_Image_Path`) VALUES
-(1, 'ss', 1, 'Frío', '2023-10-18 07:41:23', 123, 122, 1, 1, 1, 4, 0, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
-(2, 'Tacos s', 0, 'Caliente', '2023-10-13 06:16:53', 222, 23, 5, 5, 0, 2, 0, 'string'),
-(3, 'Nuevo Registro', 0, 'Frío', '2023-10-18 08:14:17', 121, 1, 1, 1, 1, 6, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
-(4, 'Nuesvo Registro', 1, 'Frío', '2023-10-13 06:16:59', 121, 1, 1, 1, 1, 6, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
-(5, 'Nsuesvo Registro', 1, 'Frío', '2023-10-13 06:17:00', 121, 1, 1, 1, 1, 6, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png');
+INSERT INTO `dish_table` (`Dish_ID`, `Dish_Name`, `Dish_Assamble`, `Dish_Temperature`, `Dish_Last_Made`, `Dish_Services`, `Dish_Rating`, `Sauce_ID`, `Protein_ID`, `Complement_ID`, `Dish_Type`, `Dish_isActive`, `Dish_Image_Path`) VALUES
+(1, 'ss', 1, 'Frío', '2023-10-13 16:22:54', 123, 122, 1, 1, 1, 2, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(2, 'ssssars', 1, 'Frío', '2023-10-13 16:22:58', 123, 122, 1, 1, 1, 3, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(3, 'Nuevo Registro', 1, 'Frío', '2023-10-13 16:23:01', 121, 1, 1, 1, 1, 4, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(4, 'Nuesvo Registro', 1, 'Frío', '2023-10-13 16:23:03', 121, 1, 1, 1, 1, 5, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(5, 'Nsuesvo Registro', 1, 'Frío', '2023-10-13 16:23:06', 121, 1, 1, 1, 1, 6, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(6, 'Tacos Nuevo Des', 0, 'Frío', '2023-10-13 17:21:44', 555, 80, 1, 2, 3, 2, 1, 'IRE_Project\\IRE_Project\\src\\main\\resources\\images\\placeholder.png'),
+(7, 'Quesadillas de Postman', 1, 'Caliente', '2023-10-17 22:34:00', 0, 0, 8, 9, 7, 2, 1, 'IRE_Project\\src\\main\\esources\\images\\default.png');
 
 -- --------------------------------------------------------
 
@@ -72,6 +74,7 @@ CREATE TABLE `extras_table` (
 --
 
 INSERT INTO `extras_table` (`Extras_ID`, `Extra_Name`, `Extra_Description`, `Kind_ID`) VALUES
+(1, 'General Extra', '', 2),
 (2, 'Desayuno', 'Aqui van todos los complementos de la comida', 4),
 (3, 'Comida', 'Aqui van todos los complementos de la comida', 4),
 (4, 'Postre', 'Insertado desde Post ', 4),
@@ -101,13 +104,12 @@ CREATE TABLE `group_table` (
 --
 
 INSERT INTO `group_table` (`Group_ID`, `Group_Name`, `Group_Description`, `Group_Hex_Color`, `Group_is_active`) VALUES
-(1, 'Carnes', 'Entran carnes de todo tipo de animales, se excluyen embutidos.', '#FF5733', 1),
-(3, 'Verduras', 'Las verduras no pueden durar mas de 4 dias refrigeradas.', '#33FF57', 1),
+(1, 'jk', 'Entran carnes de todo tipo de animales, se excluyen embutidos.', '#FF5733', NULL),
+(3, 'Verduras', 'Las verduras no pueden durar mas de 4 dias refrigeradas.', '#33FF57', 0),
 (8, 'bug?', 'bug?', '#FF5733', NULL),
 (9, 'Servicios', 'Entran carnes de todo tipo de animales, se excluyen embutidos.', '#FF5733', 1),
 (10, 'testing b', 'Entran carnes desdf todo tipo de animales, se excluyen embutidos.', '#FF33', 1),
-(11, 'Testing Z', 'Entran carnes desdf todo tipo de animales, se excluyen embutidos.', '#FF33', 1),
-(12, 'Utencilios', 'Entran carnes de todo tipo de animales, se excluyen embutidos.', '#FF5733', 1);
+(11, 'Testing Z', 'Entran carnes desdf todo tipo de animales, se excluyen embutidos.', '#FF33', 1);
 
 -- --------------------------------------------------------
 
@@ -121,24 +123,23 @@ CREATE TABLE `ingredient_table` (
   `Group_ID` int(11) NOT NULL,
   `Ingredient_Existence` float UNSIGNED NOT NULL,
   `Ingredient_Unit` varchar(15) NOT NULL,
-  `Ingredient_Last_Used` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `Ingredient_Last_Used` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Ingredient_Is_Active` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `ingredient_table`
 --
 
-INSERT INTO `ingredient_table` (`Ingredient_ID`, `Ingredient_Name`, `Group_ID`, `Ingredient_Existence`, `Ingredient_Unit`, `Ingredient_Last_Used`) VALUES
-(3, 'Tomate Verde', 3, 20.12, 'KG', '0000-00-00 00:00:00'),
-(5, 'Platano Macho', 3, 20.12, 'Kg', '2023-10-09 20:04:54'),
-(6, 'Cebolla', 3, 20.12, 'KG', '2023-10-09 20:11:14'),
-(8, 'Cacahuate', 8, 20.12, 'Pz', '2023-10-09 20:12:22'),
-(9, 'Platano', 3, 12, 'Kg', '2023-10-16 17:37:45'),
-(10, 'Tomate Amarillo', 3, 20.12, 'KG', '2023-10-16 18:15:35'),
-(12, 'Tomate Purpura', 3, 20.12, 'KG', '2023-10-16 18:16:25'),
-(14, 'Tomates Purpura', 3, 20.12, 'KG', '2023-10-16 18:16:40'),
-(15, 'Tomates Cafe', 3, 20.12, 'KG', '2023-10-16 18:19:33'),
-(16, 'Tomaates Cafe', 3, 20.12, 'KG', '2023-10-16 18:37:00');
+INSERT INTO `ingredient_table` (`Ingredient_ID`, `Ingredient_Name`, `Group_ID`, `Ingredient_Existence`, `Ingredient_Unit`, `Ingredient_Last_Used`, `Ingredient_Is_Active`) VALUES
+(3, 'Tomate Verde', 3, 20.12, 'KG', '0000-00-00 00:00:00', 1),
+(5, 'string', 10, 20.12, 'string', '2023-10-09 20:04:54', 0),
+(6, 'Cebolla', 3, 20.12, 'KG', '2023-10-09 20:11:14', 1),
+(8, 'Cacahuate', 8, 20.12, 'Pz', '2023-10-09 20:12:22', 1),
+(9, 'Banano', 3, 10, 'kg', '2023-10-18 19:17:48', 1),
+(10, 'Bananito', 3, 10, 'kg', '2023-10-18 19:19:57', 1),
+(11, 'Mango', 3, 10, 'kg', '2023-10-18 19:34:30', 1),
+(12, 'Durazno', 3, 10, 'kg', '2023-10-18 19:36:59', 1);
 
 -- --------------------------------------------------------
 
@@ -158,7 +159,6 @@ CREATE TABLE `kind_table` (
 INSERT INTO `kind_table` (`Kind_ID`, `Kind_Name`) VALUES
 (3, 'Complementos'),
 (2, 'Proteina'),
-(6, 'Salsa'),
 (1, 'Salsas'),
 (4, 'Tipos De Platillos');
 
@@ -189,26 +189,6 @@ CREATE TABLE `recipe_table` (
   `Ingredient_ID` int(10) UNSIGNED NOT NULL,
   `Recipe_Ingredient_Amount` float UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `recipe_table`
---
-
-INSERT INTO `recipe_table` (`Recipe_ID`, `Dish_ID`, `Ingredient_ID`, `Recipe_Ingredient_Amount`) VALUES
-(1, 1, 5, 22.12),
-(3, 2, 5, 22.12),
-(6, 1, 8, 12.12),
-(7, 1, 6, 0),
-(9, 1, 3, 0),
-(10, 2, 3, 24.1),
-(12, 5, 3, 24.1),
-(13, 5, 5, 24.1),
-(14, 5, 6, 24.1),
-(15, 5, 8, 24.1),
-(16, 4, 3, 24.1),
-(17, 4, 5, 24.1),
-(18, 4, 6, 24.1),
-(19, 4, 8, 24.1);
 
 -- --------------------------------------------------------
 
@@ -294,7 +274,7 @@ ALTER TABLE `requisition_table`
 -- AUTO_INCREMENT de la tabla `dish_table`
 --
 ALTER TABLE `dish_table`
-  MODIFY `Dish_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Dish_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `extras_table`
@@ -312,13 +292,13 @@ ALTER TABLE `group_table`
 -- AUTO_INCREMENT de la tabla `ingredient_table`
 --
 ALTER TABLE `ingredient_table`
-  MODIFY `Ingredient_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Ingredient_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `kind_table`
 --
 ALTER TABLE `kind_table`
-  MODIFY `Kind_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Kind_ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `movement_table`
@@ -330,7 +310,7 @@ ALTER TABLE `movement_table`
 -- AUTO_INCREMENT de la tabla `recipe_table`
 --
 ALTER TABLE `recipe_table`
-  MODIFY `Recipe_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Recipe_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `requisition_table`

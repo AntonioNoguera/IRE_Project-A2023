@@ -24,7 +24,6 @@ public class Put_Ingredient_Model {
 
 
     //Getter And Setter
-
     public Long getId() {
         return id;
     }
@@ -72,4 +71,5 @@ public class Put_Ingredient_Model {
     public void setLast_used(String last_used) {
         this.last_used = last_used;
     }
+
 }

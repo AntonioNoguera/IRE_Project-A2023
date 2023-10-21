@@ -56,12 +56,15 @@ public class Group_Service {
         if(Group.isPresent()){
             Group_Model neoGroup = Group.get();
             if(noDupNames(Request.getName())){
-                neoGroup.setGroup_Name(Request.getName());
-                neoGroup.setGroup_Description(Request.getDescription());
-                neoGroup.setGroup_Hex_Color(Request.getHexColor());
-                neoGroup.setGroup_Is_Active(Request.getIsActive());
-                groupRepository.save(neoGroup);
-                return ResponseEntity.status(HttpStatus.OK).body(new Put_Group_Model(neoGroup));
+                if(Request.getName().equals(neoGroup.getGroup_Name())){
+                    neoGroup.setGroup_Name(Request.getName());
+                    neoGroup.setGroup_Description(Request.getDescription());
+                    neoGroup.setGroup_Hex_Color(Request.getHexColor());
+                    neoGroup.setGroup_Is_Active(Request.getIsActive());
+                    groupRepository.save(neoGroup);
+                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Group_Model(neoGroup));
+                }
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
             }
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }else{

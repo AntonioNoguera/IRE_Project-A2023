@@ -39,13 +39,7 @@ public class Ingredient_Controller {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String Delete_Ingredient(@PathVariable("id") long Id){
-        boolean ok = this.ingredientService.Delete_Ingredient(Id);
-
-        if(ok){
-            return "Action Completed!";
-        }else{
-            return "Action Wasn´t Completed!";
-        }
+    public ResponseEntity<String> Delete_Ingredient(@PathVariable("id") long Id){
+        return this.ingredientService.Delete_Ingredient(Id);
     }
 }
