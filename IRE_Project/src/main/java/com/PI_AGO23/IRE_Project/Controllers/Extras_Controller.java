@@ -2,6 +2,7 @@ package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
 import com.PI_AGO23.IRE_Project.Services.Extra_Service;
 import io.swagger.models.Response;
@@ -37,7 +38,7 @@ public class Extras_Controller {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Extra_Model> Update_Extra (@RequestBody Extra_Model Request, @PathVariable("id") long Id){
+    public ResponseEntity<Put_Extra_Model> Update_Extra (@RequestBody Post_Extra_Model Request, @PathVariable("id") long Id){
         return this.extraService.update_Extra(Request,Id);
     }
 

@@ -5,7 +5,7 @@ import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
 
 public class Get_Extra_Model extends Post_Extra_Model {
     private String kind_name;
-
+    //Falta agregar el Atributo de ID
     //Constructor
     public Get_Extra_Model(Extra_Model model){
         super(model.getExtra_Name(),model.getExtra_Description(),model.getKind_ID());

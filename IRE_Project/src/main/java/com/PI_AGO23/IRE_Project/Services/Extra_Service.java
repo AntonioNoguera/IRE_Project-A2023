@@ -2,6 +2,7 @@ package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
@@ -48,7 +49,7 @@ public class Extra_Service {
     //Crear Extra
     public ResponseEntity<Put_Extra_Model> new_Extra(Extra_Model Extra){
 
-        if(!repitedExtra(Extra)){
+        if(!repitedExtra(Extra.getExtra_Name())){
             extraRepository.save(Extra);
             return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(Extra));
         }
@@ -56,26 +57,39 @@ public class Extra_Service {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
 
-    public boolean repitedExtra(Extra_Model model){
-        return extraRepository.anotherExtra(model.getExtra_Name()) >= 1;
+    public boolean repitedExtra(String nameExtra){
+        return extraRepository.anotherExtra(nameExtra) >= 1;
     }
 
-
     //Actualizar Extra
-    public ResponseEntity<Extra_Model> update_Extra(Extra_Model Request, Long Id){
+    public ResponseEntity<Put_Extra_Model> update_Extra(Post_Extra_Model Request, Long Id) {
         Optional<Extra_Model> Extra = extraRepository.findById(Id);
-        if(Extra.isPresent()){
-            Extra_Model extraUpdate = Extra.get();
-            if(!repitedExtra(extraUpdate) && Request.getExtra_Name().equals(Extra.get().getExtra_Name())){
-                extraUpdate.setExtra_Name(Request.getExtra_Name());
-                extraUpdate.setExtra_Description(Request.getExtra_Description());
-                extraUpdate.setKind_ID(Request.getKind_ID());
 
+        if (Extra.isPresent()) {
+            Extra_Model extraUpdate = Extra.get();
+            if (!repitedExtra(Request.getName())) {
+
+                extraUpdate.setExtra_Name(Request.getName());
+                extraUpdate.setExtra_Description(Request.getDescription());
+                extraUpdate.setKind_ID(Request.getKind_id());
                 extraRepository.save(extraUpdate);
 
-                return ResponseEntity.status(HttpStatus.OK).body(null);
+                return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(extraUpdate));
+
+            } else {
+                if (Request.getName().equals(extraUpdate.getExtra_Name())) {
+
+                    //SE REPITE EL ATRIBUTO, PERTENECE A LA MISMA PETICIÓN
+                    extraUpdate.setExtra_Name(Request.getName());
+                    extraUpdate.setExtra_Description(Request.getDescription());
+                    extraUpdate.setKind_ID(Request.getKind_id());
+                    extraRepository.save(extraUpdate);
+
+                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(extraUpdate));
+
+                }
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
             }
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

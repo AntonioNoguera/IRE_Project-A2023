@@ -10,6 +10,7 @@ public class Put_Extra_Model extends Post_Extra_Model {
         super(model.getExtra_Name(),model.getExtra_Description(),model.getKind_ID());
         this.id = model.getExtras_ID();
     }
+
     //Getter and Setter
     public long getId() {
         return id;

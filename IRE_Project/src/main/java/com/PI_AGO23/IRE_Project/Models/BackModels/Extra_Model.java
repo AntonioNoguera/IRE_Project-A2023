@@ -1,5 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.BackModels;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,9 @@ public class Extra_Model {
     @Column private String Extra_Description;
 
     @Column private int Kind_ID;
+
+    public Extra_Model(){
+    }
 
     public Long getExtras_ID() {
         return Extras_ID;
