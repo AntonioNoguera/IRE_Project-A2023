@@ -28,7 +28,7 @@ public class Ingredient_Service {
 
     //Obtener Todos los Ingredientes
     public ArrayList<Get_Ingredient_Model> get_Ingredients(){
-        ArrayList<Ingredient_Model> Ingredients = (ArrayList<Ingredient_Model>) ingredientRepository.findAll();
+        ArrayList<Ingredient_Model> Ingredients = (ArrayList<Ingredient_Model>) ingredientRepository.findAllActiveMembers();
         ArrayList<Get_Ingredient_Model> IngredientsFormated = new ArrayList<>();
 
         for(Ingredient_Model Ingredient: Ingredients){
@@ -45,10 +45,13 @@ public class Ingredient_Service {
 
         Optional<Ingredient_Model> ingredient = ingredientRepository.findById(Id);
         if (ingredient.isPresent()) {
-            Ingredient_Model ingredienteReal = ingredient.get();
-            Get_Ingredient_Model modeloIngrediente = new Get_Ingredient_Model(ingredienteReal);
-            modeloIngrediente.setGroup_name(groupRepository.getGroupName(ingredienteReal.getGroup_ID()));
-            return ResponseEntity.status(HttpStatus.OK).body(modeloIngrediente);
+            if(ingredientRepository.verifyActiveIngredient(Id)){
+                Ingredient_Model ingredienteReal = ingredient.get();
+                Get_Ingredient_Model modeloIngrediente = new Get_Ingredient_Model(ingredienteReal);
+                modeloIngrediente.setGroup_name(groupRepository.getGroupName(ingredienteReal.getGroup_ID()));
+                return ResponseEntity.status(HttpStatus.OK).body(modeloIngrediente);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
