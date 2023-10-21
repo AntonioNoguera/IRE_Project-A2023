@@ -37,18 +37,12 @@ public class Extras_Controller {
     }
 
     @PutMapping(path = "/{id}")
-    public Extra_Model Update_Extra (@RequestBody Extra_Model Request, @PathVariable("id") long Id){
+    public ResponseEntity<Extra_Model> Update_Extra (@RequestBody Extra_Model Request, @PathVariable("id") long Id){
         return this.extraService.update_Extra(Request,Id);
     }
 
     @DeleteMapping(path = "/{id}")
-    public String Delete_Extra(@PathVariable("id") Long Id){
-        boolean ok = this.extraService.delete_Extra(Id);
-
-        if(ok){
-            return "Action Completed!";
-        }else{
-            return "Action wasn´t completed!";
-        }
+    public ResponseEntity<String> Delete_Extra(@PathVariable("id") Long Id){
+        return this.extraService.delete_Extra(Id);
     }
 }

@@ -4,6 +4,7 @@ import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
+import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Kind_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class Extra_Service {
     @Autowired
     I_Kind_Repository kindRepository;
 
+    @Autowired
+    I_Dish_Repository dishRepository;
 
     //Obtener Extras
     public ArrayList<Extra_Model> get_Extras(){
@@ -49,10 +52,8 @@ public class Extra_Service {
             extraRepository.save(Extra);
             return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(Extra));
         }
-
         //Extra repetido
         return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-
     }
 
     public boolean repitedExtra(Extra_Model model){
@@ -61,26 +62,36 @@ public class Extra_Service {
 
 
     //Actualizar Extra
-    public Extra_Model update_Extra(Extra_Model Request, Long Id){
-        Extra_Model Extra = extraRepository.findById(Id).get();
+    public ResponseEntity<Extra_Model> update_Extra(Extra_Model Request, Long Id){
+        Optional<Extra_Model> Extra = extraRepository.findById(Id);
+        if(Extra.isPresent()){
+            Extra_Model extraUpdate = Extra.get();
+            if(!repitedExtra(extraUpdate) && Request.getExtra_Name().equals(Extra.get().getExtra_Name())){
+                extraUpdate.setExtra_Name(Request.getExtra_Name());
+                extraUpdate.setExtra_Description(Request.getExtra_Description());
+                extraUpdate.setKind_ID(Request.getKind_ID());
 
-        Extra.setExtra_Name(Request.getExtra_Name());
-        Extra.setExtra_Description(Request.getExtra_Description());
-        Extra.setKind_ID(Request.getKind_ID());
+                extraRepository.save(extraUpdate);
 
-        extraRepository.save(Extra);
-
-        return Extra;
+                return ResponseEntity.status(HttpStatus.OK).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
 
     //Eliminar Extra
-    public Boolean delete_Extra(Long Id){
-        try{
-            extraRepository.deleteById(Id);
-            return true;
-        }catch (Exception e){
-            return false;
+    public ResponseEntity<String> delete_Extra(Long Id){
+        Optional<Extra_Model> modelDeleted = extraRepository.findById(Id);
+        if(modelDeleted.isPresent()){
+            if(!(dishRepository.verifyExtraBeingUsed(Id)<1)){
+                //The extra is not being used!
+                extraRepository.deleteById(Id);
+                return ResponseEntity.status(HttpStatus.OK).body("Extra was deleted Succesfully");
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Extra is being used, need replacement");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Extra Not Found");
     }
 }

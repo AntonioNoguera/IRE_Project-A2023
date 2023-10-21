@@ -3,6 +3,7 @@ package com.PI_AGO23.IRE_Project.Repositories;
 import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,4 +20,8 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
         @Query(value = "Select Dish_Rating FROM Dish_Table WHERE Dish_ID= ?1",nativeQuery = true)
         Integer getDishGrade(Integer id);
+
+
+        @Query(value = "SELECT COUNT(*) FROM Dish_Table WHERE (Sauce_ID = id, Protein_ID = id, Complement_ID = id, Dish_Type = id ",nativeQuery = true)
+        Integer verifyExtraBeingUsed(@Param("id") long id);
 }
