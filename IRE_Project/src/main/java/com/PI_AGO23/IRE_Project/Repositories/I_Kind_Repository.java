@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface I_Kind_Repository extends JpaRepository<Kind_Model,Long>{
     @Query(value = "Select Kind_Name FROM Kind_Table Where Kind_ID = ?1",nativeQuery = true)
     String getKindName(long id);
+
 }

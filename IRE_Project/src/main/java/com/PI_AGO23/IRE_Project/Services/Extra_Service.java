@@ -46,12 +46,17 @@ public class Extra_Service {
     //Obtener Extra por tipo
     //Metodo Pendiente
 
-    //Crear Extra
-    public ResponseEntity<Put_Extra_Model> new_Extra(Extra_Model Extra){
-
-        if(!repitedExtra(Extra.getExtra_Name())){
-            extraRepository.save(Extra);
-            return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(Extra));
+    //Crear Extra (Done)
+    public ResponseEntity<Put_Extra_Model> new_Extra(Post_Extra_Model Extra){
+        if(!repitedExtra(Extra.getName())){
+            if(kindRepository.getKindName(Extra.getKind_id())!=null){
+               //Verificar la existencia del kind id
+                Extra_Model modelFormated = new Extra_Model(Extra);
+                extraRepository.save(modelFormated);
+                return ResponseEntity.status(HttpStatus.OK).body(new Put_Extra_Model(modelFormated));
+            }
+            //
+            return  ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
         }
         //Extra repetido
         return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
@@ -61,7 +66,7 @@ public class Extra_Service {
         return extraRepository.anotherExtra(nameExtra) >= 1;
     }
 
-    //Actualizar Extra
+    //Actualizar Extra (Done)
     public ResponseEntity<Put_Extra_Model> update_Extra(Post_Extra_Model Request, Long Id) {
         Optional<Extra_Model> Extra = extraRepository.findById(Id);
 
@@ -95,7 +100,7 @@ public class Extra_Service {
     }
 
 
-    //Eliminar Extra
+    //Eliminar Extra (Done)
     public ResponseEntity<String> delete_Extra(Long Id){
         Optional<Extra_Model> modelDeleted = extraRepository.findById(Id);
         if(modelDeleted.isPresent()){

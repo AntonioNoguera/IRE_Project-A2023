@@ -22,6 +22,7 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
         Integer getDishGrade(Integer id);
 
 
-        @Query(value = "SELECT COUNT(*) FROM Dish_Table WHERE (Sauce_ID = id, Protein_ID = id, Complement_ID = id, Dish_Type = id ",nativeQuery = true)
+        @Query(value = "SELECT COUNT(*) FROM Dish_Table WHERE Sauce_ID = :id OR Protein_ID = :id OR Complement_ID = :id OR Dish_Type = :id", nativeQuery = true)
         Integer verifyExtraBeingUsed(@Param("id") long id);
+
 }

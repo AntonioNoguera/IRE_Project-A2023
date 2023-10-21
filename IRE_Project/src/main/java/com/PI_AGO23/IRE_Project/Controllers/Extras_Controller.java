@@ -32,7 +32,7 @@ public class Extras_Controller {
     }
 
     @PostMapping
-    public ResponseEntity<Put_Extra_Model> New_Extra(@RequestBody Extra_Model Extra){
+    public ResponseEntity<Put_Extra_Model> New_Extra(@RequestBody Post_Extra_Model Extra){
         return this.extraService.new_Extra(Extra);
 
     }

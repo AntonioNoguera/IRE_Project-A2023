@@ -19,7 +19,12 @@ public class Extra_Model {
 
     @Column private int Kind_ID;
 
-    public Extra_Model(){
+    public Extra_Model(){}
+
+    public Extra_Model(Post_Extra_Model model){
+        Extra_Name = model.getName();
+        Extra_Description = model.getDescription();
+        Kind_ID = model.getKind_id();
     }
 
     public Long getExtras_ID() {
