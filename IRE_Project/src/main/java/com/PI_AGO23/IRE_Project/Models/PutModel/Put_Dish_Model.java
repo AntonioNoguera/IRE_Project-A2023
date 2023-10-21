@@ -9,7 +9,7 @@ public class Put_Dish_Model extends Post_Dish_Model {
     private long services;
     private int rating;
     private String image_path;
-    private String active;
+    private boolean active;
 
     //Super Constructor
     public Put_Dish_Model(Dish_Model model){
@@ -74,11 +74,11 @@ public class Put_Dish_Model extends Post_Dish_Model {
         this.image_path = image_path;
     }
 
-    public String getActive() {
+    public boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 }

@@ -3,6 +3,7 @@ package com.PI_AGO23.IRE_Project.Repositories;
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +32,7 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM Extras_Table WHERE Extra_Name = ?1",nativeQuery = true)
     int anotherExtra(String name);
+
+    @Query(value = "SELECT COUNT(*) FROM Extras_Table WHERE Extras_ID = :ExtraID AND Kind_ID = :KindID",nativeQuery = true)
+    int verifyExtra(@Param("ExtraID")long name, @Param("KindID")int outKey);
 }

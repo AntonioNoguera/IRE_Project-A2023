@@ -6,7 +6,7 @@ import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 public class Get_Dish_Model {
     private long id;
     private String name;
-    private String assamble;
+    private boolean assamble;
     private String temperature;
     private String last_made;
     private long services;
@@ -43,10 +43,10 @@ public class Get_Dish_Model {
     public void setName(String name) {
         this.name = name;
     }
-    public String getAssamble() {
+    public boolean getAssamble() {
         return assamble;
     }
-    public void setAssamble(String assamble) {
+    public void setAssamble(boolean assamble) {
         this.assamble = assamble;
     }
     public String getTemperature() {

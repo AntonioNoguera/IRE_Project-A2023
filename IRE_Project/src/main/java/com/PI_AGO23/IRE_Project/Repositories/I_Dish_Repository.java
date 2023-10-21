@@ -12,8 +12,11 @@ import java.util.List;
 @Repository
 public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
-        @Query(value = "Select Dish_ID FROM Dish_Table WHERE Dish_isActive= 1",nativeQuery = true)
+        @Query(value = "Select Dish_ID FROM Dish_Table WHERE Dish_is_Active= 1",nativeQuery = true)
         ArrayList<Long> getIdActiveDishes();
+
+        @Query(value = "Select * FROM Dish_Table WHERE Dish_is_Active = 1",nativeQuery = true)
+        ArrayList<Dish_Model> getAllActiveDishes();
 
         @Query(value="SELECT Dish_ID From Dish_Table Where Dish_Type=?1", nativeQuery = true)
         List<Integer> getTypeMembers(long id);
@@ -22,7 +25,14 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
         Integer getDishGrade(Integer id);
 
 
+        /**
+        @Query(value = "Select COUNT(*) FROM Dish_Table WHERE :id ",nativeQuery = true)
+        Integer verifyColumnPertenency(Integer id, String extraId);
+        */
+
         @Query(value = "SELECT COUNT(*) FROM Dish_Table WHERE Sauce_ID = :id OR Protein_ID = :id OR Complement_ID = :id OR Dish_Type = :id", nativeQuery = true)
         Integer verifyExtraBeingUsed(@Param("id") long id);
 
+        @Query(value=" SELECT COUNT(*) FROM Dish_Table WHERE Dish_Name = ?1", nativeQuery = true)
+        Integer uniqueDish(String name);
 }

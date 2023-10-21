@@ -24,7 +24,7 @@ public class Dish_Controller {
     }
 
     @GetMapping(path="/{id}")
-    public Get_Dish_Model Get_Dish_By_ID(@PathVariable("id") long id){
+    public ResponseEntity<Get_Dish_Model> Get_Dish_By_ID(@PathVariable("id") long id){
         return this.dishService.get_Dish_By_ID(id);
     }
 
@@ -39,13 +39,8 @@ public class Dish_Controller {
     }
 
     @DeleteMapping(path="/{id}")
-    public String Delete_Dish(@PathVariable("id") long id){
-        boolean ok = this.dishService.delete_Dish(id);
-        if(ok){
-            return  "Action Completed!";
-        }else{
-            return "Action wasn´t Completed!";
-        }
+    public ResponseEntity<String> Delete_Dish(@PathVariable("id") long id){
+        return this.dishService.delete_Dish(id);
     }
 
     @GetMapping(path = "/getValues")

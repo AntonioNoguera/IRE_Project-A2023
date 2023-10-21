@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.*;
 
@@ -25,8 +27,9 @@ public class Dish_Service {
 
     public Menu_Data_Model menu = new Menu_Data_Model();
 
+    //Done
     public ArrayList<Get_Dish_Model> get_Dishes(){
-        ArrayList<Dish_Model> dishUnformatd = (ArrayList<Dish_Model>) dishRepository.findAll();
+        ArrayList<Dish_Model> dishUnformatd = (ArrayList<Dish_Model>) dishRepository.getAllActiveDishes();
         ArrayList<Get_Dish_Model> dishFormatd = new ArrayList<>();
 
         for(Dish_Model dish: dishUnformatd){
@@ -34,12 +37,6 @@ public class Dish_Service {
         }
 
         return dishFormatd;
-    }
-
-    public Get_Dish_Model get_Dish_By_ID(Long id){
-        Optional<Dish_Model> optionalDish = dishRepository.findById(id);
-
-        return optionalDish.map(this::turnDishGet).orElse(null);
     }
 
     public Get_Dish_Model turnDishGet(Dish_Model model){
@@ -82,12 +79,41 @@ public class Dish_Service {
         return getModel;
     }
 
+    //Get by ID(DONE)
+    public ResponseEntity<Get_Dish_Model> get_Dish_By_ID(Long id){
+        Optional<Dish_Model> optionalDish = dishRepository.findById(id);
+        if (optionalDish.isPresent()){
+            if (optionalDish.get().getDish_isActive()){
+                return ResponseEntity.status(HttpStatus.OK).body(turnDishGet(optionalDish.get()));
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(turnDishGet(null));
+    }
 
-    public ResponseEntity< Put_Dish_Model> new_Dish(Post_Dish_Model Dish) throws Exception{
+    public Boolean keyValidation (Dish_Model modelToVerify){
+        int a = extraRep.verifyExtra(modelToVerify.getSauce_ID(),1);
+        int b = extraRep.verifyExtra(modelToVerify.getProtein_ID(),2);
+        int c = extraRep.verifyExtra(modelToVerify.getComplement_ID(),3);
+        int d = extraRep.verifyExtra(modelToVerify.getDish_Type(),4);
 
-        Dish_Model model = dishRepository.save(new Dish_Model(Dish));
-        return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+        return (a + b + c + d) == 4;
+    }
 
+
+    //New Dish
+    public ResponseEntity<Put_Dish_Model> new_Dish(Post_Dish_Model Dish) throws Exception{
+        if(dishRepository.uniqueDish(Dish.getName())==0){
+            //ComplementValidation
+            if(keyValidation(new Dish_Model(Dish))){
+                //Pendient to check if necesary to use all the validations, talking about the enums and the
+                Dish_Model model = dishRepository.save(new Dish_Model(Dish));
+                return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+            }
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
 
     //Metodo if duplicated
@@ -97,15 +123,15 @@ public class Dish_Service {
         Dish_Model Dish = dishRepository.findById(Id).get();
 
 
+        //Data swaping
         // Transform(12)
-
         Dish.setDish_Name(Request.getName());
         Dish.setDish_Assamble(Request.getAssamble());
         Dish.setDish_Temperature(Request.getTemperature());
         Dish.setDish_Services(Request.getServices());
         Dish.setComplement_ID(Request.getComplement_id());
         //Date unModifible + 9
-        //
+
         Dish.setDish_Rating(Request.getRating());
         Dish.setDish_Image_Path(Request.getImage_path());
         Dish.setDish_isActive(Request.getActive());
@@ -113,12 +139,10 @@ public class Dish_Service {
         Dish.setSauce_ID(Request.getSauce_id());
         Dish.setProtein_ID(Request.getProtein_id());
         Dish.setDish_Type(Request.getType_id());
-
         dishRepository.save(Dish);
-
-
-
         return new Put_Dish_Model(Dish);
+
+
     }
 
     public String update_Image_Path(long id, String imagePath){
@@ -130,13 +154,19 @@ public class Dish_Service {
         return "Image Path Correctly Updated!";
     }
 
-    public Boolean delete_Dish(Long Id){
-        try{
-            dishRepository.deleteById(Id);
-            return true;
-        }catch (Exception e){
-            return false;
+    //Delete Dish - (Done
+    public ResponseEntity<String> delete_Dish(Long Id){
+        Optional<Dish_Model> dishDeleted = dishRepository.findById(Id);
+        if(dishDeleted.isPresent()){
+            if(dishDeleted.get().getDish_isActive()){
+                Dish_Model format = dishDeleted.get();
+                format.setDish_isActive(false);
+                dishRepository.save(format);
+                return ResponseEntity.status(HttpStatus.OK).body("Dish Succesfully Covered");
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Already Disabled Dish");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("null");
     }
 
     public List<List<List<Integer>>> idGrades = new ArrayList<>();
@@ -154,7 +184,6 @@ public class Dish_Service {
 
     public void getGrades(ArrayList<List<Long>> members){
     }
-
 
     public List<String> Extras = List.of("Sauce","Protein","Complement");
     public Menu_Data_Model preProcessing(){

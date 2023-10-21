@@ -2,7 +2,7 @@ package com.PI_AGO23.IRE_Project.Models.PostModels;
 
 public class Post_Dish_Model {
     private String name;
-    private String assamble;
+    private boolean assamble;
     private String temperature;
     private Long complement_id;
     private Long sauce_id;
@@ -12,7 +12,7 @@ public class Post_Dish_Model {
     //Constructor
     public Post_Dish_Model(){}
 
-    public Post_Dish_Model(String name, String assamble, String temperature, Long complement_id, Long sauce_id, Long protein_id, Long type_id) {
+    public Post_Dish_Model(String name, boolean assamble, String temperature, Long complement_id, Long sauce_id, Long protein_id, Long type_id) {
         this.name = name;
         this.assamble = assamble;
         this.temperature = temperature;
@@ -31,11 +31,11 @@ public class Post_Dish_Model {
         this.name = name;
     }
 
-    public String getAssamble() {
+    public boolean getAssamble() {
         return assamble;
     }
 
-    public void setAssamble(String assamble) {
+    public void setAssamble(boolean assamble) {
         this.assamble = assamble;
     }
 
