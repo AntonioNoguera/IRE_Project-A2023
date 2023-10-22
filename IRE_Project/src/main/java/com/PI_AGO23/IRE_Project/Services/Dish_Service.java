@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.*;
 
@@ -83,7 +81,7 @@ public class Dish_Service {
     public ResponseEntity<Get_Dish_Model> get_Dish_By_ID(Long id){
         Optional<Dish_Model> optionalDish = dishRepository.findById(id);
         if (optionalDish.isPresent()){
-            if (optionalDish.get().getDish_isActive()){
+            if (optionalDish.get().getDish_is_Active()){
                 return ResponseEntity.status(HttpStatus.OK).body(turnDishGet(optionalDish.get()));
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -134,7 +132,7 @@ public class Dish_Service {
 
         Dish.setDish_Rating(Request.getRating());
         Dish.setDish_Image_Path(Request.getImage_path());
-        Dish.setDish_isActive(Request.getActive());
+        Dish.setDish_is_Active(Request.getActive());
 
         Dish.setSauce_ID(Request.getSauce_id());
         Dish.setProtein_ID(Request.getProtein_id());
@@ -158,9 +156,9 @@ public class Dish_Service {
     public ResponseEntity<String> delete_Dish(Long Id){
         Optional<Dish_Model> dishDeleted = dishRepository.findById(Id);
         if(dishDeleted.isPresent()){
-            if(dishDeleted.get().getDish_isActive()){
+            if(dishDeleted.get().getDish_is_Active()){
                 Dish_Model format = dishDeleted.get();
-                format.setDish_isActive(false);
+                format.setDish_is_Active(false);
                 dishRepository.save(format);
                 return ResponseEntity.status(HttpStatus.OK).body("Dish Succesfully Covered");
             }

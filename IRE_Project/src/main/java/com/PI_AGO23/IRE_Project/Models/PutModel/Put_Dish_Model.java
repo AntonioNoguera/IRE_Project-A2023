@@ -30,7 +30,7 @@ public class Put_Dish_Model extends Post_Dish_Model {
         services = model.getDish_Services();
         rating = model.getDish_Rating();
         image_path = model.getDish_Image_Path();
-        active = model.getDish_isActive();
+        active = model.getDish_is_Active();
     }
 
     //Getter and Setter
