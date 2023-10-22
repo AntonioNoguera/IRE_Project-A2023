@@ -1,6 +1,7 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Requisition_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Requisition_Model;
 import com.PI_AGO23.IRE_Project.Services.Requisition_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,8 @@ public class Requisition_Controller {
         return (ArrayList<Requisition_Model>) requisitionService.get_Week_Requisition("pending");
     }
 
-    @PostMapping Requisition_Model New_Requisition(@RequestBody Requisition_Model Requisition){
+    @PostMapping(path = "/{date}")
+    public Post_Requisition_Model New_Requisition(@PathVariable("date") String Requisition){
         return this.requisitionService.new_Requisition(Requisition);
     }
 }

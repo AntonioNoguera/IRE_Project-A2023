@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +29,14 @@ public class Extra_Service {
     I_Dish_Repository dishRepository;
 
     //Obtener Extras
-    public ArrayList<Extra_Model> get_Extras(){
-        return (ArrayList<Extra_Model>) extraRepository.findAll();
+    public List<Put_Extra_Model> get_Extras(){
+        List<Extra_Model> miembros = extraRepository.findAll();
+        List<Put_Extra_Model> miembrosCasteados = new ArrayList<>();
+
+        for(Extra_Model member: miembros){
+            miembrosCasteados.add(new Put_Extra_Model(member));
+        }
+        return miembrosCasteados;
     }
 
     //Obtener Extra por Id
