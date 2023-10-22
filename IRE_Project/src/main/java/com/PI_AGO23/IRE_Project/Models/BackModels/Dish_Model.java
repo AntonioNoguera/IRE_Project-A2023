@@ -144,11 +144,11 @@ public class Dish_Model {
         Dish_Image_Path = dish_Image_Path;
     }
 
-    public boolean getDish_isActive() {
+    public boolean getDish_is_Active() {
         return Dish_is_Active;
     }
 
-    public void setDish_isActive(boolean dish_isActive) {
-        Dish_is_Active = dish_isActive;
+    public void setDish_is_Active(boolean dish_is_Active) {
+        Dish_is_Active = dish_is_Active;
     }
 }

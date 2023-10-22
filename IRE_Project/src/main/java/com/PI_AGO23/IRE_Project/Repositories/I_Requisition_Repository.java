@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface I_Requisition_Repository extends JpaRepository<Requisition_Model, Long> {
-    @Query(value = "Select Requisition_ID FROM Requisition_Table",nativeQuery = true)
+    @Query(value = "Select Requisition_ID FROM requisition_table",nativeQuery = true)
     ArrayList<Long> getRequisitions();
 
 }

@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public interface I_Ingredient_Repository extends JpaRepository<Ingredient_Model,Long> {
 
 
-    @Query(value = "SELECT COUNT(*) FROM Ingredient_Table WHERE Ingredient_Name = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM ingredient_table WHERE Ingredient_Name = ?1", nativeQuery = true)
     int countDuplicateIngredients(String name);
 
-    @Query(value = "SELECT Ingredient_Is_Active FROM Ingredient_Table WHERE Ingredient_ID = ?1", nativeQuery = true)
+    @Query(value = "SELECT Ingredient_Is_Active FROM ingredient_table WHERE Ingredient_ID = ?1", nativeQuery = true)
     boolean verifyActiveIngredient(long id);
 
-    @Query(value = "SELECT * FROM Ingredient_Table WHERE Ingredient_Is_Active = 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM ingredient_table WHERE Ingredient_Is_Active = 1", nativeQuery = true)
     ArrayList<Ingredient_Model> findAllActiveMembers();
 }
