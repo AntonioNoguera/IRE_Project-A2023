@@ -1,5 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.BackModels;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Requisition_Model;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,18 @@ public class Requisition_Model {
     private Long Requisition_ID;
     @Column private String Requisition_Day_Name;
     @Column private String Requisition_Date;
+
+    public Requisition_Model(){}
+
+    public Requisition_Model(String requDate,String dayName){
+        this.Requisition_Date = requDate;
+        this.Requisition_Day_Name = dayName;
+    }
+
+    public Requisition_Model(Post_Requisition_Model model){
+        Requisition_Day_Name = model.getDayName();
+        Requisition_Date = model.getDate();
+    }
 
     public Long getRequisition_ID() {
         return Requisition_ID;
