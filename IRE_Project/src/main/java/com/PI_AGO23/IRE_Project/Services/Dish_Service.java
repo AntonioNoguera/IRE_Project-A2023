@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.function.EntityResponse;
 
+import java.lang.ref.ReferenceQueue;
 import java.util.*;
 
 @Service
@@ -100,6 +101,16 @@ public class Dish_Service {
         return (a + b + c + d) == 4;
     }
 
+    ArrayList<String> enumMembers = new ArrayList<>(List.of("Frío", "Irrelevante", "Caliente"));
+
+    boolean VerifyEnumPertenency(String dishTem){
+        for(String enu : enumMembers){
+            if(enu.equals(dishTem)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //New Dish
     public ResponseEntity<Put_Dish_Model> new_Dish(Post_Dish_Model Dish) throws Exception{
@@ -107,8 +118,11 @@ public class Dish_Service {
             //ComplementValidation
             if(keyValidation(new Dish_Model(Dish))){
                 //Pendient to check if necesary to use all the validations, talking about the enums and the
-                Dish_Model model = dishRepository.save(new Dish_Model(Dish));
-                return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+                if(VerifyEnumPertenency(Dish.getTemperature())){
+                    Dish_Model model = dishRepository.save(new Dish_Model(Dish));
+                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+                }
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
 
@@ -116,32 +130,63 @@ public class Dish_Service {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
 
-    //Metodo if duplicated
+    //Metodo que verifica pertenencia al ENUM
 
+    public ResponseEntity<Put_Dish_Model> update_Dish(Put_Dish_Model Request, Long Id){
+        Optional<Dish_Model> Dish = dishRepository.findById(Id);
 
-    public Put_Dish_Model update_Dish(Put_Dish_Model Request, Long Id){
-        Dish_Model Dish = dishRepository.findById(Id).get();
+        if(Dish.isPresent()){
+            //ID NO EXISTENTE
+            Dish_Model DishGet = Dish.get();
+            if(VerifyEnumPertenency(Request.getTemperature())){
+                if(dishRepository.uniqueDish(Request.getName())==0){
+                    //Nombre Nuevo
+                    DishGet.setDish_Name(Request.getName());
+                    DishGet.setDish_Assamble(Request.getAssamble());
+                    DishGet.setDish_Temperature(Request.getTemperature());
+                    DishGet.setDish_Services(Request.getServices());
+                    DishGet.setComplement_ID(Request.getComplement_id());
+                    //Date unModifible + 9
 
+                    DishGet.setDish_Rating(Request.getRating());
+                    DishGet.setDish_Image_Path(Request.getImage_path());
+                    DishGet.setDish_isActive(Request.getActive());
 
+                    DishGet.setSauce_ID(Request.getSauce_id());
+                    DishGet.setProtein_ID(Request.getProtein_id());
+                    DishGet.setDish_Type(Request.getType_id());
+                    dishRepository.save(DishGet);
+                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(DishGet));
+                }else{
+                    if(DishGet.getDish_Name().equals(Request.getName())){
+                        //Actualización del mismo valor
+                        DishGet.setDish_Name(Request.getName());
+                        DishGet.setDish_Assamble(Request.getAssamble());
+                        DishGet.setDish_Temperature(Request.getTemperature());
+                        DishGet.setDish_Services(Request.getServices());
+                        DishGet.setComplement_ID(Request.getComplement_id());
+                        //Date unModifible + 9
+
+                        DishGet.setDish_Rating(Request.getRating());
+                        DishGet.setDish_Image_Path(Request.getImage_path());
+                        DishGet.setDish_isActive(Request.getActive());
+
+                        DishGet.setSauce_ID(Request.getSauce_id());
+                        DishGet.setProtein_ID(Request.getProtein_id());
+                        DishGet.setDish_Type(Request.getType_id());
+                        dishRepository.save(DishGet);
+                        return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(DishGet));
+                    }
+                    return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
         //Data swaping
         // Transform(12)
-        Dish.setDish_Name(Request.getName());
-        Dish.setDish_Assamble(Request.getAssamble());
-        Dish.setDish_Temperature(Request.getTemperature());
-        Dish.setDish_Services(Request.getServices());
-        Dish.setComplement_ID(Request.getComplement_id());
-        //Date unModifible + 9
 
-        Dish.setDish_Rating(Request.getRating());
-        Dish.setDish_Image_Path(Request.getImage_path());
-        Dish.setDish_isActive(Request.getActive());
-
-        Dish.setSauce_ID(Request.getSauce_id());
-        Dish.setProtein_ID(Request.getProtein_id());
-        Dish.setDish_Type(Request.getType_id());
-        dishRepository.save(Dish);
-        return new Put_Dish_Model(Dish);
-
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
 

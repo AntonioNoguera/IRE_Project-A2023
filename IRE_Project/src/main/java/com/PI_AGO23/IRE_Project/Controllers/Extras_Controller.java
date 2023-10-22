@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +22,7 @@ public class Extras_Controller {
     private Extra_Service extraService;
 
     @GetMapping
-    public ArrayList<Extra_Model> Get_Extras(){
+    public List<Put_Extra_Model> Get_Extras(){
         return this.extraService.get_Extras();
     }
 
