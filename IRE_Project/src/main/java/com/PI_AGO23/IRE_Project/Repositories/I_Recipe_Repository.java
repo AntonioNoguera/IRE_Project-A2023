@@ -28,14 +28,15 @@ public interface I_Recipe_Repository extends JpaRepository<Recipe_Model, Long> {
     ArrayList<Recipe_Model> getRecipeById(long Dish_ID);
     **/
     //Join Personalizada utilizando SQL Nativo
-    @Query(value = "Select Recipe_Table.Recipe_ID AS Recipe_ID, \n" +
-            "Dish_Table.Dish_Name AS Dish_Name, \n" +
-            "Ingredient_Table.Ingredient_Name AS Ingredient_Name, \n" +
-            "Recipe_Table.Recipe_Ingredient_Amount AS Recipe_Ingredient_Amount, \n" +
-            "Ingredient_Table.Ingredient_Unit AS Ingredient_Unit\n " +
-            " FROM recipe_table\n " +
-            " INNER JOIN Dish_Table ON Recipe_Table.Dish_ID = Dish_Table.Dish_ID\n " +
-            " INNER JOIN Ingredient_Table ON Recipe_Table.Ingredient_ID = Ingredient_Table.Ingredient_ID\n " +
-            " WHERE Recipe_Table.Dish_ID = ?1",nativeQuery = true)
+    @Query(value = """
+            Select Recipe_Table.Recipe_ID AS Recipe_ID,\s
+            Dish_Table.Dish_Name AS Dish_Name,\s
+            Ingredient_Table.Ingredient_Name AS Ingredient_Name,\s
+            Recipe_Table.Recipe_Ingredient_Amount AS Recipe_Ingredient_Amount,\s
+            Ingredient_Table.Ingredient_Unit AS Ingredient_Unit
+              FROM recipe_table
+              INNER JOIN dish_table ON Recipe_Table.Dish_ID = dish_table.Dish_ID
+              INNER JOIN ingredient_table ON Recipe_Table.Ingredient_ID = ingredient_table.Ingredient_ID
+              WHERE Recipe_Table.Dish_ID = ?1""",nativeQuery = true)
     ArrayList<Object[]> getRecipeById(long Dish_ID);
 }
