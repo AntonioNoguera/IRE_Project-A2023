@@ -148,7 +148,7 @@ public class Dish_Service {
 
                     DishGet.setDish_Rating(Request.getRating());
                     DishGet.setDish_Image_Path(Request.getImage_path());
-                    DishGet.setDish_isActive(Request.getActive());
+                    DishGet.setDish_is_Active(Request.getActive());
 
                     DishGet.setSauce_ID(Request.getSauce_id());
                     DishGet.setProtein_ID(Request.getProtein_id());
@@ -167,7 +167,7 @@ public class Dish_Service {
 
                         DishGet.setDish_Rating(Request.getRating());
                         DishGet.setDish_Image_Path(Request.getImage_path());
-                        DishGet.setDish_isActive(Request.getActive());
+                        DishGet.setDish_is_Active(Request.getActive());
 
                         DishGet.setSauce_ID(Request.getSauce_id());
                         DishGet.setProtein_ID(Request.getProtein_id());
