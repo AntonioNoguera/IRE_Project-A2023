@@ -31,7 +31,7 @@ public class Extra_Service {
     @Autowired
     I_Dish_Repository dishRepository;
 
-    //Obtener Extras
+    //Obtener Extras para FORMS
     public Get_All_Extras get_Extras(){
         Get_All_Extras getExtras = new Get_All_Extras();
 

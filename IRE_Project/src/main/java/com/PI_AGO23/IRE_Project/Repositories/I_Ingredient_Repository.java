@@ -19,4 +19,10 @@ public interface I_Ingredient_Repository extends JpaRepository<Ingredient_Model,
 
     @Query(value = "SELECT * FROM ingredient_table WHERE Ingredient_Is_Active = 1", nativeQuery = true)
     ArrayList<Ingredient_Model> findAllActiveMembers();
+
+    @Query(value = "SELECT Ingredient_Name FROM ingredient_table WHERE Ingredient_ID = ?1", nativeQuery = true)
+    String getName(long id);
+
+    @Query(value = "SELECT Ingredient_Unit FROM ingredient_table WHERE Ingredient_ID = ?1", nativeQuery = true)
+    String getUnit(long id);
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface I_Recipe_Repository extends JpaRepository<Recipe_Model, Long> {
@@ -28,15 +29,6 @@ public interface I_Recipe_Repository extends JpaRepository<Recipe_Model, Long> {
     ArrayList<Recipe_Model> getRecipeById(long Dish_ID);
     **/
     //Join Personalizada utilizando SQL Nativo
-    @Query(value = """
-            Select recipe_table.Recipe_ID AS Recipe_ID,\s
-            dish_table.Dish_Name AS Dish_Name,\s
-            ingredient_table.Ingredient_Name AS Ingredient_Name,\s
-            recipe_table.Recipe_Ingredient_Amount AS Recipe_Ingredient_Amount,\s
-            ingredient_table.Ingredient_Unit AS Ingredient_Unit
-              FROM recipe_table
-              INNER JOIN dish_table ON recipe_table.Dish_ID = dish_table.Dish_ID
-              INNER JOIN ingredient_table ON recipe_table.Ingredient_ID = ingredient_table.Ingredient_ID
-              WHERE recipe_table.Dish_ID = ?1""",nativeQuery = true)
-    ArrayList<Object[]> getRecipeById(long Dish_ID);
+    @Query(value = "SELECT * FROM recipe_table where Dish_ID = ?1",nativeQuery = true)
+    List<Recipe_Model> getRecipeById(long Dish_ID);
 }

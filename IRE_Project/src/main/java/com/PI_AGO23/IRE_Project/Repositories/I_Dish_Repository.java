@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
+        @Query(value = "Select Dish_Name FROM dish_table WHERE Dish_ID = ?1",nativeQuery = true)
+        String getDishName(long id);
+
         @Query(value = "Select Dish_ID FROM dish_table WHERE Dish_is_Active= 1",nativeQuery = true)
         ArrayList<Long> getIdActiveDishes();
 
