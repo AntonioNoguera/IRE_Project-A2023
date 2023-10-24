@@ -49,20 +49,12 @@ public class Extra_Service {
             }
 
             switch (i) {
-                case 1:
-                    getExtras.setProteins(formated);
-                    break;
-                case 2:
-                    getExtras.setSauces(formated);
-                    break;
-                case 3:
-                    getExtras.setComplements(formated);
-                    break;
-                case 4:
-                    getExtras.setTypes(formated);
-                    break;
-                default:
-                    // Manejar otros casos si es necesario
+                case 1 -> getExtras.setSauces(formated);
+                case 2 -> getExtras.setProteins(formated);
+                case 3 -> getExtras.setComplements(formated);
+                case 4 -> getExtras.setTypes(formated);
+                default -> {
+                }
             }
         }
         return getExtras;
