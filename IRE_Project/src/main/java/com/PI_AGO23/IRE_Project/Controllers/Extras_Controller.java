@@ -1,6 +1,8 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.smallExtras;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_All_Extras;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Extra_Model;
@@ -22,7 +24,7 @@ public class Extras_Controller {
     private Extra_Service extraService;
 
     @GetMapping
-    public List<Put_Extra_Model> Get_Extras(){
+    public Get_All_Extras Get_Extras(){
         return this.extraService.get_Extras();
     }
 
@@ -32,11 +34,15 @@ public class Extras_Controller {
         return this.extraService.get_Extra_ByiD(Id);
     }
 
+
+
     @PostMapping
     public ResponseEntity<Put_Extra_Model> New_Extra(@RequestBody Post_Extra_Model Extra){
         return this.extraService.new_Extra(Extra);
 
     }
+
+
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<Put_Extra_Model> Update_Extra (@RequestBody Post_Extra_Model Request, @PathVariable("id") long Id){

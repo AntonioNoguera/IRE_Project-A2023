@@ -1,6 +1,7 @@
 package com.PI_AGO23.IRE_Project.Repositories;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.smallExtras;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,8 +15,6 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
     @Query(value = "Select Extra_Name FROM extras_table Where Extras_ID = ?1",nativeQuery = true)
     String getExtra(long id);
 
-
-
     //Maybe this r irrelevant Methods, but they´re necessary to have a more readable code
 
     //Dish Types Getter
@@ -24,6 +23,9 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
 
     @Query(value = "Select Extras_ID From extras_table Where Kind_ID=?1", nativeQuery = true)
     List<Long> getExtrasIDS(Integer id);
+
+    @Query(value = "SELECT Extras_ID AS id, Extra_Name AS name From extras_table Where Kind_ID=?1",nativeQuery = true)
+    List<Object[]> getExtrasFromType(int id);
 
 
     //Number Of member

@@ -1,6 +1,9 @@
 package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Extra_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.RecipeJoin_Model;
+import com.PI_AGO23.IRE_Project.Models.BackModels.smallExtras;
+import com.PI_AGO23.IRE_Project.Models.GetModels.Get_All_Extras;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Extra_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
@@ -29,15 +32,43 @@ public class Extra_Service {
     I_Dish_Repository dishRepository;
 
     //Obtener Extras
-    public List<Put_Extra_Model> get_Extras(){
-        List<Extra_Model> miembros = extraRepository.findAll();
-        List<Put_Extra_Model> miembrosCasteados = new ArrayList<>();
+    public Get_All_Extras get_Extras(){
+        Get_All_Extras getExtras = new Get_All_Extras();
 
-        for(Extra_Model member: miembros){
-            miembrosCasteados.add(new Put_Extra_Model(member));
+        for(int i=1;i<=4;i++){
+            List<Object[]> extrasFromType = extraRepository.getExtrasFromType(i);
+            List<smallExtras> formated = new ArrayList<>();
+
+            for(Object[] objT : extrasFromType){
+                formated.add(
+                        new smallExtras(
+                                (int) objT[0],
+                                (String) objT[1]
+                        )
+                );
+            }
+
+            switch (i) {
+                case 1:
+                    getExtras.setProteins(formated);
+                    break;
+                case 2:
+                    getExtras.setSauces(formated);
+                    break;
+                case 3:
+                    getExtras.setComplements(formated);
+                    break;
+                case 4:
+                    getExtras.setTypes(formated);
+                    break;
+                default:
+                    // Manejar otros casos si es necesario
+            }
         }
-        return miembrosCasteados;
+        return getExtras;
     }
+
+
 
     //Obtener Extra por Id
     public ResponseEntity<Get_Extra_Model> get_Extra_ByiD(Long Id){
@@ -51,7 +82,6 @@ public class Extra_Service {
     }
 
     //Obtener Extra por tipo
-    //Metodo Pendiente
 
     //Crear Extra (Done)
     public ResponseEntity<Put_Extra_Model> new_Extra(Post_Extra_Model Extra){
