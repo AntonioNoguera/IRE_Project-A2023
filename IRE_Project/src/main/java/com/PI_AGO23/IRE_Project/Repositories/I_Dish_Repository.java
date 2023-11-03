@@ -43,4 +43,7 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
         @Query(value=" SELECT COUNT(*) FROM dish_table WHERE Dish_Assamble = ?1 AND Dish_is_Active=1", nativeQuery = true)
         int getAssambled(int boolAssamble);
+
+        @Query(value=" SELECT COUNT(*) FROM dish_table WHERE Dish_Temperature = ?1 AND Dish_is_Active=1", nativeQuery = true)
+        double getTemperture(String type);
 }

@@ -28,7 +28,7 @@ public class Automatization_Service {
         //Lector de tipos
         for(int i=0;i<Types.size();i++){
             double nTipo = this.dishRepository.getTypeNumber(Types.get(i));
-            HashMenuModel.getDish_Kind_Amount_Info().add(
+            HashMenuModel.getDish_Distribution().add(
                 new smallTypes(
                         Types.get(i),
                         this.extraRep.getExtra(Types.get(i)),
@@ -39,12 +39,24 @@ public class Automatization_Service {
 
         //Seleccionando Armado o No
         for(int i=0; i<2;i++){
-            HashMenuModel.getAssamble_Info().add(
+            HashMenuModel.getAssamble_Distribution().add(
                 new smallTypes(
                         i,
                     "inferedType",
                     ((double) this.dishRepository.getAssambled(i)/totalPlatos)*100
                 )
+            );
+        }
+
+        //Seleccionando Temperatura
+        String[] tempTipos={"Frío","Irrelevante","Caliente"};
+        for(int i=0; i<3;i++){
+            HashMenuModel.getTemperature_Distribution().add(
+                    new smallTypes(
+                            i,
+                            tempTipos[i],
+                            ((double) this.dishRepository.getTemperture(tempTipos[i])/totalPlatos)*100
+                    )
             );
         }
 

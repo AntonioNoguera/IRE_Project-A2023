@@ -8,30 +8,42 @@ import java.util.List;
 import java.util.Map;
 
 public class Menu_Data_Model {
-    private List<smallTypes> Dish_Kind_Amount_Info = new ArrayList<>();
-    private List<smallTypes> Assamble_Info = new ArrayList<>();
+    private List<smallTypes> Dish_Distribution = new ArrayList<>();
+    private List<smallTypes> Assamble_Distribution = new ArrayList<>();
+
+    private List<smallTypes> Temperature_Distribution = new ArrayList<>();
 
     //Constructor
     public Menu_Data_Model() {}
-    public Menu_Data_Model(List<smallTypes> dish_Kind_Amount_Info, List<smallTypes> assamble_Info) {
-        Dish_Kind_Amount_Info = dish_Kind_Amount_Info;
-        Assamble_Info = assamble_Info;
+    public Menu_Data_Model(List<smallTypes> dish_Kind_Amount_Info, List<smallTypes> assamble_Info, List<smallTypes> Temp) {
+        Dish_Distribution = dish_Kind_Amount_Info;
+        Assamble_Distribution = assamble_Info;
+        Temperature_Distribution = Temp;
     }
 
-    //Getters And Setters
-    public List<smallTypes> getDish_Kind_Amount_Info() {
-        return Dish_Kind_Amount_Info;
+    //Getters And SetterS
+
+    public List<smallTypes> getDish_Distribution() {
+        return Dish_Distribution;
     }
 
-    public void setDish_Kind_Amount_Info(List<smallTypes> dish_Kind_Amount_Info) {
-        Dish_Kind_Amount_Info = dish_Kind_Amount_Info;
+    public void setDish_Distribution(List<smallTypes> dish_Kind_Distribution) {
+        Dish_Distribution = dish_Kind_Distribution;
     }
 
-    public List<smallTypes> getAssamble_Info() {
-        return Assamble_Info;
+    public List<smallTypes> getAssamble_Distribution() {
+        return Assamble_Distribution;
     }
 
-    public void setAssamble_Info(List<smallTypes> assamble_Info) {
-        Assamble_Info = assamble_Info;
+    public void setAssamble_Distribution(List<smallTypes> assamble_Distribution) {
+        Assamble_Distribution = assamble_Distribution;
+    }
+
+    public List<smallTypes> getTemperature_Distribution() {
+        return Temperature_Distribution;
+    }
+
+    public void setTemperature_Distribution(List<smallTypes> temperature_Distribution) {
+        Temperature_Distribution = temperature_Distribution;
     }
 }
