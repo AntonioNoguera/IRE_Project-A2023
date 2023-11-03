@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class Menu_Data_Model {
     private List<smallTypes> Dish_Kind_Amount_Info = new ArrayList<>();
+    private List<smallTypes> Assamble_Info = new ArrayList<>();
 
     //Constructor
-
     public Menu_Data_Model() {}
-
-    public Menu_Data_Model(List<smallTypes> dish_Kind_Amount_Info) {
+    public Menu_Data_Model(List<smallTypes> dish_Kind_Amount_Info, List<smallTypes> assamble_Info) {
         Dish_Kind_Amount_Info = dish_Kind_Amount_Info;
+        Assamble_Info = assamble_Info;
     }
 
     //Getters And Setters
@@ -27,4 +27,11 @@ public class Menu_Data_Model {
         Dish_Kind_Amount_Info = dish_Kind_Amount_Info;
     }
 
+    public List<smallTypes> getAssamble_Info() {
+        return Assamble_Info;
+    }
+
+    public void setAssamble_Info(List<smallTypes> assamble_Info) {
+        Assamble_Info = assamble_Info;
+    }
 }

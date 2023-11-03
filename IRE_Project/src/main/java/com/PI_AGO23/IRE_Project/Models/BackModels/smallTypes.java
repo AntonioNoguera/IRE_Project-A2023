@@ -1,24 +1,23 @@
 package com.PI_AGO23.IRE_Project.Models.BackModels;
 
 public class smallTypes {
-    private Long id;
+    private long id;
     private String name;
     private double members;
 
     //Constructor
-    public smallTypes(Long id, String name, double members){
+    public smallTypes(long id, String name, double members){
         this.id = id;
         this.name = name;
         this.members = members;
     }
 
     //Getter and Setter
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -29,11 +29,22 @@ public class Automatization_Service {
         for(int i=0;i<Types.size();i++){
             double nTipo = this.dishRepository.getTypeNumber(Types.get(i));
             HashMenuModel.getDish_Kind_Amount_Info().add(
-                    new smallTypes(
-                            Types.get(i),
-                            this.extraRep.getExtra(Types.get(i)),
-                            (nTipo/totalPlatos)*100
-                    )
+                new smallTypes(
+                        Types.get(i),
+                        this.extraRep.getExtra(Types.get(i)),
+                        (nTipo/totalPlatos)*100
+                )
+            );
+        }
+
+        //Seleccionando Armado o No
+        for(int i=0; i<2;i++){
+            HashMenuModel.getAssamble_Info().add(
+                new smallTypes(
+                        i,
+                    "inferedType",
+                    ((double) this.dishRepository.getAssambled(i)/totalPlatos)*100
+                )
             );
         }
 
