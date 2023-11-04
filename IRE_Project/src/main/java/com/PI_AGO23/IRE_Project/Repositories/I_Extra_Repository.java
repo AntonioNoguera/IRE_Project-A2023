@@ -37,4 +37,5 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
 
     @Query(value = "SELECT COUNT(*) FROM extras_table WHERE Extras_ID = :ExtraID AND Kind_ID = :KindID",nativeQuery = true)
     int verifyExtra(@Param("ExtraID")long name, @Param("KindID")int outKey);
+
 }

@@ -27,6 +27,8 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
         @Query(value = "Select Dish_Rating FROM dish_table WHERE Dish_ID= ?1",nativeQuery = true)
         Integer getDishGrade(Integer id);
 
+        @Query(value = "SELECT COUNT(*) FROM dish_table WHERE Dish_Type=?1 AND Dish_is_Active = 1",nativeQuery = true)
+        double getTypeNumber(Long id);
 
         /**
         @Query(value = "Select COUNT(*) FROM dish_table WHERE :id ",nativeQuery = true)
@@ -38,4 +40,10 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
 
         @Query(value=" SELECT COUNT(*) FROM dish_table WHERE Dish_Name = ?1", nativeQuery = true)
         Integer uniqueDish(String name);
+
+        @Query(value=" SELECT COUNT(*) FROM dish_table WHERE Dish_Assamble = ?1 AND Dish_is_Active=1", nativeQuery = true)
+        int getAssambled(int boolAssamble);
+
+        @Query(value=" SELECT COUNT(*) FROM dish_table WHERE Dish_Temperature = ?1 AND Dish_is_Active=1", nativeQuery = true)
+        double getTemperture(String type);
 }

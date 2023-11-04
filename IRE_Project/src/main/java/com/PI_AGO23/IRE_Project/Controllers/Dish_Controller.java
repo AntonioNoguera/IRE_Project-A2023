@@ -43,10 +43,6 @@ public class Dish_Controller {
         return this.dishService.delete_Dish(id);
     }
 
-    @GetMapping(path = "/getValues")
-    public Menu_Data_Model AutomatizationGetFirstValues(){
-        return this.dishService.preProcessing();
-    }
 
     @GetMapping(path = "/GetActives")
     public String AutomatizationGetTest(){

@@ -20,7 +20,8 @@ import java.util.*;
 @Service
 public class Dish_Service {
 
-    @Autowired I_Dish_Repository dishRepository;
+    @Autowired
+    I_Dish_Repository dishRepository;
     @Autowired
     I_Extra_Repository extraRep;
 
@@ -227,61 +228,7 @@ public class Dish_Service {
     }
 
     public List<String> Extras = List.of("Sauce","Protein","Complement");
-    public Menu_Data_Model preProcessing(){
-        //Dish Type Related
-        List<Long> Types = this.extraRep.getDish_Types_ID();
 
-
-        //Extra Related
-        //Salsa = 1, Proteina = 2, Complementos = 3
-        List<List<Long>> ExtrasCount = this.getExtrasCount();
-
-        //Data Model
-        Menu_Data_Model HashMenuModel = new Menu_Data_Model();
-
-        //Lector de extras
-        for(int i=0;i<Extras.size();i++){
-            List<Extra_Data_Model> Ex = new ArrayList<>();
-            for(int j=0;j<ExtrasCount.get(i).size(); j++){
-
-                HashMenuModel.getExtra_Info().put(
-                        Extras.get(i),
-                        new Extra_Data_Model(ExtrasCount.get(i).get(j),
-                                this.extraRep.getExtra(ExtrasCount.get(i).get(j))
-                        ));
-            }
-        }
-
-
-        //Lector de tipos
-        idGrades.clear();
-        for(int i=0;i<Types.size();i++){
-            List<Integer> members = this.dishRepository.getTypeMembers(Types.get(i));
-            HashMenuModel.getDish_Kind_Amount_Info().put(
-                    this.extraRep.getExtra(Types.get(i)),
-                    members.size()
-
-            );
-
-            List<List<Integer>> idAndGradeLevel = new ArrayList<>();
-            //Arranque media y stdDev
-            for(int j=0;j<members.size();j++){
-                idAndGradeLevel.add(List.of(
-                                members.get(j),
-                                this.dishRepository.getDishGrade(members.get(j))
-                        )
-                );
-
-            }
-
-
-            idGrades.add(idAndGradeLevel);
-
-        }
-
-        menu = HashMenuModel;
-        return HashMenuModel;
-    }
 
     public String getActives() {
         String debug="";
