@@ -1,13 +1,19 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.BackModels.postMenuModel;
 import com.PI_AGO23.IRE_Project.Models.BackModels.smallTypes;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Dish_String_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class Automatization_Service {
 
@@ -61,5 +67,21 @@ public class Automatization_Service {
         }
 
         return HashMenuModel;
+    }
+
+    public String generate(postMenuModel jsonObject){
+        return jsonObject.getTurnFormat().get(0).getName().toString();
+
+        /**
+        List<List<Dish_String_Model>> menu = new ArrayList<>();
+
+        for(int i=0;i<jsonObject.getTurnsOfDay().size();i++){
+            //menu.get(i).add(
+
+                    return(jsonObject.getTurnsOfDay().get(i));
+        }
+
+        return "";
+         **/
     }
 }
