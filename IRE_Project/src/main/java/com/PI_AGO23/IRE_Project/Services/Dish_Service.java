@@ -91,18 +91,19 @@ public class Dish_Service {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(turnDishGet(null));
     }
 
-    public Boolean keyValidation (Dish_Model modelToVerify){
+    public int keyValidation (Dish_Model modelToVerify){
         int a = extraRep.verifyExtra(modelToVerify.getSauce_ID(),1);
         int b = extraRep.verifyExtra(modelToVerify.getProtein_ID(),2);
         int c = extraRep.verifyExtra(modelToVerify.getComplement_ID(),3);
         int d = extraRep.verifyExtra(modelToVerify.getDish_Type(),4);
-
-        return (a + b + c + d) == 4;
+        int test = a + b + c + d;
+        System.out.println(test);
+        return (a + b + c + d);
     }
 
     ArrayList<String> enumMembers = new ArrayList<>(List.of("Frío", "Irrelevante", "Caliente"));
 
-    boolean VerifyEnumPertenency(String dishTem){
+    public boolean VerifyEnumPertenency(String dishTem){
         for(String enu : enumMembers){
             if(enu.equals(dishTem)){
                 return true;
@@ -115,16 +116,15 @@ public class Dish_Service {
     public ResponseEntity<Put_Dish_Model> new_Dish(Post_Dish_Model Dish) throws Exception{
         if(dishRepository.uniqueDish(Dish.getName())==0){
             //ComplementValidation
-            if(keyValidation(new Dish_Model(Dish))){
+            if((keyValidation(new Dish_Model(Dish)))==4){
                 //Pendient to check if necesary to use all the validations, talking about the enums and the
                 if(VerifyEnumPertenency(Dish.getTemperature())){
-                    Dish_Model model = dishRepository.save(new Dish_Model(Dish));
-                    return ResponseEntity.status(HttpStatus.OK).body(new Put_Dish_Model(model));
+                    Put_Dish_Model model = new Put_Dish_Model(this.dishRepository.save(new Dish_Model(Dish)));
+                    return ResponseEntity.status(HttpStatus.OK).body(model);
                 }
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(null);
-
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
     }
@@ -138,6 +138,7 @@ public class Dish_Service {
             //ID NO EXISTENTE
             Dish_Model DishGet = Dish.get();
             if(VerifyEnumPertenency(Request.getTemperature())){
+                System.out.println("SE ENTRA?");
                 if(dishRepository.uniqueDish(Request.getName())==0){
                     //Nombre Nuevo
                     DishGet.setDish_Name(Request.getName());
@@ -180,9 +181,7 @@ public class Dish_Service {
                 }
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-
         }
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
@@ -228,24 +227,4 @@ public class Dish_Service {
     }
 
     public List<String> Extras = List.of("Sauce","Protein","Complement");
-
-
-    public String getActives() {
-        String debug="";
-        //List<String> Types = dishRepository.
-        Map<String,Extra_Data_Model> DishesInDB = new HashMap<String, Extra_Data_Model>();
-        if(!idGrades.isEmpty()){
-            int limite = idGrades.size();
-            for(int i=0; i<limite; i++){
-                for(int j=0;j<idGrades.get(i).size();j++){
-                    debug+= idGrades.get(i).get(j).get(0).toString() +"-";
-                    //Dish_Type - Dish_String_Model
-                    //DishesInDB.put(Types.get(i),new Extra_Data_Model());
-                }
-
-            }
-        }
-
-        return debug;
-    }
 }

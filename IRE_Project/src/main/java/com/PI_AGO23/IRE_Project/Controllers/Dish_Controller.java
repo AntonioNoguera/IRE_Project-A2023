@@ -43,10 +43,4 @@ public class Dish_Controller {
         return this.dishService.delete_Dish(id);
     }
 
-
-    @GetMapping(path = "/GetActives")
-    public String AutomatizationGetTest(){
-        return this.dishService.getActives();
-    }
-
 }

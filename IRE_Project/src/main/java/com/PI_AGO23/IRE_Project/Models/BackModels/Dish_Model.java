@@ -28,6 +28,22 @@ public class Dish_Model {
     //Constructor
     public Dish_Model(){}
 
+    public Dish_Model(Long dish_ID, String dish_Name, boolean dish_Assamble, String dish_Temperature, String dish_Last_Made, long dish_Services, int dish_Rating, long complement_ID, long sauce_ID, long protein_ID, long dish_Type, String dish_Image_Path, boolean dish_is_Active) {
+        Dish_ID = dish_ID;
+        Dish_Name = dish_Name;
+        Dish_Assamble = dish_Assamble;
+        Dish_Temperature = dish_Temperature;
+        Dish_Last_Made = dish_Last_Made;
+        Dish_Services = dish_Services;
+        Dish_Rating = dish_Rating;
+        Complement_ID = complement_ID;
+        Sauce_ID = sauce_ID;
+        Protein_ID = protein_ID;
+        Dish_Type = dish_Type;
+        Dish_Image_Path = dish_Image_Path;
+        Dish_is_Active = dish_is_Active;
+    }
+
     public Dish_Model(Post_Dish_Model model){
         Dish_Name = model.getName();
         Dish_Assamble = model.getAssamble();

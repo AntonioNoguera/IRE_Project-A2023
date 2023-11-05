@@ -11,6 +11,7 @@ public class Put_Dish_Model extends Post_Dish_Model {
     private String image_path;
     private boolean active;
 
+    public Put_Dish_Model(){}
     //Super Constructor
     public Put_Dish_Model(Dish_Model model){
 
