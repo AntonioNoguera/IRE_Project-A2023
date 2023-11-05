@@ -2,8 +2,12 @@ package com.PI_AGO23.IRE_Project.Services;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.postMenuModel;
 import com.PI_AGO23.IRE_Project.Models.BackModels.smallTypes;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Dish_String_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Food_Time_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Weekly_Turn_Model;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,19 +73,21 @@ public class Automatization_Service {
         return HashMenuModel;
     }
 
-    public postMenuModel generate(postMenuModel jsonObject){
-        return jsonObject;
+    public List<Weekly_Turn_Model> generate(postMenuModel jsonObject){
+        List<Food_Time_Model> test = new ArrayList<>();
+        test. add(new Food_Time_Model(
+                1,
+                "Desayuno",
+                List.of(new Put_Dish_Model( this.dishRepository.findById(1L).get()))
+        ));
 
-        /**
-        List<List<Dish_String_Model>> menu = new ArrayList<>();
+        List<Weekly_Turn_Model> menu = new ArrayList<>();
 
         for(int i=0;i<jsonObject.getTurnsOfDay().size();i++){
-            //menu.get(i).add(
-
-                    return(jsonObject.getTurnsOfDay().get(i));
+            menu.add(
+                    new Weekly_Turn_Model(i,jsonObject.getTurnsOfDay().get(i),test));
         }
 
-        return "";
-         **/
+        return menu;
     }
 }
