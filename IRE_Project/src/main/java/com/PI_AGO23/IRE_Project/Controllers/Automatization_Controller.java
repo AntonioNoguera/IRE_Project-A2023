@@ -23,7 +23,7 @@ public class Automatization_Controller {
     }
 
     @PostMapping
-    public String generateMenu(@RequestBody postMenuModel instructions){
+    public postMenuModel generateMenu(@RequestBody postMenuModel instructions){
         return this.autoService.generate(instructions);
     }
 }

@@ -2,13 +2,13 @@ package com.PI_AGO23.IRE_Project.Models.SupportModels;
 
 public class turnModel {
     private String name;
-    private int recurency;
+    private int recurrence;
 
     public turnModel(){}
 
-    public turnModel(String name, int recurency) {
+    public turnModel(String name, int recurrence) {
         this.name = name;
-        this.recurency = recurency;
+        this.recurrence = recurrence;
     }
 
     //Getter and Setter
@@ -21,11 +21,11 @@ public class turnModel {
         this.name = name;
     }
 
-    public int getRecurency() {
-        return recurency;
+    public int getRecurrence() {
+        return recurrence;
     }
 
-    public void setRecurency(int recurency) {
-        this.recurency = recurency;
+    public void setRecurrence(int recurency) {
+        this.recurrence = recurency;
     }
 }

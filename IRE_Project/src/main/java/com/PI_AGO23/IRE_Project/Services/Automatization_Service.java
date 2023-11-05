@@ -69,8 +69,8 @@ public class Automatization_Service {
         return HashMenuModel;
     }
 
-    public String generate(postMenuModel jsonObject){
-        return jsonObject.getTurnFormat().get(0).getName().toString();
+    public postMenuModel generate(postMenuModel jsonObject){
+        return jsonObject;
 
         /**
         List<List<Dish_String_Model>> menu = new ArrayList<>();
