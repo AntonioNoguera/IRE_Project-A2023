@@ -81,6 +81,12 @@ public class Automatization_Service {
                 List.of(new Put_Dish_Model( this.dishRepository.findById(1L).get()))
         ));
 
+        test. add(new Food_Time_Model(
+                2,
+                "Comida",
+                List.of(new Put_Dish_Model( this.dishRepository.findById(2L).get()))
+        ));
+
         List<Weekly_Turn_Model> menu = new ArrayList<>();
 
         for(int i=0;i<jsonObject.getTurnsOfDay().size();i++){
