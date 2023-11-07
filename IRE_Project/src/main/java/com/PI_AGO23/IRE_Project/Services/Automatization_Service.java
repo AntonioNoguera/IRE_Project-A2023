@@ -1,13 +1,11 @@
 package com.PI_AGO23.IRE_Project.Services;
 
+import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.BackModels.postMenuModel;
 import com.PI_AGO23.IRE_Project.Models.BackModels.smallTypes;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
-import com.PI_AGO23.IRE_Project.Models.SupportModels.Dish_String_Model;
-import com.PI_AGO23.IRE_Project.Models.SupportModels.Food_Time_Model;
-import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
-import com.PI_AGO23.IRE_Project.Models.SupportModels.Weekly_Turn_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.*;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +72,7 @@ public class Automatization_Service {
         return HashMenuModel;
     }
 
-    public List<Weekly_Turn_Model> generate(postMenuModel jsonObject){
+    public List<Dish_Map_Model> generate(postMenuModel jsonObject){
         List<Food_Time_Model> test = new ArrayList<>();
         test. add(new Food_Time_Model(
                 1,
@@ -87,13 +86,54 @@ public class Automatization_Service {
                 List.of(new Put_Dish_Model( this.dishRepository.findById(2L).get()))
         ));
 
+        //Variable de Retorno
         List<Weekly_Turn_Model> menu = new ArrayList<>();
 
-        for(int i=0;i<jsonObject.getTurnsOfDay().size();i++){
-            menu.add(
-                    new Weekly_Turn_Model(i,jsonObject.getTurnsOfDay().get(i),test));
+        //Variable de Proceseo
+        List<Dish_Map_Model> distribution = new ArrayList<>();
+
+
+        //PROCESAMIENTO
+        List<Dish_Map_Model> dishMap = new ArrayList<>();
+
+        for(int i=0;i<jsonObject.getTurnFormat().size();i++){
+            List<Dish_Model> model = this.dishRepository.getSpecificType(jsonObject.getTurnFormat().get(i).getId());
+
+            //RETURN VAR
+
+
+            List<Dish_Process_Model> members = new ArrayList<>();
+            double mean=0;
+            double m2 = 0.0;
+            double std=0;
+            int n = 0;
+
+            for(Dish_Model modelUnit : model){
+                n++;
+                double delta = modelUnit.getDish_Rating() - mean;
+                mean += delta / n;
+                double delta2 = modelUnit.getDish_Rating() - mean;
+                m2 += delta * delta2;
+                members.add(new Dish_Process_Model(modelUnit));
+            }
+
+            double desviacionEstandar = Math.sqrt(m2 / (n - 1));
+            //Es muestral
+            if (Double.isNaN(desviacionEstandar)) {
+                desviacionEstandar=-1;
+            }
+            dishMap.add(
+                    new Dish_Map_Model(
+                        jsonObject.getTurnFormat().get(i).getId(),
+                        members,
+                        mean,
+                        desviacionEstandar
+                    )
+            );
         }
 
-        return menu;
+        //CREANDO RETORNO
+
+        return dishMap;
     }
 }

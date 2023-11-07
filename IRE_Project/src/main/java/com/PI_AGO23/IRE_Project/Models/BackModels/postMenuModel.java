@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 public class postMenuModel {
+    private int id;
     private boolean booleanTemp;
     private List<String> nameServiceDays;
     private List<String> turnsOfDay;
     private List<turnModel> turnFormat;
 
     //Constructor
-
-
     public postMenuModel(boolean booleanTemp, List<String> nameServiceDays, List<String> turnsOfDay, List<turnModel> turnFormat) {
+        this.id= id;
         this.booleanTemp = booleanTemp;
         this.nameServiceDays = nameServiceDays;
         this.turnsOfDay = turnsOfDay;
@@ -54,5 +54,13 @@ public class postMenuModel {
 
     public void setTurnFormat(List<turnModel> turnFormat) {
         this.turnFormat = turnFormat;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

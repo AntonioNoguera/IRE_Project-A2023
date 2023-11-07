@@ -2,7 +2,7 @@ package com.PI_AGO23.IRE_Project.Models.PutModel;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
-
+//Clase que abarca el modelo para el arreglo de algormito
 public class Put_Dish_Model extends Post_Dish_Model {
     private long id;
     private String last_made;

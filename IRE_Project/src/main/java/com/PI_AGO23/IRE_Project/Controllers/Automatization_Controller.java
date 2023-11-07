@@ -1,6 +1,7 @@
 package com.PI_AGO23.IRE_Project.Controllers;
 
 import com.PI_AGO23.IRE_Project.Models.BackModels.postMenuModel;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.Dish_Map_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Menu_Data_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.Weekly_Turn_Model;
 import com.PI_AGO23.IRE_Project.Services.Automatization_Service;
@@ -25,7 +26,12 @@ public class Automatization_Controller {
     }
 
     @PostMapping
-    public List<Weekly_Turn_Model> generateMenu(@RequestBody postMenuModel instructions){
+    public List<Dish_Map_Model> generateMenu(@RequestBody postMenuModel instructions){
         return this.autoService.generate(instructions);
+    }
+
+    @PostMapping("/Test")
+    public postMenuModel generate(@RequestBody postMenuModel instructions){
+        return instructions;
     }
 }

@@ -24,6 +24,7 @@ public class Dish_Model {
     @Column private long Dish_Type;
     @Column private String Dish_Image_Path;
     @Column private boolean Dish_is_Active;
+    @Transient private double aptitude=0;
 
     //Constructor
     public Dish_Model(){}
@@ -166,5 +167,13 @@ public class Dish_Model {
 
     public void setDish_is_Active(boolean dish_is_Active) {
         Dish_is_Active = dish_is_Active;
+    }
+
+    public double getAptitude() {
+        return aptitude;
+    }
+
+    public void setAptitude(double aptitude) {
+        this.aptitude = aptitude;
     }
 }

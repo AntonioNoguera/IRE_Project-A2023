@@ -3,6 +3,7 @@ package com.PI_AGO23.IRE_Project.Models.SupportModels;
 import java.util.List;
 
 public class Weekly_Turn_Model {
+    //Clase que
     private int id;
     private String day;
     private List<Food_Time_Model> food_time;
