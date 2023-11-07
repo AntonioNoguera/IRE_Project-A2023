@@ -23,6 +23,7 @@ public class Dish_Process_Model extends Post_Dish_Model {
                 model.getDish_Type()
         );
         this.id=model.getDish_ID();
+        this.aptitude=model.getAptitude();
         this.last_made=model.getDish_Last_Made();
         this.rating=model.getDish_Rating();
     }

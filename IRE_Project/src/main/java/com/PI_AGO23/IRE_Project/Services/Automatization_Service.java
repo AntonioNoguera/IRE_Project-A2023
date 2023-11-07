@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +76,31 @@ public class Automatization_Service {
         return HashMenuModel;
     }
 
+    public Long diferenceBeetwen(String dateString){
+        //Making Aptitude
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        LocalDateTime lastMaded = null;
+
+        try {
+            // Convierte la cadena en LocalDateTime utilizando el formato especificado
+            lastMaded = LocalDateTime.parse(dateString, formatter);
+        } catch (Exception e) {
+            // Maneja la excepción si la conversión falla
+            System.err.println("No se pudo convertir la cadena en LocalDateTime: " + e.getMessage());
+        }
+
+        if (lastMaded != null) {
+            // Obtiene la fecha actual
+            LocalDate today = LocalDate.now();
+
+            // Calcula la diferencia en días
+            long daysDifference = ChronoUnit.DAYS.between(lastMaded.toLocalDate(), today);
+            return daysDifference;
+        }
+        return null;
+    }
+
     public List<Dish_Map_Model> generate(postMenuModel jsonObject){
         List<Food_Time_Model> test = new ArrayList<>();
         test. add(new Food_Time_Model(
@@ -100,8 +129,6 @@ public class Automatization_Service {
             List<Dish_Model> model = this.dishRepository.getSpecificType(jsonObject.getTurnFormat().get(i).getId());
 
             //RETURN VAR
-
-
             List<Dish_Process_Model> members = new ArrayList<>();
             double mean=0;
             double m2 = 0.0;
@@ -114,7 +141,11 @@ public class Automatization_Service {
                 mean += delta / n;
                 double delta2 = modelUnit.getDish_Rating() - mean;
                 m2 += delta * delta2;
+
+                modelUnit.setAptitude(diferenceBeetwen(modelUnit.getDish_Last_Made()));
+
                 members.add(new Dish_Process_Model(modelUnit));
+
             }
 
             double desviacionEstandar = Math.sqrt(m2 / (n - 1));
