@@ -3,31 +3,29 @@ package com.PI_AGO23.IRE_Project.Services;
 import com.PI_AGO23.IRE_Project.Models.BackModels.Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.BackModels.postMenuModel;
 import com.PI_AGO23.IRE_Project.Models.BackModels.smallTypes;
-import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Dish_Model;
 import com.PI_AGO23.IRE_Project.Models.SupportModels.*;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Extra_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class Automatization_Service {
-
     @Autowired
     I_Dish_Repository dishRepository;
     @Autowired
     I_Extra_Repository extraRep;
+
+    private postMenuModel globalObject;
+
     public Menu_Data_Model gettingStuff(){
         //Dish Type Related
         List<Long> Types = this.extraRep.getDish_Types_ID();
@@ -101,27 +99,66 @@ public class Automatization_Service {
         return null;
     }
 
-    public List<Dish_Map_Model> generate(postMenuModel jsonObject){
-        List<Food_Time_Model> test = new ArrayList<>();
-        test. add(new Food_Time_Model(
-                1,
-                "Desayuno",
-                List.of(new Put_Dish_Model( this.dishRepository.findById(1L).get()))
-        ));
-
-        test. add(new Food_Time_Model(
-                2,
-                "Comida",
-                List.of(new Put_Dish_Model( this.dishRepository.findById(2L).get()))
-        ));
-
+    public List<OneDay_Turn_Model> generandoReturn(List<Dish_Map_Model> cleanedHash){
         //Variable de Retorno
-        List<Weekly_Turn_Model> menu = new ArrayList<>();
-
-        //Variable de Proceseo
-        List<Dish_Map_Model> distribution = new ArrayList<>();
+        List<OneDay_Turn_Model> menu = new ArrayList<>();
 
 
+        //Días por semana Laboral
+        List<String> week = globalObject.getNameServiceDays();
+
+        //Turnos Diarios
+        List<String> turns = globalObject.getTurnsOfDay();
+
+        //Formato del Turno
+        List<turnModel> turnObj = globalObject.getTurnFormat();
+        /**
+        for(int i=0;i<week.size();i++){
+            //Iteración por semana
+            for(int j=0;j<turns.size();j++){
+                //Iteraciones por Dia (Arranca formatoDiario)
+                for(int k=0;k<turnObj.size();k++){
+                    for(int l=0;l<turnObj.get(k).getRecurrence();l++){
+                        //Se asigna un platillo
+                    }
+                }
+            }
+        }
+         */
+
+        int ident=1;
+
+        for(String spcfDay : week){
+            List<TurnFormat> day= new ArrayList<>();
+            for(String dailyTurn : turns){
+                List<Food_Time_Model> turnMembers = new ArrayList<>();
+
+                for(turnModel spcfTurnTime : turnObj){
+
+                    List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
+                    for(int i=0; i<spcfTurnTime.getRecurrence();i++){
+                        //Condiciones que determinan si se agregan o no.
+                        dishesOfTurn.add(new Put_Dish_Model(this.dishRepository.getById(2L)));
+                    }
+                    //Se agrega el Time Model
+                    turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+                }
+                //Se agrega al Formato del Turno
+                day.add(new TurnFormat(dailyTurn,turnMembers));
+            }
+            menu.add(new OneDay_Turn_Model(1,spcfDay, day));
+        }
+        return menu;
+    }
+
+    public List<OneDay_Turn_Model> creandoMenu(List<Dish_Map_Model> hash){
+        //Shuffling
+
+        return generandoReturn(hash);
+    }
+
+    public List<OneDay_Turn_Model> generate(postMenuModel jsonObject){
+        globalObject= jsonObject;
         //PROCESAMIENTO
         List<Dish_Map_Model> dishMap = new ArrayList<>();
 
@@ -130,10 +167,7 @@ public class Automatization_Service {
 
             //RETURN VAR
             List<Dish_Process_Model> members = new ArrayList<>();
-            double mean=0;
-            double m2 = 0.0;
-            double std=0;
-            int n = 0;
+            double mean=0; double m2 = 0.0; double std=0; int n = 0;
 
             for(Dish_Model modelUnit : model){
                 n++;
@@ -145,14 +179,11 @@ public class Automatization_Service {
                 modelUnit.setAptitude(diferenceBeetwen(modelUnit.getDish_Last_Made()));
 
                 members.add(new Dish_Process_Model(modelUnit));
-
             }
-
-            double desviacionEstandar = Math.sqrt(m2 / (n - 1));
             //Es muestral
-            if (Double.isNaN(desviacionEstandar)) {
-                desviacionEstandar=-1;
-            }
+            double desviacionEstandar = Math.sqrt(m2 / (n - 1));
+
+            if (Double.isNaN(desviacionEstandar)) { desviacionEstandar=-1; }
             dishMap.add(
                     new Dish_Map_Model(
                         jsonObject.getTurnFormat().get(i).getId(),
@@ -164,7 +195,6 @@ public class Automatization_Service {
         }
 
         //CREANDO RETORNO
-
-        return dishMap;
+        return creandoMenu(dishMap);
     }
 }
