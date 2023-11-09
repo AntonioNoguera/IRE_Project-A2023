@@ -23,10 +23,10 @@ public class OneDay_Turn_Model {
         return id;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
-
     public String getDay() {
         return day;
     }

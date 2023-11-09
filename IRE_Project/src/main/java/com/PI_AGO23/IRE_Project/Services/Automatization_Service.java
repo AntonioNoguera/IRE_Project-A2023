@@ -99,7 +99,10 @@ public class Automatization_Service {
         return null;
     }
 
-    public List<OneDay_Turn_Model> generandoReturn(List<Dish_Map_Model> cleanedHash){
+    public List<WeeklyTurnModel> generandoReturn(List<Dish_Map_Model> cleanedHash){
+
+        List<WeeklyTurnModel> WeeklyModel = new ArrayList<>();
+
         //Variable de Retorno
         List<OneDay_Turn_Model> menu = new ArrayList<>();
 
@@ -112,19 +115,6 @@ public class Automatization_Service {
 
         //Formato del Turno
         List<turnModel> turnObj = globalObject.getTurnFormat();
-        /**
-        for(int i=0;i<week.size();i++){
-            //Iteración por semana
-            for(int j=0;j<turns.size();j++){
-                //Iteraciones por Dia (Arranca formatoDiario)
-                for(int k=0;k<turnObj.size();k++){
-                    for(int l=0;l<turnObj.get(k).getRecurrence();l++){
-                        //Se asigna un platillo
-                    }
-                }
-            }
-        }
-         */
 
         int ident=1;
 
@@ -148,23 +138,28 @@ public class Automatization_Service {
             }
             menu.add(new OneDay_Turn_Model(1,spcfDay, day));
         }
-        return menu;
+        WeeklyModel.add(new WeeklyTurnModel(
+                1,
+                LocalDate.now().toString(),
+                menu,
+                12.21)
+        );
+        return WeeklyModel;
     }
 
-    public List<OneDay_Turn_Model> creandoMenu(List<Dish_Map_Model> hash){
+    public List<WeeklyTurnModel> creandoMenu(List<Dish_Map_Model> hash){
         //Shuffling
 
         return generandoReturn(hash);
     }
 
-    public List<OneDay_Turn_Model> generate(postMenuModel jsonObject){
+    public List<WeeklyTurnModel> generate(postMenuModel jsonObject){
         globalObject= jsonObject;
         //PROCESAMIENTO
+        //Esto es un día (Ocupamos aun un iterador semanal, cuantas semanas se van a intentar devolver)
         List<Dish_Map_Model> dishMap = new ArrayList<>();
-
         for(int i=0;i<jsonObject.getTurnFormat().size();i++){
             List<Dish_Model> model = this.dishRepository.getSpecificType(jsonObject.getTurnFormat().get(i).getId());
-
             //RETURN VAR
             List<Dish_Process_Model> members = new ArrayList<>();
             double mean=0; double m2 = 0.0; double std=0; int n = 0;
@@ -186,13 +181,14 @@ public class Automatization_Service {
             if (Double.isNaN(desviacionEstandar)) { desviacionEstandar=-1; }
             dishMap.add(
                     new Dish_Map_Model(
-                        jsonObject.getTurnFormat().get(i).getId(),
-                        members,
-                        mean,
-                        desviacionEstandar
+                            jsonObject.getTurnFormat().get(i).getId(),
+                            members,
+                            mean,
+                            desviacionEstandar
                     )
             );
         }
+
 
         //CREANDO RETORNO
         return creandoMenu(dishMap);
