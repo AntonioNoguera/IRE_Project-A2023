@@ -155,7 +155,7 @@ public class Automatization_Service {
                             globalItemCount++;
                         }
                     }else{
-                        for(int i=0; i<spcfTurnTime.getRecurrence();i++){
+                        for(int i=0; i<spcfTurnTime.getRecurrence()fi;i++){
                             //Condiciones que determinan si se agregan o no.
                             System.out.println(spcfTurnTime);
                             System.out.println(spcfTurnTime.getId());
