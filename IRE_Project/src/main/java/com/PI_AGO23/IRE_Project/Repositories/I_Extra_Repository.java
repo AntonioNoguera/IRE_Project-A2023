@@ -27,6 +27,8 @@ public interface I_Extra_Repository extends JpaRepository<Extra_Model, Long> {
     @Query(value = "SELECT Extras_ID AS id, Extra_Name AS name From extras_table Where Kind_ID=?1",nativeQuery = true)
     List<Object[]> getExtrasFromType(int id);
 
+    @Query(value = "SELECT Extras_ID From extras_table Where Extra_Name=?1",nativeQuery = true)
+    Double getExtraID(String name);
 
     //Number Of member
     @Query(value = "SELECT COUNT(*) From extras_table Where Kind_ID=?1",nativeQuery = true)

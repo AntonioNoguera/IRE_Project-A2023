@@ -80,24 +80,37 @@ public class Automatization_Service {
 
         LocalDateTime lastMaded = null;
 
+
+
         try {
-            // Convierte la cadena en LocalDateTime utilizando el formato especificado
             lastMaded = LocalDateTime.parse(dateString, formatter);
         } catch (Exception e) {
-            // Maneja la excepción si la conversión falla
             System.err.println("No se pudo convertir la cadena en LocalDateTime: " + e.getMessage());
         }
 
         if (lastMaded != null) {
-            // Obtiene la fecha actual
             LocalDate today = LocalDate.now();
 
-            // Calcula la diferencia en días
             long daysDifference = ChronoUnit.DAYS.between(lastMaded.toLocalDate(), today);
             return daysDifference;
         }
         return null;
     }
+
+    public String generatingLapse(LocalDate startingTd){
+
+        String[] fechasplt = (startingTd.toString()).split("-");
+        String[] fechaFin = (startingTd.plusDays(7).toString()).split("-");
+
+        String[] meses= {"","Ene","Feb","Mar","Abril","Mayo","Jun","Jul","Ago","Sep","Oct","Nov","Dic"} ;
+        // Sumar 7 días a la fecha actual
+        if(Integer.parseInt(fechasplt[1])==Integer.parseInt(fechaFin[1])){
+            return fechasplt[2] + " a "+fechaFin[2] + " de " + meses[Integer.parseInt(fechaFin[1])];
+        }else{
+            return fechasplt[2] + " " + meses[Integer.parseInt(fechasplt[1])] + " a "+fechaFin[2] + " " + meses[Integer.parseInt(fechaFin[1])];
+        }
+    }
+
 
     public List<WeeklyTurnModel> generandoReturn(List<Dish_Map_Model> cleanedHash){
 
@@ -105,7 +118,6 @@ public class Automatization_Service {
 
         //Variable de Retorno
         List<OneDay_Turn_Model> menu = new ArrayList<>();
-
 
         //Días por semana Laboral
         List<String> week = globalObject.getNameServiceDays();
@@ -117,7 +129,7 @@ public class Automatization_Service {
         List<turnModel> turnObj = globalObject.getTurnFormat();
 
         int ident=1;
-
+        double mean = 0;
         for(String spcfDay : week){
             List<TurnFormat> day= new ArrayList<>();
             for(String dailyTurn : turns){
@@ -125,13 +137,40 @@ public class Automatization_Service {
 
                 for(turnModel spcfTurnTime : turnObj){
 
-                    List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
+
+
+                    //List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
+                    List<String> dishesOfTurn = new ArrayList<>();
+                    turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+
+                    //Donde se agrega, el número de recurrencia
+                    Double mockOfIterator = this.extraRep.getExtraID(dailyTurn);
+                    System.out.println(spcfTurnTime.getName());
+                    System.out.println(mockOfIterator.toString());
+
+                    String gettingRng = this.dishRepository.getRandomType(mockOfIterator);
+
+                    System.out.println(gettingRng.toString());
+
+                    dishesOfTurn.add(
+                            gettingRng.toString()
+                    );
+
+
+                    //Aquí añadiremos en un futuro que el primer valor hace referencia a todos los demás atributos
+                    //El primer valor se añadirá en base a dailyTurn, que es desayuno y comida
                     for(int i=0; i<spcfTurnTime.getRecurrence();i++){
                         //Condiciones que determinan si se agregan o no.
-                        dishesOfTurn.add(new Put_Dish_Model(this.dishRepository.getById(2L)));
+
+                        //Put_Dish_Model dish = new Put_Dish_Model(this.dishRepository.getById(2L));
+                        //dishesOfTurn.add(dish);
+                        //mean+=dish.getRating();
                     }
                     //Se agrega el Time Model
-                    turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+                    if(!(dishesOfTurn.size()==0)){
+                        //turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+                    }
+
                 }
                 //Se agrega al Formato del Turno
                 day.add(new TurnFormat(dailyTurn,turnMembers));
@@ -140,9 +179,9 @@ public class Automatization_Service {
         }
         WeeklyModel.add(new WeeklyTurnModel(
                 1,
-                LocalDate.now().toString(),
+                generatingLapse(LocalDate.now()),
                 menu,
-                12.21)
+                mean)
         );
         return WeeklyModel;
     }
@@ -188,7 +227,6 @@ public class Automatization_Service {
                     )
             );
         }
-
 
         //CREANDO RETORNO
         return creandoMenu(dishMap);

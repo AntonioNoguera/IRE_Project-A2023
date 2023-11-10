@@ -34,6 +34,10 @@ public class Put_Dish_Model extends Post_Dish_Model {
         active = model.getDish_is_Active();
     }
 
+    public Put_Dish_Model(String manualName){
+        this.image_path=manualName;
+    }
+
     //Getter and Setter
     public long getId() {
         return id;
