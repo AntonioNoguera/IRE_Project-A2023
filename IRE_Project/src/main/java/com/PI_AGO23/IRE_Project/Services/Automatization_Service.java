@@ -127,7 +127,7 @@ public class Automatization_Service {
 
         //Formato del Turno
         List<turnModel> turnObj = globalObject.getTurnFormat();
-
+        double globalItemCount=0;
         int ident=1;
         double mean = 0;
         for(String spcfDay : week){
@@ -137,38 +137,38 @@ public class Automatization_Service {
 
                 for(turnModel spcfTurnTime : turnObj){
 
-
-
-                    //List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
-                    List<String> dishesOfTurn = new ArrayList<>();
-                    turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+                    List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
 
                     //Donde se agrega, el número de recurrencia
-                    Double mockOfIterator = this.extraRep.getExtraID(dailyTurn);
                     System.out.println(spcfTurnTime.getName());
-                    System.out.println(mockOfIterator.toString());
-
-                    String gettingRng = this.dishRepository.getRandomType(mockOfIterator);
-
-                    System.out.println(gettingRng.toString());
-
-                    dishesOfTurn.add(
-                            gettingRng.toString()
-                    );
-
 
                     //Aquí añadiremos en un futuro que el primer valor hace referencia a todos los demás atributos
                     //El primer valor se añadirá en base a dailyTurn, que es desayuno y comida
-                    for(int i=0; i<spcfTurnTime.getRecurrence();i++){
-                        //Condiciones que determinan si se agregan o no.
 
-                        //Put_Dish_Model dish = new Put_Dish_Model(this.dishRepository.getById(2L));
-                        //dishesOfTurn.add(dish);
-                        //mean+=dish.getRating();
+                    //Significa que es el último
+                    if(spcfTurnTime.getId()==0){
+                        for(int i=0; i<spcfTurnTime.getRecurrence();i++){
+                            //Condiciones que determinan si se agregan o no.
+                            Put_Dish_Model dish = new Put_Dish_Model(this.dishRepository.findById(this.dishRepository.getRandomType(this.extraRep.getExtraID(dailyTurn))).get());
+                            dishesOfTurn.add(dish);
+                            mean+=dish.getRating();
+                            globalItemCount++;
+                        }
+                    }else{
+                        for(int i=0; i<spcfTurnTime.getRecurrence();i++){
+                            //Condiciones que determinan si se agregan o no.
+                            System.out.println(spcfTurnTime);
+                            System.out.println(spcfTurnTime.getId());
+                            Put_Dish_Model dish = new Put_Dish_Model((this.dishRepository.findById(this.dishRepository.getRandomType(spcfTurnTime.getId())).get()));
+                            dishesOfTurn.add(dish);
+                            mean+=dish.getRating();
+                            globalItemCount++;
+                        }
                     }
+
                     //Se agrega el Time Model
                     if(!(dishesOfTurn.size()==0)){
-                        //turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
+                        turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
                     }
 
                 }
@@ -181,7 +181,7 @@ public class Automatization_Service {
                 1,
                 generatingLapse(LocalDate.now()),
                 menu,
-                mean)
+                mean/globalItemCount)
         );
         return WeeklyModel;
     }

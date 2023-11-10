@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
@@ -51,6 +50,6 @@ public interface I_Dish_Repository extends JpaRepository<Dish_Model,Long> {
         @Query(value = "SELECT * FROM dish_table WHERE Dish_Type = ?1 AND Dish_is_Active=1",nativeQuery = true)
         List<Dish_Model> getSpecificType(int type);
 
-        @Query(value = "SELECT Dish_Name FROM dish_table WHERE Dish_Type = ?1 ORDER BY RAND() LIMIT 1", nativeQuery = true)
-        String getRandomType(double type);
+        @Query(value = "SELECT Dish_ID FROM dish_table WHERE Dish_Type = ?1 ORDER BY RAND() LIMIT 1", nativeQuery = true)
+        Long getRandomType(double type);
 }
