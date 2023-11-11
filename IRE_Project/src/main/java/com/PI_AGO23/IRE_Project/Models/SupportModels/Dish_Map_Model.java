@@ -8,14 +8,16 @@ import java.util.List;
 public class Dish_Map_Model {
     //Attributes
     private int id;
+    private String ServiceDesc;
     private List<Dish_Process_Model> members = new ArrayList<>();
     private double mean;
     private double std_dsv;
 
     //Constructor
 
-    public Dish_Map_Model(int id, List<Dish_Process_Model> members, double mean, double std_dsv) {
+    public Dish_Map_Model(int id,String ServiceDesc, List<Dish_Process_Model> members, double mean, double std_dsv) {
         this.id = id;
+        this.ServiceDesc = ServiceDesc;
         this.members = members;
         this.mean = mean;
         this.std_dsv = std_dsv;
@@ -53,5 +55,13 @@ public class Dish_Map_Model {
 
     public void setStd_dsv(double std_dsv) {
         this.std_dsv = std_dsv;
+    }
+
+    public String getService() {
+        return ServiceDesc;
+    }
+
+    public void setService(String service) {
+        ServiceDesc = service;
     }
 }

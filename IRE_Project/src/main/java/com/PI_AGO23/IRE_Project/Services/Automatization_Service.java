@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class Automatization_Service {
@@ -80,8 +81,6 @@ public class Automatization_Service {
 
         LocalDateTime lastMaded = null;
 
-
-
         try {
             lastMaded = LocalDateTime.parse(dateString, formatter);
         } catch (Exception e) {
@@ -111,8 +110,8 @@ public class Automatization_Service {
         }
     }
 
-
-    public List<WeeklyTurnModel> generandoReturn(List<Dish_Map_Model> cleanedHash){
+    List<Dish_Map_Model> finalHash;
+    public List<WeeklyTurnModel> generandoReturn(){
 
         List<WeeklyTurnModel> WeeklyModel = new ArrayList<>();
 
@@ -132,48 +131,63 @@ public class Automatization_Service {
         double mean = 0;
         for(String spcfDay : week){
             List<TurnFormat> day= new ArrayList<>();
-            for(String dailyTurn : turns){
+            for(int k=0;k<turns.size();k++){
                 List<Food_Time_Model> turnMembers = new ArrayList<>();
-
+                System.out.println("POR ALGUNA RAZON SE REINICIA AQUÍ?");
                 for(turnModel spcfTurnTime : turnObj){
 
                     List<Put_Dish_Model> dishesOfTurn = new ArrayList<>();
-
-                    //Donde se agrega, el número de recurrencia
-                    System.out.println(spcfTurnTime.getName());
-
-                    //Aquí añadiremos en un futuro que el primer valor hace referencia a todos los demás atributos
-                    //El primer valor se añadirá en base a dailyTurn, que es desayuno y comida
-
                     //Significa que es el último
                     if(spcfTurnTime.getId()==0){
                         for(int i=0; i<spcfTurnTime.getRecurrence();i++){
-                            //Condiciones que determinan si se agregan o no.
-                            Put_Dish_Model dish = new Put_Dish_Model(this.dishRepository.findById(this.dishRepository.getRandomType(this.extraRep.getExtraID(dailyTurn))).get());
-                            dishesOfTurn.add(dish);
-                            mean+=dish.getRating();
-                            globalItemCount++;
+                            System.out.println("TURNOOOO: "+spcfDay+" - "+turns.get(k));
+                            //Condiciones que determinan si se agregan o no
+                            // turnsOfDay
+
+                            List<Dish_Process_Model> actualArrays = new ArrayList<>(finalHash.get(k).getMembers());
+
+
+                            for(int w=0;w<actualArrays.size();w++){
+                                System.out.print(w+".- SupPrint"+actualArrays.get(w).getName());
+                            }
+                            System.out.println("/");
+
+                            if (!actualArrays.isEmpty()) {
+                                Random random = new Random();
+
+                                int iA = random.nextInt(actualArrays.size());
+
+                                Put_Dish_Model dish = new Put_Dish_Model(this.dishRepository.findById((actualArrays.get(iA)).getId()).get());
+
+                                actualArrays.remove(iA);
+
+                                System.out.println("Miembro eliminado" + iA);
+
+                                finalHash.get(k).setMembers(actualArrays);
+
+                                dishesOfTurn.add(dish);
+                                mean += dish.getRating();
+                            }
                         }
                     }else{
-                        for(int i=0; i<spcfTurnTime.getRecurrence()fi;i++){
-                            //Condiciones que determinan si se agregan o no.
-                            System.out.println(spcfTurnTime);
-                            System.out.println(spcfTurnTime.getId());
+                        for(int i=0; i<spcfTurnTime.getRecurrence();i++){
+                            //Condiciones que determinan si se agregan o no
+
                             Put_Dish_Model dish = new Put_Dish_Model((this.dishRepository.findById(this.dishRepository.getRandomType(spcfTurnTime.getId())).get()));
                             dishesOfTurn.add(dish);
                             mean+=dish.getRating();
-                            globalItemCount++;
+
                         }
                     }
-
+                    globalItemCount++;
                     //Se agrega el Time Model
-                    if(!(dishesOfTurn.size()==0)){
+                    if(!(dishesOfTurn.isEmpty())){
                         turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));
                     }
 
                 }
                 //Se agrega al Formato del Turno
-                day.add(new TurnFormat(dailyTurn,turnMembers));
+                day.add(new TurnFormat(turns.get(k),turnMembers));
             }
             menu.add(new OneDay_Turn_Model(1,spcfDay, day));
         }
@@ -187,9 +201,10 @@ public class Automatization_Service {
     }
 
     public List<WeeklyTurnModel> creandoMenu(List<Dish_Map_Model> hash){
-        //Shuffling
-
-        return generandoReturn(hash);
+        //Clearing
+        finalHash=hash;
+        System.out.println("SE ARRANCAN LOS VALORES DEL MAP");
+        return generandoReturn();
     }
 
     public List<WeeklyTurnModel> generate(postMenuModel jsonObject){
@@ -197,8 +212,11 @@ public class Automatization_Service {
         //PROCESAMIENTO
         //Esto es un día (Ocupamos aun un iterador semanal, cuantas semanas se van a intentar devolver)
         List<Dish_Map_Model> dishMap = new ArrayList<>();
-        for(int i=0;i<jsonObject.getTurnFormat().size();i++){
-            List<Dish_Model> model = this.dishRepository.getSpecificType(jsonObject.getTurnFormat().get(i).getId());
+        for(int i=0;i<jsonObject.getTurnsOfDay().size();i++){
+
+            List<Dish_Model> model = this.dishRepository.getSpecificType(this.extraRep.getExtraID(jsonObject.getTurnsOfDay().get(i)).intValue());
+
+            // GET TURN NAME
             //RETURN VAR
             List<Dish_Process_Model> members = new ArrayList<>();
             double mean=0; double m2 = 0.0; double std=0; int n = 0;
@@ -211,21 +229,45 @@ public class Automatization_Service {
                 m2 += delta * delta2;
 
                 modelUnit.setAptitude(diferenceBeetwen(modelUnit.getDish_Last_Made()));
-
                 members.add(new Dish_Process_Model(modelUnit));
             }
             //Es muestral
             double desviacionEstandar = Math.sqrt(m2 / (n - 1));
 
             if (Double.isNaN(desviacionEstandar)) { desviacionEstandar=-1; }
-            dishMap.add(
-                    new Dish_Map_Model(
-                            jsonObject.getTurnFormat().get(i).getId(),
-                            members,
-                            mean,
-                            desviacionEstandar
-                    )
-            );
+
+            int iteratorV=-1;
+
+            for(Dish_Map_Model types : dishMap ){
+                if(jsonObject.getTurnsOfDay().get(i).equals(types.getService())){
+                    iteratorV=types.getId();
+                    break;
+                }
+            }
+
+            if(!(iteratorV!=-1)){
+                dishMap.add(
+                        new Dish_Map_Model(
+                                iteratorV,
+                                jsonObject.getTurnsOfDay().get(i),
+                                members,
+                                mean,
+                                desviacionEstandar
+                        )
+                );
+            }else{
+                dishMap.add(
+                        new Dish_Map_Model(
+                                jsonObject.getTurnFormat().get(i).getId(),
+                                jsonObject.getTurnsOfDay().get(i),
+                                members,
+                                mean,
+                                desviacionEstandar
+                        )
+                );
+            }
+
+
         }
 
         //CREANDO RETORNO
