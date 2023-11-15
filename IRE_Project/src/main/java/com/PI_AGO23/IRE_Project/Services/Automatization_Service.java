@@ -26,7 +26,7 @@ public class Automatization_Service {
     I_Extra_Repository extraRep;
 
     private postMenuModel globalObject;
-
+    private int turnLength;
     public Menu_Data_Model gettingStuff(){
         //Dish Type Related
         List<Long> Types = this.extraRep.getDish_Types_ID();
@@ -99,7 +99,7 @@ public class Automatization_Service {
     public String generatingLapse(LocalDate startingTd){
 
         String[] fechasplt = (startingTd.toString()).split("-");
-        String[] fechaFin = (startingTd.plusDays(7).toString()).split("-");
+        String[] fechaFin = (startingTd.plusDays(turnLength).toString()).split("-");
 
         String[] meses= {"","Ene","Feb","Mar","Abril","Mayo","Jun","Jul","Ago","Sep","Oct","Nov","Dic"} ;
         // Sumar 7 días a la fecha actual
@@ -129,6 +129,7 @@ public class Automatization_Service {
         double globalItemCount=0;
         int ident=1;
         double mean = 0;
+        turnLength = week.size();
         for(String spcfDay : week){
             List<TurnFormat> day= new ArrayList<>();
             for(int k=0;k<turns.size();k++){
@@ -145,7 +146,6 @@ public class Automatization_Service {
                             // turnsOfDay
 
                             List<Dish_Process_Model> actualArrays = new ArrayList<>(finalHash.get(k).getMembers());
-
 
                             for(int w=0;w<actualArrays.size();w++){
                                 System.out.print(w+".- SupPrint"+actualArrays.get(w).getName());
@@ -168,6 +168,7 @@ public class Automatization_Service {
                                 dishesOfTurn.add(dish);
                                 mean += dish.getRating();
                             }
+                            globalItemCount++;
                         }
                     }else{
                         for(int i=0; i<spcfTurnTime.getRecurrence();i++){
@@ -176,10 +177,10 @@ public class Automatization_Service {
                             Put_Dish_Model dish = new Put_Dish_Model((this.dishRepository.findById(this.dishRepository.getRandomType(spcfTurnTime.getId())).get()));
                             dishesOfTurn.add(dish);
                             mean+=dish.getRating();
-
+                            globalItemCount++;
                         }
                     }
-                    globalItemCount++;
+
                     //Se agrega el Time Model
                     if(!(dishesOfTurn.isEmpty())){
                         turnMembers.add(new Food_Time_Model(ident,spcfTurnTime.getName(),dishesOfTurn));

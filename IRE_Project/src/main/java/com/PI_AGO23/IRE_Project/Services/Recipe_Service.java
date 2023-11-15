@@ -1,9 +1,10 @@
 package com.PI_AGO23.IRE_Project.Services;
 
-import com.PI_AGO23.IRE_Project.Models.BackModels.RecipeJoin_Model;
-import com.PI_AGO23.IRE_Project.Models.BackModels.Recipe_Model;
-import com.PI_AGO23.IRE_Project.Models.BackModels.smallRecipes;
+import com.PI_AGO23.IRE_Project.Models.BackModels.*;
 import com.PI_AGO23.IRE_Project.Models.GetModels.Get_Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.PutModel.Put_Recipe_Model;
+import com.PI_AGO23.IRE_Project.Models.SupportModels.smallPost_Ingredient;
 import com.PI_AGO23.IRE_Project.Repositories.I_Dish_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Ingredient_Repository;
 import com.PI_AGO23.IRE_Project.Repositories.I_Recipe_Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class Recipe_Service {
@@ -27,20 +29,30 @@ public class Recipe_Service {
     I_Ingredient_Repository ingredientRepository;
 
     //5.1.- Add_Ingredient(Crear):
-    public Recipe_Model add_Ingredient(Recipe_Model Ingredient){
-        return recipeRepository.save(Ingredient);
+    public ResponseEntity<Put_Recipe_Model> add_Ingredient(Post_Recipe_Model RecipeItem){
+
+        Optional<Dish_Model> modelD = this.dishRepository.findById(RecipeItem.getDish_id());
+
+        Optional<Ingredient_Model> modelI = this.ingredientRepository.findById(RecipeItem.getIngredient_id());
+
+        float am = RecipeItem.getAmount();
+        if(modelD.isEmpty() || modelI.isEmpty() || am<0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        }
+        System.out.println("SE LANZAE");
+        Recipe_Model model =this.recipeRepository.save(new Recipe_Model(RecipeItem));
+        return ResponseEntity.status(HttpStatus.OK).body(new Put_Recipe_Model(model));
     }
 
     //5.1.1.- Add Ingredients:
-    public String add_Ingredients(List<Recipe_Model> Ingredient_List, Long DishId){
-        for (Recipe_Model recipeModel : Ingredient_List) {
+    public String add_Ingredients(List<smallPost_Ingredient> Ingredient_List, Long DishId){
+        for (smallPost_Ingredient recipeModel : Ingredient_List) {
             try {
-                recipeModel.setDish_ID(DishId);
-                add_Ingredient(recipeModel);
+                add_Ingredient(new Post_Recipe_Model(DishId,recipeModel));
             }catch (Exception e){
                 return "Problem with the ingredient " + recipeModel+ "Verify no double items";
             }
-
         }
         return "Process Done with sucess!";
     }
@@ -88,4 +100,20 @@ public class Recipe_Service {
     }
     //5.4.- Update_Recipe
     //Metodo de creación de un nuevo platillo;
+
+    public  ResponseEntity<String> deleteItem(long id){
+        Optional<Recipe_Model> recipeVerifier = this.recipeRepository.findById(id);
+        if(recipeVerifier.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Elemento no encontrado");
+        }else{
+            try{
+                this.recipeRepository.deleteById(id);
+                return ResponseEntity.status(HttpStatus.OK).body("Elemento eliminado con éxito!");
+            }catch(Exception e){
+                return ResponseEntity.status(HttpStatus.OK).body("Problemos con el delete!");
+            }
+
+        }
+
+    }
 }

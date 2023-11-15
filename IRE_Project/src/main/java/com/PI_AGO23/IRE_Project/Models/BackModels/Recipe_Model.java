@@ -1,5 +1,7 @@
 package com.PI_AGO23.IRE_Project.Models.BackModels;
 
+import com.PI_AGO23.IRE_Project.Models.PostModels.Post_Recipe_Model;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,14 @@ public class Recipe_Model {
 
     @Column private float Recipe_Ingredient_Amount;
 
+    public Recipe_Model() {
+    }
+
+    public Recipe_Model(Post_Recipe_Model recipeItem) {
+        this.Dish_ID = recipeItem.getDish_id();
+        this.Ingredient_ID = recipeItem.getIngredient_id();
+        this.Recipe_Ingredient_Amount = recipeItem.getAmount();
+    }
 
 
     public Long getRecipe_ID() {
