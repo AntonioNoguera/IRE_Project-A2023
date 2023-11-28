@@ -3,18 +3,21 @@ package com.PI_AGO23.IRE_Project.Models.BackModels;
 public class smallRecipes {
     private long id;
     private String name;
-    private float amount;
+    private float existence;
     private String unit;
-
+    private Long group_id;
 
     //Constructor
 
+    public smallRecipes() {
+    }
 
-    public smallRecipes(long id, String name, float amount, String unit) {
+    public smallRecipes(long id, String name, float existence, String unit, Long group_id) {
         this.id = id;
         this.name = name;
-        this.amount = amount;
+        this.existence = existence;
         this.unit = unit;
+        this.group_id = group_id;
     }
 
     //Getter and setter
@@ -34,12 +37,12 @@ public class smallRecipes {
         this.name = name;
     }
 
-    public float getAmount() {
-        return amount;
+    public float getExistence() {
+        return existence;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setExistence(float existence) {
+        this.existence = existence;
     }
 
     public String getUnit() {
@@ -48,5 +51,13 @@ public class smallRecipes {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public Long getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(Long group_id) {
+        this.group_id = group_id;
     }
 }

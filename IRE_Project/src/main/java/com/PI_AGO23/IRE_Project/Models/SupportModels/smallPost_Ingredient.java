@@ -2,11 +2,11 @@ package com.PI_AGO23.IRE_Project.Models.SupportModels;
 
 public class smallPost_Ingredient {
     private Long ingredient_id;
-    private float amount;
+    private float existence;
 
-    public smallPost_Ingredient(Long ingredient_id, float amount) {
+    public smallPost_Ingredient(Long ingredient_id, float existence) {
         this.ingredient_id = ingredient_id;
-        this.amount = amount;
+        this.existence = existence;
     }
 
     public Long getIngredient_id() {
@@ -17,11 +17,11 @@ public class smallPost_Ingredient {
         this.ingredient_id = ingredient_id;
     }
 
-    public float getAmount() {
-        return amount;
+    public float getExistence() {
+        return existence;
     }
 
-    public void setAmount(float amount) {
-        this.amount = amount;
+    public void setExistence(float existence) {
+        this.existence = existence;
     }
 }

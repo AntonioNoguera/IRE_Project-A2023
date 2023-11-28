@@ -9,7 +9,7 @@ public class Put_Recipe_Model extends Post_Recipe_Model {
     Put_Recipe_Model(){}
 
     public Put_Recipe_Model(Recipe_Model recipe){
-        super(recipe.getDish_ID(),recipe.getIngredient_ID(),recipe.getRecipe_Ingredient_Amount());
+        super(recipe.getDish_ID(),recipe.getIngredient_ID(),recipe.getRecipe_Existence());
         this.id=recipe.getRecipe_ID();
     }
 

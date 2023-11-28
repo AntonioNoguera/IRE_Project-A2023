@@ -35,12 +35,11 @@ public class Recipe_Service {
 
         Optional<Ingredient_Model> modelI = this.ingredientRepository.findById(RecipeItem.getIngredient_id());
 
-        float am = RecipeItem.getAmount();
+        float am = RecipeItem.getExistence();
         if(modelD.isEmpty() || modelI.isEmpty() || am<0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
         }
-        System.out.println("SE LANZAE");
         Recipe_Model model =this.recipeRepository.save(new Recipe_Model(RecipeItem));
         return ResponseEntity.status(HttpStatus.OK).body(new Put_Recipe_Model(model));
     }
@@ -84,8 +83,9 @@ public class Recipe_Service {
                 smallRecipes recipe = new smallRecipes(
                         result.getRecipe_ID(),  // id
                         ingredientRepository.getName(result.getIngredient_ID()),  // name
-                        result.getRecipe_Ingredient_Amount(),  // amount
-                        ingredientRepository.getUnit(result.getIngredient_ID())  // unit Get Unit from Ingredient table
+                        result.getRecipe_Existence(),  // amount
+                        ingredientRepository.getUnit(result.getIngredient_ID()),  // unit Get Unit from Ingredient table
+                        ingredientRepository.getGroupID(result.getIngredient_ID())
                 );
                 formatMembers.add(recipe);
             }

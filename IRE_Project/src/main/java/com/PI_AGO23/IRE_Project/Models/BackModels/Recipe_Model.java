@@ -24,7 +24,7 @@ public class Recipe_Model {
     public Recipe_Model(Post_Recipe_Model recipeItem) {
         this.Dish_ID = recipeItem.getDish_id();
         this.Ingredient_ID = recipeItem.getIngredient_id();
-        this.Recipe_Ingredient_Amount = recipeItem.getAmount();
+        this.Recipe_Ingredient_Amount = recipeItem.getExistence();
     }
 
 
@@ -52,7 +52,7 @@ public class Recipe_Model {
         Ingredient_ID = ingredient_ID;
     }
 
-    public float getRecipe_Ingredient_Amount() {
+    public float getRecipe_Existence() {
         return Recipe_Ingredient_Amount;
     }
 

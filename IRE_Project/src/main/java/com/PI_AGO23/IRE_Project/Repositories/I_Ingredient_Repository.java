@@ -25,4 +25,7 @@ public interface I_Ingredient_Repository extends JpaRepository<Ingredient_Model,
 
     @Query(value = "SELECT Ingredient_Unit FROM ingredient_table WHERE Ingredient_ID = ?1", nativeQuery = true)
     String getUnit(long id);
+
+    @Query(value = "SELECT Group_ID FROM ingredient_table WHERE Ingredient_ID = ?1", nativeQuery = true)
+    Long getGroupID(long id);
 }
