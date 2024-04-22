@@ -20,12 +20,14 @@ public class Kind_Controller {
     }
 
     @PostMapping Kind_Model New_Kind(@RequestBody Kind_Model Kind){
+        System.out.println("Verifying : "+ Kind.getKind_ID());
+        System.out.println("Verifying : "+ Kind.getKind_Name());
         return this.kindService.new_Kind(Kind);
     }
 
     @PutMapping(path = "/{id}")
     public Kind_Model Update_Kind(@RequestBody Kind_Model Request, @PathVariable("id") long Id){
-         return this.kindService.update_Kind(Request, Id);
+        return this.kindService.update_Kind(Request, Id);
     }
 
     @DeleteMapping(path = "/{id}")

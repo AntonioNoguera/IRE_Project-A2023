@@ -12,6 +12,8 @@ public class Kind_Model {
 
     @Column private String Kind_Name;
 
+    public Kind_Model(){}
+
     public Long getKind_ID() {
         return Kind_ID;
     }
